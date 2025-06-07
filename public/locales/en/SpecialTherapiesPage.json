@@ -1,0 +1,14 @@
+{
+  "title": "Special Therapies",
+  "description": "Explore traditional and modern combined special therapies for menstrual pain relief, providing you with diverse health management options.",
+  "introduction": "Special therapies combine traditional wisdom with modern science, providing unique and effective solutions for menstrual pain management. These therapies focus on holistic health, helping to relieve discomfort naturally and promote mind-body balance.",
+  "therapyCards": {
+    "title": "Recommended Therapies",
+    "viewAll": "View All"
+  },
+  "videoSection": {
+    "title": "Video Demonstrations",
+    "description": "Learn proper therapy techniques and precautions through professional instructional videos."
+  },
+  "disclaimer": "The information provided on this page is for educational reference only and cannot replace professional medical advice. If you have health problems, please consult qualified medical professionals."
+}

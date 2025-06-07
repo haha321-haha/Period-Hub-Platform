@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "title": "PDF Resource Downloads | periodhub.health",
+    "description": "Download practical menstrual health PDF resources including campus emergency checklists, parent communication guides, teacher manuals, and healthy habits checklists."
+  },
+  "title": "Resource Download Center",
+  "subtitle": "Access practical menstrual health guides and checklists to support your health management journey",
+  "stats": {
+    "totalResources": "Available Resources",
+    "totalDownloads": "Total Downloads",
+    "activeUsers": "Active Users"
+  },
+  "categories": {
+    "emergency": "Emergency Guide",
+    "education": "Educational Resource",
+    "health": "Health Management",
+    "communication": "Communication Guide",
+    "tools": "Management Tools"
+  },
+  "resources": {
+    "projectSummary": {
+      "title": "Menstrual Pain Content Project Summary Report",
+      "description": "Comprehensive menstrual pain research project summary, including detailed analysis of 8 professional articles, SEO strategies, and user needs assessment for healthcare professionals and researchers."
+    },
+    "evaluationReport": {
+      "title": "Menstrual Pain Content Project Evaluation Report",
+      "description": "Project evaluation and optimization recommendations, including user needs analysis, content coverage assessment, and future development directions based on 17-point detailed requirements analysis."
+    },
+    "naturalReliefGuide": {
+      "title": "Comprehensive Natural & Non-Drug Menstrual Pain Relief Guide",
+      "description": "Evidence-based complete guide to natural therapies, covering 15 methods including heat therapy, diet, herbs, exercise, massage, integrating traditional wisdom with modern medicine."
+    },
+    "differentialDiagnosis": {
+      "title": "Menstrual Pain Differential Diagnosis: When to Seek Medical Care",
+      "description": "Detailed differential diagnosis guide including 7 warning signs comparison table, self-assessment process, and differentiation from endometriosis and other conditions."
+    },
+    "endometriosisGuide": {
+      "title": "Endometriosis Special Topic: Understanding, Diagnosis & Management",
+      "description": "In-depth exploration of endometriosis-related menstrual pain, including laparoscopic diagnostic methods, hormone treatment options, and daily life management strategies."
+    },
+    "iudPainGuide": {
+      "title": "IUD & Menstrual Pain: Understanding, Management & Selection Guide",
+      "description": "Detailed introduction to different effects of copper and hormonal IUDs on menstrual pain, insertion pain management, and post-procedure pain management strategies."
+    },
+    "symptomManagement": {
+      "title": "Menstrual Pain with Bloating & Nausea: Expert Analysis & Comprehensive Management",
+      "description": "Detailed analysis of accompanying symptoms caused by prostaglandins and hormonal fluctuations, providing comprehensive solutions for dietary adjustments, lifestyle interventions, and medical treatment."
+    },
+    "backPainGuide": {
+      "title": "Back Pain-Type Menstrual Cramps: Causes, Characteristics & Targeted Relief",
+      "description": "Specialized analysis of back pain-type menstrual cramps causes, including prostaglandin mechanisms, uterine position effects, and targeted relief methods."
+    },
+    "perimenopauseGuide": {
+      "title": "Perimenopausal Menstrual Pain (40+): Characteristics & Management",
+      "description": "Specialized menstrual pain management guide for women over 40, covering hormonal fluctuations, potential diseases, and comprehensive management strategies."
+    },
+    "campusEmergency": {
+      "title": "Campus Emergency Checklist",
+      "description": "A comprehensive emergency checklist designed for students, including essential items, emergency procedures, and help-seeking methods for campus environments."
+    },
+    "parentGuide": {
+      "title": "A Letter to Parents / Communication Guide",
+      "description": "A complete guide to help parents communicate with their teenage daughters about menstrual health, including conversation techniques, FAQ, and support strategies."
+    },
+    "teacherManual": {
+      "title": "Teacher / School Health Office Manual",
+      "description": "A comprehensive manual for teachers and school health personnel covering menstrual health education, emergency procedures, and student support methods."
+    },
+    "healthyHabits": {
+      "title": "Menstrual Health Habits Checklist",
+      "description": "A science-based menstrual health management checklist covering practical advice and check items for diet, exercise, sleep, hygiene, and more."
+    },
+    "zhanZhuangBaduanjin": {
+      "title": "Standing Meditation & Baduanjin Illustrated Guide",
+      "description": "Professional illustrated guide for traditional practices to relieve menstrual pain, including detailed movement breakdowns, breathing coordination, and personalized practice plans for different constitutions."
+    },
+    "teacherCollaboration": {
+      "title": "Teacher Collaboration Handbook",
+      "description": "A collaboration guide for teacher teams on menstrual health education, including interdisciplinary cooperation strategies, home-school communication methods, and student support network building."
+    },
+    "specificPainManagement": {
+      "title": "Specific Menstrual Pain Management Guide",
+      "description": "Professional menstrual pain management guide for specific situations including IUD users, pregnancy, and perimenopause, covering hormonal mechanisms, warning signs, and personalized treatment plans."
+    },
+    "painComplications": {
+      "title": "Menstrual Pain Complications & Symptom Management",
+      "description": "In-depth analysis of complications caused by menstrual pain including bloating, nausea, and back pain, providing scientific coping strategies and symptom tracking management systems."
+    },
+    "magnesiumGutHealth": {
+      "title": "Magnesium Balance & Gut Health: The Dual Key to Menstrual Pain Relief",
+      "description": "From the holistic perspective of the nutrition-gut-hormone axis, in-depth analysis of how magnesium deficiency and gut microbiota imbalance affect menstrual pain, providing scientific magnesium supplementation strategies and gut health management plans."
+    },
+    "painTrackingForm": {
+      "title": "Menstrual Pain Symptom Tracking Form",
+      "description": "Professional form for detailed recording of menstrual pain symptoms, trigger factors, and relief methods. Includes pain intensity scoring, symptom description, potential trigger analysis, and treatment effectiveness assessment to help you systematically track pain patterns and find the most effective relief strategies."
+    },
+    "menstrualCycleNutritionPlan": {
+      "title": "Menstrual Cycle Nutrition & Activity Plan Template",
+      "description": "Based on the physiological characteristics of the four menstrual cycle phases (menstrual, follicular, ovulatory, luteal), provides personalized dietary nutrition recommendations and exercise activity plans. Scientifically guides you to optimize your body condition and relieve menstrual discomfort at different phases."
+    },
+    "naturalTherapyAssessment": {
+      "title": "Natural Therapy Effectiveness Assessment Form",
+      "description": "Professional tool for systematically evaluating the effectiveness of different natural therapies (such as dietary adjustments, exercise, meditation, herbs, etc.). Through detailed recording and structured assessment, helps you find the most suitable personalized natural therapy combination."
+    }
+  },
+  "common": {
+    "pages": "pages",
+    "download": "View Document",
+    "document": "Document"
+  },
+  "guidelines": {
+    "title": "Usage Guidelines",
+    "usage": {
+      "title": "Usage Instructions",
+      "item1": "All resources are free to view and use",
+      "item2": "We recommend printing and carrying with you or sharing with those in need",
+      "item3": "Content is regularly updated, please check for the latest versions"
+    },
+    "sharing": {
+      "title": "Sharing & Distribution",
+      "item1": "Welcome to share these resources in educational institutions and communities",
+      "item2": "Please retain the periodhub.health source attribution when redistributing",
+      "item3": "For large-scale printing and distribution, please contact us for authorization"
+    }
+  },
+  "contact": {
+    "text": "For questions or additional resources, please contact us:"
+  }
+}

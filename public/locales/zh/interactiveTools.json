@@ -1,0 +1,226 @@
+{
+  "common": {
+    "loading": "加载中...",
+    "error": "发生错误，请重试",
+    "submit": "提交",
+    "cancel": "取消",
+    "save": "保存",
+    "reset": "重置",
+    "back": "返回",
+    "next": "下一步",
+    "previous": "上一步",
+    "close": "关闭",
+    "startNow": "立即开始",
+    "tryNow": "立即尝试",
+    "learnMore": "了解更多"
+  },
+
+  "navigation": {
+    "backToTools": "返回工具列表",
+    "toolsTitle": "互动工具",
+    "toolsDescription": "专业的经期健康管理工具，帮助您更好地了解和管理自己的健康状况"
+  },
+
+  "categories": {
+    "assessment": "评估工具",
+    "tracking": "追踪工具",
+    "constitutionAssessment": "体质评估",
+    "healthAssessment": "健康评估"
+  },
+
+  "difficulty": {
+    "easy": "简单",
+    "medium": "中等",
+    "hard": "困难"
+  },
+
+  "estimatedTime": {
+    "5to10min": "5-10分钟",
+    "2to3minDaily": "每日2-3分钟",
+    "5to8min": "5-8分钟",
+    "3to5min": "3-5分钟"
+  },
+
+  "medicalDisclaimer": {
+    "title": "医疗免责声明",
+    "text": "此工具仅供参考，不能替代专业医疗建议、诊断或治疗。如有健康问题，请咨询医疗专业人士。",
+    "shortText": "⚠️ 本工具仅供参考，不能替代专业医疗诊断。如有疑虑，请咨询医生。"
+  },
+
+  "periodPainAssessment": {
+    "title": "痛经速测小工具",
+    "description": "回答几个简单问题，初步了解你的痛经类型和严重程度，获得个性化的健康建议。",
+    "cta": "立即评估",
+    "subtitle": "回答几个简单问题，初步了解你的痛经类型和严重程度。",
+    
+    "questions": {
+      "intensity": {
+        "title": "你的痛经强度如何?",
+        "options": {
+          "mild": "轻微（可以忍受，不影响日常活动）",
+          "moderate": "中度（影响部分活动，但能坚持）",
+          "severe": "重度（完全影响日常活动，需要休息）"
+        }
+      },
+      "onset": {
+        "title": "你的痛经何时开始?",
+        "options": {
+          "recent": "初潮后不久（1-2年内）",
+          "later": "较晚开始（初潮多年后）"
+        }
+      },
+      "symptoms": {
+        "title": "你有以下任何症状吗？（可多选）",
+        "options": {
+          "fever": "发热（体温超过38°C）",
+          "vomiting": "严重呕吐",
+          "dizziness": "昏厥或头晕目眩",
+          "bleeding": "异常出血（大量或血块）",
+          "nonMenstrual": "非经期时也有盆腔痛"
+        }
+      }
+    },
+
+    "actions": {
+      "assess": "评估是否需要就医",
+      "reset": "重新评估",
+      "moreInfo": "查看更多青少年健康指南"
+    },
+
+    "results": {
+      "title": "评估结果",
+      "consultAdvice": "建议您尽快咨询医生或妇科专家，以获得专业的医疗建议和治疗方案。",
+      "validationMessage": "请先选择痛经强度和开始时间",
+      "assessments": {
+        "severe_symptoms": "根据您选择的症状（如发热、剧烈呕吐、昏厥或异常出血），建议您尽快咨询医生，这些可能是需要医疗评估的警示信号。",
+        "severe_late": "重度痛经如果在初潮较晚后开始，可能提示继发性痛经的风险，建议咨询医生排除潜在的妇科问题。",
+        "severe_early": "您的痛经严重程度较高。虽然可能是原发性痛经，但影响日常生活的严重疼痛建议医学评估，以获得有效的疼痛管理方案。",
+        "moderate_late": "中度痛经在初潮较晚后开始，建议咨询医生排除继发性痛经的可能性。",
+        "normal": "基于您提供的信息，您的痛经情况属于常见范围，可能是原发性痛经。建议尝试自然缓解方法，如热敷、轻度运动和健康饮食习惯等。如症状加重或出现异常，请及时咨询医生。"
+      }
+    }
+  },
+
+  "constitutionTest": {
+    "title": "中医体质测试",
+    "description": "通过8个问题了解您的中医体质类型，获得个性化的穴位、饮食和生活方式建议",
+    "cta": "开始测试",
+    "subtitle": "通过专业的中医体质问卷，了解您的体质类型，获得个性化的健康建议",
+
+    "features": {
+      "quick": {
+        "title": "快速便捷",
+        "description": "仅需5-8分钟完成"
+      },
+      "professional": {
+        "title": "专业可靠",
+        "description": "基于中医理论设计"
+      },
+      "personalized": {
+        "title": "个性化建议",
+        "description": "针对您的体质特点"
+      },
+      "practical": {
+        "title": "实用指导",
+        "description": "穴位、饮食、生活建议"
+      }
+    },
+
+    "instructions": {
+      "title": "测试说明",
+      "item1": "请根据您最近3个月的身体状况回答",
+      "item2": "选择最符合您情况的选项",
+      "item3": "如有疑问，选择相对更符合的选项",
+      "item4": "测试结果仅供参考，不替代医疗诊断"
+    },
+
+    "navigation": {
+      "startTest": "开始测试",
+      "nextQuestion": "下一题",
+      "previousQuestion": "上一题",
+      "completeTest": "完成测试",
+      "retakeTest": "重新测试"
+    },
+
+    "result": {
+      "title": "测试结果",
+      "subtitle": "您的中医体质类型分析",
+      "match": "匹配度",
+      "constitutionFeatures": "体质特征",
+      "commonSymptoms": "常见症状",
+      "menstrualFeatures": "月经特点"
+    },
+
+    "recommendations": {
+      "acupoints": {
+        "title": "穴位调理建议",
+        "primaryAcupoints": "主要穴位",
+        "location": "位置：",
+        "function": "功效：",
+        "method": "方法：",
+        "guidelines": "按摩指导",
+        "technique": "手法：",
+        "frequency": "频率：",
+        "duration": "时长："
+      },
+      "dietary": {
+        "title": "饮食调理建议",
+        "beneficialFoods": "适宜食物",
+        "foodsToAvoid": "避免食物",
+        "dietaryPrinciples": "饮食原则"
+      },
+      "lifestyle": {
+        "title": "场景化生活建议",
+        "description": "根据您的体质特点，为不同生活场景提供个性化建议",
+        "reminder": "温馨提醒：",
+        "reminderText": "以上建议需要持续实践才能看到效果，建议结合专业医师指导。"
+      },
+      "menstrualPain": {
+        "title": "痛经专项建议",
+        "acupointTherapy": "穴位疗法",
+        "lifestyleAdjustments": "生活调理"
+      }
+    },
+
+    "messages": {
+      "testComplete": "测试完成",
+      "testCompleteDesc": "您的个性化体质分析已生成",
+      "testFailed": "测试失败",
+      "testFailedDesc": "无法生成测试结果，请重试"
+    },
+
+    "emergencyKit": {
+      "title": "个性化应急包"
+    }
+  },
+
+  "painTracker": {
+    "title": "疼痛追踪器",
+    "description": "记录疼痛模式，分析趋势变化，优化治疗效果。",
+    "cta": "开始追踪"
+  },
+
+  "breathingExercise": {
+    "title": "即时呼吸练习工具",
+    "description": "基于科学验证的4-7-8呼吸法，通过调节神经系统快速缓解疼痛。无需下载，立即开始练习。",
+    "usageTips": {
+      "title": "使用建议：",
+      "bestTiming": {
+        "title": "最佳时机：",
+        "items": [
+          "疼痛刚开始时",
+          "感到焦虑紧张时",
+          "睡前放松时"
+        ]
+      },
+      "precautions": {
+        "title": "注意事项：",
+        "items": [
+          "找舒适的坐位或躺位",
+          "初学者3-4个循环即可",
+          "如感到头晕请停止练习"
+        ]
+      }
+    }
+  }
+}

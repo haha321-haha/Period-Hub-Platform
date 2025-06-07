@@ -1,0 +1,60 @@
+{
+  "title": "互动健康工具",
+  "description": "专业的经期健康管理工具，帮助您更好地了解和管理自己的健康状况",
+  
+  "symptomAssessment": {
+    "title": "症状评估工具",
+    "description": "通过专业问卷快速识别疼痛类型，为您提供精准的个性化建议。",
+    "startButton": "开始评估"
+  },
+
+  "periodPainAssessment": {
+    "title": "痛经速测小工具",
+    "description": "回答几个简单问题，初步了解你的痛经类型和严重程度，获得个性化的健康建议。",
+    "cta": "立即评估"
+  },
+
+  "painTracker": {
+    "title": "疼痛追踪器",
+    "description": "记录疼痛模式，分析趋势变化，优化治疗效果。",
+    "startButton": "开始追踪"
+  },
+
+  "constitutionTest": {
+    "title": "中医体质测试",
+    "description": "通过8个问题了解您的中医体质类型，获得个性化的穴位、饮食和生活方式建议",
+    "cta": "开始测试"
+  },
+
+  "personalizedInsights": {
+    "title": "个性化洞察（即将推出）",
+    "description": "基于您的追踪数据和评估结果，深入了解您的经期健康模式。（即将推出）"
+  },
+
+  "breathingExercise": {
+    "title": "即时呼吸练习工具",
+    "description": "基于科学验证的4-7-8呼吸法，通过调节神经系统快速缓解疼痛。无需下载，立即开始练习。",
+    "usageTips": {
+      "title": "使用建议：",
+      "bestTiming": {
+        "title": "最佳时机：",
+        "items": [
+          "疼痛刚开始时",
+          "感到焦虑紧张时",
+          "睡前放松时"
+        ]
+      },
+      "precautions": {
+        "title": "注意事项：",
+        "items": [
+          "找舒适的坐位或躺位",
+          "初学者3-4个循环即可",
+          "如感到头晕请停止练习"
+        ]
+      }
+    }
+  },
+
+  "toolsIntroduction": "我们的互动工具旨在为您提供知识和个性化策略，帮助您管理经期健康。通过了解您独特的症状和模式，您可以做出明智的决定并找到更有效的缓解方法。",
+  "developmentNote": "我们正在不断开发新的工具和资源。请经常回来查看更新！"
+}

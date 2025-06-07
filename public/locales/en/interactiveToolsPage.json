@@ -1,0 +1,60 @@
+{
+  "title": "Interactive Health Tools",
+  "description": "Professional menstrual health management tools to help you better understand and manage your health",
+  
+  "symptomAssessment": {
+    "title": "Symptom Assessment Tool",
+    "description": "Quickly identify pain types through professional questionnaires and receive precise personalized recommendations.",
+    "startButton": "Start Assessment"
+  },
+
+  "periodPainAssessment": {
+    "title": "Period Pain Assessment Tool",
+    "description": "Answer a few simple questions to understand your period pain type and severity, and get personalized health recommendations.",
+    "cta": "Quick Assessment"
+  },
+
+  "painTracker": {
+    "title": "Pain Tracker",
+    "description": "Track pain patterns, analyze trends, and optimize treatment effectiveness.",
+    "startButton": "Start Tracking"
+  },
+
+  "constitutionTest": {
+    "title": "TCM Constitution Test",
+    "description": "Discover your TCM constitution type through 8 questions and get personalized acupoint, diet, and lifestyle recommendations",
+    "cta": "Start Test"
+  },
+
+  "personalizedInsights": {
+    "title": "Personalized Insights (Coming Soon)",
+    "description": "Unlock deeper insights into your menstrual health patterns based on your tracked data and assessments. (Coming Soon)"
+  },
+
+  "breathingExercise": {
+    "title": "Instant Breathing Exercise Tool",
+    "description": "Based on scientifically validated 4-7-8 breathing technique to quickly relieve pain by regulating the nervous system. No download required, start practicing immediately.",
+    "usageTips": {
+      "title": "Usage Tips:",
+      "bestTiming": {
+        "title": "Best Timing:",
+        "items": [
+          "When pain just starts",
+          "When feeling anxious",
+          "Before sleep for relaxation"
+        ]
+      },
+      "precautions": {
+        "title": "Precautions:",
+        "items": [
+          "Find comfortable sitting or lying position",
+          "Beginners: 3-4 cycles are enough",
+          "Stop if feeling dizzy"
+        ]
+      }
+    }
+  },
+
+  "toolsIntroduction": "Our interactive tools are designed to empower you with knowledge and personalized strategies for managing your menstrual health. By understanding your unique symptoms and patterns, you can make informed decisions and find more effective relief.",
+  "developmentNote": "We are continuously developing new tools and resources. Check back often for updates!"
+}

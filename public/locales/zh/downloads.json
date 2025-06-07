@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "title": "PDF资源下载 | periodhub.health",
+    "description": "下载实用的经期健康PDF资源，包括校园应急清单、家长沟通指南、教师手册和健康习惯清单。"
+  },
+  "title": "资源下载中心",
+  "subtitle": "下载实用的经期健康指南和清单，为您的健康管理提供专业支持",
+  "stats": {
+    "totalResources": "可用资源",
+    "totalDownloads": "总下载量",
+    "activeUsers": "活跃用户"
+  },
+  "categories": {
+    "emergency": "应急指南",
+    "education": "教育资源",
+    "health": "健康管理",
+    "communication": "沟通指南",
+    "tools": "管理工具"
+  },
+  "resources": {
+    "projectSummary": {
+      "title": "痛经内容项目总结报告",
+      "description": "全面的痛经研究项目总结，包含8篇专业文章的详细分析、SEO策略和用户需求评估，为医护人员和研究者提供权威参考。"
+    },
+    "evaluationReport": {
+      "title": "痛经内容项目评估总结报告",
+      "description": "项目评估与优化建议，包含用户需求分析、内容覆盖评估和未来发展方向，基于17点详细需求的逐条对照分析。"
+    },
+    "naturalReliefGuide": {
+      "title": "全面自然及非药物痛经缓解指南",
+      "description": "基于科学证据的自然疗法完整指南，涵盖热敷、饮食、草药、运动、按摩等15种方法，整合传统智慧与现代医学。"
+    },
+    "differentialDiagnosis": {
+      "title": "痛经鉴别诊断：何时需要就医及与疾病的区分",
+      "description": "详细的鉴别诊断指南，包含7个危险信号对照表、自检流程和与子宫内膜异位症等疾病的区分方法。"
+    },
+    "endometriosisGuide": {
+      "title": "子宫内膜异位症专题：理解、诊断与管理",
+      "description": "深入探讨内异症引起的痛经，包含腹腔镜诊断方法、激素治疗方案和日常生活管理策略。"
+    },
+    "iudPainGuide": {
+      "title": "节育器（IUD）与痛经：了解、管理和选择指南",
+      "description": "详细介绍含铜和含激素IUD对痛经的不同影响，植入疼痛管理和术后痛经应对策略。"
+    },
+    "symptomManagement": {
+      "title": "痛经伴随腹胀、呕吐怎么办？专家解析原因与综合应对策略",
+      "description": "详细解析前列腺素和激素波动引起的伴随症状，提供饮食调整、生活方式干预和药物治疗的综合方案。"
+    },
+    "backPainGuide": {
+      "title": "腰痛型痛经：为何经期会腰痛？成因、特点与针对性缓解策略",
+      "description": "专门针对腰痛型痛经的成因分析，包含前列腺素作用机制、子宫位置影响和针对性缓解方法。"
+    },
+    "perimenopauseGuide": {
+      "title": "围绝经期痛经（40岁以上）的特点与应对",
+      "description": "针对40岁以上女性的特殊痛经管理指南，涵盖激素波动、潜在疾病和综合管理策略。"
+    },
+    "campusEmergency": {
+      "title": "校园应急清单",
+      "description": "专为学生设计的校园经期应急处理清单，包含必备物品、应急步骤和求助方式。适用于中学和大学校园环境。"
+    },
+    "parentGuide": {
+      "title": "致家长的一封信 / 沟通指南",
+      "description": "帮助家长与青春期女儿进行经期健康沟通的完整指南，包含对话技巧、常见问题解答和支持策略。"
+    },
+    "teacherManual": {
+      "title": "致教师 / 学校卫生室手册",
+      "description": "为教师和学校卫生人员提供的经期健康教育和应急处理手册，包含教学要点、应急处理和学生支持方法。"
+    },
+    "healthyHabits": {
+      "title": "经期健康生活习惯清单",
+      "description": "科学的经期健康管理清单，涵盖饮食、运动、睡眠、卫生等各个方面的实用建议和检查项目。"
+    },
+    "zhanZhuangBaduanjin": {
+      "title": "站桩与八段锦图解指导手册",
+      "description": "传统功法缓解痛经的专业图解指南，包含详细的动作分解、呼吸配合和针对不同体质的个性化练习方案。"
+    },
+    "teacherCollaboration": {
+      "title": "教师协作手册",
+      "description": "为教师团队提供的经期健康教育协作指南，包含跨学科合作策略、家校沟通方法和学生支持网络建设。"
+    },
+    "specificPainManagement": {
+      "title": "特定情况下的痛经管理指南",
+      "description": "针对IUD使用者、孕期、围绝经期等特定情况的专业痛经管理指南，包含激素原理、危险信号识别和个性化治疗方案。"
+    },
+    "painComplications": {
+      "title": "痛经并发症与伴随症状管理",
+      "description": "深入解析痛经引起的腹胀、恶心、腰痛等并发症状，提供科学的应对策略和症状追踪管理系统。"
+    },
+    "magnesiumGutHealth": {
+      "title": "镁平衡与肠道健康：痛经缓解的双重密码",
+      "description": "从营养-肠道-激素轴的整体视角，深度解析镁缺乏与肠道菌群失衡对痛经的影响，提供科学的镁补充策略和肠道健康调理方案。"
+    },
+    "painTrackingForm": {
+      "title": "痛经症状追踪表",
+      "description": "详细记录痛经症状、触发因素和缓解方法的专业表格。包含疼痛程度评分、症状描述、可能诱因分析和治疗效果评估，帮助您系统追踪痛经模式并找到最有效的缓解策略。"
+    },
+    "menstrualCycleNutritionPlan": {
+      "title": "月经周期营养与活动计划模板",
+      "description": "根据月经周期四个阶段（月经期、卵泡期、排卵期、黄体期）的生理特点，提供个性化的饮食营养建议和运动活动计划。科学指导您在不同阶段优化身体状态，缓解经期不适。"
+    },
+    "naturalTherapyAssessment": {
+      "title": "自然疗法效果评估表",
+      "description": "用于系统评估不同自然疗法（如饮食调整、运动、冥想、草药等）效果的专业工具。通过详细记录和结构化评估，帮助您找到最适合的个性化自然疗法组合。"
+    }
+  },
+  "common": {
+    "pages": "页",
+    "download": "查看文档",
+    "document": "文档"
+  },
+  "guidelines": {
+    "title": "使用指南",
+    "usage": {
+      "title": "使用说明",
+      "item1": "所有资源均可免费查看和使用",
+      "item2": "建议打印后随身携带或分享给需要的人",
+      "item3": "内容定期更新，请关注最新版本"
+    },
+    "sharing": {
+      "title": "分享与传播",
+      "item1": "欢迎在教育机构和社区中分享这些资源",
+      "item2": "转载时请保留periodhub.health来源标识",
+      "item3": "如需大量印刷分发，请联系我们获得授权"
+    }
+  },
+  "contact": {
+    "text": "如有疑问或需要更多资源，请联系我们："
+  }
+}

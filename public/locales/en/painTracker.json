@@ -1,0 +1,336 @@
+{
+  "title": "Pain Tracker",
+  "subtitle": "Record and track your menstrual pain to understand patterns and find the most effective relief methods",
+  "description": "Help manage your menstrual health by keeping detailed pain records",
+  
+  "navigation": {
+    "addEntry": "Add Entry",
+    "viewEntries": "View Entries",
+    "statistics": "Statistics",
+    "export": "Export Data"
+  },
+  
+  "form": {
+    "title": "Pain Record",
+    "date": "Date",
+    "painLevel": "Pain Level",
+    "duration": "Duration",
+    "location": "Pain Location",
+    "menstrualStatus": "Menstrual Status",
+    "symptoms": "Symptoms",
+    "remedies": "Remedies Used",
+    "effectiveness": "Effectiveness Rating",
+    "notes": "Notes",
+    "optional": "optional",
+    "minutes": "minutes",
+    "save": "Save Record",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "edit": "Edit Record",
+    "update": "Update Record",
+    "updating": "Updating...",
+    "notesPlaceholder": "Record any additional information such as triggers, mood, etc..."
+  },
+  
+  "entries": {
+    "title": "Pain Records",
+    "noEntries": "No pain records yet",
+    "noEntriesDescription": "Start recording your pain information to better understand pain patterns",
+    "addFirst": "Add First Record",
+    "totalEntries": "Total Records",
+    "lastEntry": "Last Entry",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirmDelete": "Confirm Delete",
+    "deleteMessage": "Are you sure you want to delete this record? This action cannot be undone.",
+    "deleteSuccess": "Record deleted successfully",
+    "deleteError": "Failed to delete record, please try again",
+    "painIntensity": "Pain Intensity",
+    "duration": "Duration",
+    "minutes": "minutes"
+  },
+  
+  "statistics": {
+    "title": "Statistics",
+    "overview": "Overview",
+    "trends": "Trend Analysis",
+    "patterns": "Pain Patterns",
+    "remedies": "Remedy Effectiveness",
+    "totalEntries": "Total Records",
+    "averagePain": "Average Pain Level",
+    "maxPain": "Maximum Pain Level",
+    "minPain": "Minimum Pain Level",
+    "trendDirection": "Pain Trend",
+    "improving": "Improving",
+    "worsening": "Worsening",
+    "stable": "Stable",
+    "mostCommonSymptoms": "Most Common Symptoms",
+    "mostEffectiveRemedies": "Most Effective Remedies",
+    "painFrequency": "Pain Level Distribution",
+    "noData": "No data available",
+    "noDataDescription": "Add more records to view statistical analysis",
+    "painLevelChart": "Pain Level Trends",
+    "cyclePatterns": "Menstrual Cycle Pain Patterns",
+    "remedyEffectiveness": "Remedy Effectiveness",
+    "inDevelopment": "Statistics feature is under development..."
+  },
+  
+  "export": {
+    "title": "Export Data",
+    "description": "Export your pain records as files for backup or sharing with healthcare providers",
+    "format": "Export Format",
+    "json": "JSON Format",
+    "csv": "CSV Format",
+    "pdf": "PDF Report",
+    "dateRange": "Date Range",
+    "allData": "All Data",
+    "lastMonth": "Last Month",
+    "lastThreeMonths": "Last 3 Months",
+    "lastSixMonths": "Last 6 Months",
+    "customRange": "Custom Range",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "includeCharts": "Include Charts",
+    "includeStatistics": "Include Statistics",
+    "export": "Export",
+    "exporting": "Exporting...",
+    "exportSuccess": "Export successful",
+    "exportError": "Export failed, please try again",
+    "inDevelopment": "Export feature is under development..."
+  },
+  
+  "insights": {
+    "title": "Health Insights",
+    "painPatterns": "Pain Pattern Analysis",
+    "recommendations": "Personalized Recommendations",
+    "trends": "Trend Analysis",
+    "alerts": "Health Alerts",
+    "noInsights": "No insights available",
+    "noInsightsDescription": "Record more data to get personalized health insights"
+  },
+  
+  "settings": {
+    "title": "Settings",
+    "notifications": "Notification Settings",
+    "reminders": "Recording Reminders",
+    "privacy": "Privacy Settings",
+    "dataManagement": "Data Management",
+    "clearAllData": "Clear All Data",
+    "clearDataWarning": "This action will permanently delete all pain records and cannot be undone",
+    "clearDataConfirm": "Confirm Clear",
+    "clearDataSuccess": "Data cleared successfully",
+    "clearDataError": "Failed to clear data, please try again"
+  },
+  
+  "messages": {
+    "saveSuccess": "Record saved successfully",
+    "saveError": "Failed to save record, please try again",
+    "updateSuccess": "Record updated successfully",
+    "updateError": "Failed to update record, please try again",
+    "loadError": "Failed to load data, please refresh the page",
+    "networkError": "Network error, please check your connection",
+    "validationError": "Please check your input",
+    "duplicateDate": "A record for this date already exists, please choose another date or edit the existing record",
+    "assessmentComplete": "Assessment Complete",
+    "assessmentCompleteDesc": "Your personalized recommendations have been generated",
+    "assessmentFailed": "Assessment Failed",
+    "assessmentFailedDesc": "Unable to generate assessment results, please try again",
+    "resultsSaved": "Results Saved",
+    "resultsSavedDesc": "You can view your assessment results anytime",
+    "close": "Close"
+  },
+  
+  "help": {
+    "title": "Help",
+    "gettingStarted": "Getting Started",
+    "recordingPain": "Recording Pain",
+    "viewingData": "Viewing Data",
+    "exportingData": "Exporting Data",
+    "tips": "Tips",
+    "faq": "FAQ"
+  },
+
+  "assessment": {
+    "title": "Symptom Assessment",
+    "subtitle": "Answer a few questions about your symptoms to get personalized advice for managing menstrual pain",
+    "description": "This assessment will help you understand the severity of your symptoms and get targeted recommendations",
+
+    "start": {
+      "title": "Start Symptom Assessment",
+      "description": "This assessment takes approximately 5-10 minutes to complete",
+      "features": [
+        "Personalized pain assessment",
+        "Science-based recommendations",
+        "Privacy protection, data stored locally",
+        "Get instant results and advice"
+      ],
+      "startButton": "Start Assessment",
+      "disclaimer": "This assessment is for reference only and cannot replace professional medical advice"
+    },
+
+    "progress": {
+      "questionOf": "Question {current} of {total}",
+      "progressPercent": "Progress: {percent}%"
+    },
+
+    "navigation": {
+      "previous": "Previous",
+      "next": "Next",
+      "skip": "Skip",
+      "finish": "Complete Assessment"
+    },
+
+    "validation": {
+      "required": "This question is required",
+      "selectAtLeastOne": "Please select at least one option",
+      "invalidRange": "Please select a value within the valid range"
+    },
+
+    "result": {
+      "title": "Assessment Results",
+      "yourScore": "Your Score",
+      "severity": "Symptom Severity",
+      "summary": "Results Summary",
+      "recommendations": "Personalized Recommendations",
+      "nextSteps": "Next Steps",
+      "relatedArticles": "Related Articles",
+      "retakeAssessment": "Retake Assessment",
+      "saveResults": "Save Results",
+      "shareResults": "Share Results",
+      "timeframe": "Timeframe:",
+      "actionSteps": "Action Steps:"
+    },
+
+    "severity": {
+      "mild": "Mild",
+      "moderate": "Moderate",
+      "severe": "Severe",
+      "emergency": "Emergency"
+    },
+
+    "categories": {
+      "immediate": "Immediate Relief",
+      "lifestyle": "Lifestyle",
+      "medical": "Medical Advice",
+      "dietary": "Dietary Adjustments",
+      "exercise": "Exercise Recommendations",
+      "selfcare": "Self Care"
+    },
+
+    "priority": {
+      "high": "High Priority",
+      "medium": "Medium Priority",
+      "low": "Low Priority"
+    }
+  },
+
+  "constitutionTest": {
+    "title": "TCM Constitution Test",
+    "subtitle": "Discover your TCM constitution type through 8 carefully designed questions and get personalized acupoint massage, dietary therapy, and lifestyle recommendations to help you better manage your menstrual health.",
+
+    "features": {
+      "quick": {
+        "title": "Quick & Easy",
+        "description": "Only 5-8 minutes to complete"
+      },
+      "professional": {
+        "title": "Professional",
+        "description": "Based on TCM theory"
+      },
+      "personalized": {
+        "title": "Personalized",
+        "description": "Targeted wellness plan"
+      },
+      "practical": {
+        "title": "Practical Guide",
+        "description": "Actionable health advice"
+      }
+    },
+
+    "instructions": {
+      "title": "Test Instructions",
+      "item1": "Please answer based on your actual condition in the past 3 months",
+      "item2": "Select only one most suitable answer for each question",
+      "item3": "Test results are for reference only and cannot replace professional medical advice",
+      "item4": "It is recommended to complete the test in a quiet environment"
+    },
+
+    "navigation": {
+      "startTest": "Start Test",
+      "previous": "Previous",
+      "next": "Next",
+      "completeTest": "Complete Test",
+      "retakeTest": "Retake Test"
+    },
+
+    "progress": {
+      "questionOf": "Question {current} / {total}",
+      "complete": "Complete"
+    },
+
+    "painScale": {
+      "title": "Pain Level:",
+      "reference": "Pain Level Reference:",
+      "levels": {
+        "none": "No pain",
+        "mild": "Mild",
+        "moderate": "Moderate",
+        "severe": "Severe",
+        "extreme": "Extreme"
+      },
+      "descriptions": {
+        "0-2": "No pain or mild discomfort",
+        "3-4": "Mild pain, tolerable",
+        "5-7": "Moderate pain, affects activities",
+        "8-10": "Severe pain, unbearable"
+      }
+    },
+
+    "result": {
+      "title": "Test Complete",
+      "subtitle": "Your Constitution Type Analysis Results",
+      "match": "Match:",
+      "constitutionFeatures": "Constitution Features",
+      "commonSymptoms": "Common Symptoms",
+      "menstrualFeatures": "Menstrual Features"
+    },
+
+    "recommendations": {
+      "acupoints": {
+        "title": "Acupoint Massage Recommendations",
+        "primaryAcupoints": "Primary Acupoints",
+        "location": "Location: ",
+        "function": "Function: ",
+        "method": "Method: ",
+        "guidelines": "Massage Guidelines",
+        "technique": "Technique: ",
+        "frequency": "Frequency: ",
+        "duration": "Duration: "
+      },
+      "dietary": {
+        "title": "Dietary Recommendations",
+        "beneficialFoods": "Beneficial Foods",
+        "foodsToAvoid": "Foods to Avoid",
+        "dietaryPrinciples": "Dietary Principles"
+      },
+      "lifestyle": {
+        "title": "Scenario-Based Life Guidance",
+        "description": "Based on your constitution characteristics, we provide targeted health advice for different life scenarios to help you take better care of yourself in various environments.",
+        "reminder": "💡 Gentle Reminder:",
+        "reminderText": " These suggestions are tailored to your constitution characteristics. Please apply them flexibly based on your actual situation. Continue to monitor body changes and adjust lifestyle accordingly."
+      },
+      "menstrualPain": {
+        "title": "Menstrual Pain Management",
+        "acupointTherapy": "Targeted Acupoint Therapy",
+        "lifestyleAdjustments": "Lifestyle Adjustments"
+      }
+    },
+
+    "messages": {
+      "testComplete": "Test Complete",
+      "testCompleteDesc": "Your constitution analysis results have been generated",
+      "testFailed": "Test Failed",
+      "testFailedDesc": "Unable to generate test results, please try again"
+    }
+  }
+}
