@@ -2,9 +2,6 @@
 
 import React, { useState } from 'react';
 import { useInteractiveToolTranslations } from '../shared/hooks/useAppTranslations';
-import { useTranslations } from 'next-intl';
-import { useTranslations } from 'next-intl';
-import { useTranslations } from 'next-intl';
 
 interface AssessmentResult {
   advice: string;
@@ -17,7 +14,6 @@ interface PeriodPainAssessmentToolProps {
 }
 
 const PeriodPainAssessmentTool: React.FC<PeriodPainAssessmentToolProps> = ({ locale = 'zh' }) => {
-  const t = useTranslations('InteractiveTools');
   const [intensity, setIntensity] = useState<string>('');
   const [onset, setOnset] = useState<string>('');
   const [severeSymptoms, setSevereSymptoms] = useState<string[]>([]);
