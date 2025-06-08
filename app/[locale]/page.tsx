@@ -31,30 +31,33 @@ export default function HomePage() {
   const articles = getAllArticles(locale);
   
   return (
-    <div className="space-y-16 py-4">
-      {/* Hero Section */}
-      <section className="py-12 md:py-20 bg-gradient-to-br from-primary-50 to-secondary-50 rounded-2xl">
+    <div className="space-y-8 md:space-y-12 lg:space-y-16 py-2 md:py-4">
+      {/* 📱 移动端优化 Hero Section */}
+      <section className="py-8 md:py-12 lg:py-20 bg-gradient-to-br from-primary-50 to-secondary-50 rounded-xl md:rounded-2xl">
         <div className="container-custom">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="space-y-6 text-center md:text-left">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-neutral-900 leading-tight">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-center">
+            <div className="space-y-4 md:space-y-6 text-center md:text-left">
+              {/* 移动端优化标题 */}
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-neutral-900 leading-tight">
                 {t('hero.headline')}
               </h1>
-              <p className="text-lg md:text-xl text-neutral-700">
+              {/* 移动端优化副标题 */}
+              <p className="text-base sm:text-lg md:text-xl text-neutral-700 leading-relaxed">
                 {t('hero.subheadline')}
               </p>
-              <p className="text-neutral-600 max-w-lg mx-auto md:mx-0">
+              {/* 移动端优化描述文本 */}
+              <p className="text-sm sm:text-base text-neutral-600 max-w-lg mx-auto md:mx-0 leading-relaxed">
                 {t('hero.bodyCopy')}
               </p>
-              {/* Quick Search Box */}
-              <div className="max-w-md mx-auto md:mx-0 mb-6">
+              {/* 📱 移动端优化搜索框 */}
+              <div className="max-w-md mx-auto md:mx-0 mb-4 md:mb-6">
                 <SearchBox
                   articles={articles}
                   locale={locale}
                   placeholder={locale === 'zh' ? '🔍 快速搜索痛经解决方案...' : '🔍 Quick search for pain relief solutions...'}
                   className="w-full"
                 />
-                <p className="text-sm text-neutral-500 mt-2 text-center md:text-left">
+                <p className="text-xs sm:text-sm text-neutral-500 mt-2 text-center md:text-left leading-relaxed">
                   {locale === 'zh'
                     ? '💡 试试搜索"5分钟缓解"、"热敷"、"前列腺素"'
                     : '💡 Try searching "5-minute relief", "heat therapy", "prostaglandins"'
@@ -62,16 +65,18 @@ export default function HomePage() {
                 </p>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                <Link href={`/${locale}/immediate-relief`} className="btn-primary">
+              {/* 📱 移动端优化按钮组 */}
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start">
+                <Link href={`/${locale}/immediate-relief`} className="btn-primary w-full sm:w-auto">
                   {t('hero.ctaExplore')}
                 </Link>
-                <Link href={`/${locale}/interactive-tools`} className="btn-outline">
+                <Link href={`/${locale}/interactive-tools`} className="btn-outline w-full sm:w-auto">
                   {t('hero.ctaCheckSymptoms')}
                 </Link>
               </div>
             </div>
-            <div className="relative h-64 md:h-96 rounded-xl overflow-hidden shadow-lg">
+            {/* 📱 移动端优化图片区域 */}
+            <div className="relative h-48 sm:h-56 md:h-80 lg:h-96 rounded-lg md:rounded-xl overflow-hidden shadow-lg order-first md:order-last">
               {/* Hero image placeholder - shows required image specifications */}
               <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-pink-100 to-purple-100">
                 <ImagePlaceholder
@@ -97,14 +102,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Statistics Section */}
-      <section className="py-12 gradient-purple-pink text-white">
+      {/* 📱 移动端优化统计数据部分 */}
+      <section className="py-8 md:py-12 gradient-purple-pink text-white">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 md:mb-4">
               {locale === 'zh' ? '数据说话，效果可见' : 'Data-Driven Results'}
             </h2>
-            <p className="text-primary-100 max-w-2xl mx-auto">
+            <p className="text-primary-100 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed px-4">
               {locale === 'zh'
                 ? '基于真实用户反馈和科学研究的数据统计'
                 : 'Statistics based on real user feedback and scientific research'
@@ -112,22 +117,33 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-            <div className="text-center animate-slide-up">
-              <div className="text-4xl md:text-5xl font-bold mb-2">92%</div>
-              <p className="text-primary-100">{locale === 'zh' ? '用户症状改善' : 'Users Report Improvement'}</p>
+          {/* 📱 移动端优化数据网格 */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mb-8 md:mb-12">
+            <div className="text-center animate-slide-up bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 md:p-0 md:bg-transparent">
+              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-1 md:mb-2">92%</div>
+              <p className="text-primary-100 text-xs sm:text-sm md:text-base leading-tight">
+                {locale === 'zh' ? '用户症状改善' : 'Users Report Improvement'}
+              </p>
             </div>
-            <div className="text-center animate-slide-up" style={{animationDelay: '0.1s'}}>
-              <div className="text-4xl md:text-5xl font-bold mb-2">{locale === 'zh' ? '10万+' : '100K+'}</div>
-              <p className="text-primary-100">{locale === 'zh' ? '累计用户' : 'Total Users'}</p>
+            <div className="text-center animate-slide-up bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 md:p-0 md:bg-transparent" style={{animationDelay: '0.1s'}}>
+              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-1 md:mb-2">
+                {locale === 'zh' ? '10万+' : '100K+'}
+              </div>
+              <p className="text-primary-100 text-xs sm:text-sm md:text-base leading-tight">
+                {locale === 'zh' ? '累计用户' : 'Total Users'}
+              </p>
             </div>
-            <div className="text-center animate-slide-up" style={{animationDelay: '0.2s'}}>
-              <div className="text-4xl md:text-5xl font-bold mb-2">24/7</div>
-              <p className="text-primary-100">{locale === 'zh' ? '在线支持' : 'Online Support'}</p>
+            <div className="text-center animate-slide-up bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 md:p-0 md:bg-transparent" style={{animationDelay: '0.2s'}}>
+              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-1 md:mb-2">24/7</div>
+              <p className="text-primary-100 text-xs sm:text-sm md:text-base leading-tight">
+                {locale === 'zh' ? '在线支持' : 'Online Support'}
+              </p>
             </div>
-            <div className="text-center animate-slide-up" style={{animationDelay: '0.3s'}}>
-              <div className="text-4xl md:text-5xl font-bold mb-2">100+</div>
-              <p className="text-primary-100">{locale === 'zh' ? '专业文章' : 'Expert Articles'}</p>
+            <div className="text-center animate-slide-up bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 md:p-0 md:bg-transparent" style={{animationDelay: '0.3s'}}>
+              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-1 md:mb-2">100+</div>
+              <p className="text-primary-100 text-xs sm:text-sm md:text-base leading-tight">
+                {locale === 'zh' ? '专业文章' : 'Expert Articles'}
+              </p>
             </div>
           </div>
 
