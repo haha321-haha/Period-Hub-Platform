@@ -160,8 +160,8 @@ periodhub-health/
 
 ## 📞 联系方式
 
-- **GitHub**: [@haha321-hash](https://github.com/haha321-hash)
-- **项目地址**: [https://github.com/haha321-hash/periodhub-health](https://github.com/haha321-hash/periodhub-health)
+- **GitHub**: [@haha321-haha](https://github.com/haha321-haha)
+- **项目地址**: [[https://github.com/haha321-hash/periodhub-health](https://github.com/haha321-haha/Period-Hub-Platform)]
 
 ## 🙏 致谢
 
