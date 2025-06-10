@@ -68,7 +68,7 @@ export class AdvancedCacheManager {
     
     const now = Date.now();
     const item: CacheItem<T> = {
-      data: this.config.enableCompression ? this.compress(data) : data,
+      data: this.config.enableCompression ? this.compress(data) as T : data,
       timestamp: now,
       ttl,
       accessCount: 0,

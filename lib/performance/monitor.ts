@@ -163,7 +163,7 @@ class PerformanceMonitor {
   private recordInteraction(entry: PerformanceEventTiming) {
     const metric: PerformanceMetrics['interaction'] = {
       type: entry.name as any,
-      element: entry.target?.tagName || 'unknown',
+      element: (entry.target as Element)?.tagName || 'unknown',
       timestamp: entry.startTime,
       duration: entry.duration,
     };
