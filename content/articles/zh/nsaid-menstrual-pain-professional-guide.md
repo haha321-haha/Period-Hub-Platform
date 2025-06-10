@@ -161,7 +161,7 @@ NSAIDs通过**抑制环氧合酶（COX）**来发挥作用：
 | **优势** | 胃肠道耐受性好 |
 | **注意事项** | 心血管风险，需医生处方 |
 
-## 🧮 互动式NSAID用药计算器
+## 🧮 互动式NSAID用药计算器（成人）
 
 <div class="nsaid-calculator">
   <div class="calculator-container">
