@@ -1,19 +1,20 @@
+const withNextIntl = require('next-intl/plugin')(
+  // This is the default (also the `src` folder is supported out of the box)
+  './i18n.ts'
+);
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // 🚀 GitHub Pages 静态导出配置
-  output: 'export',
-  
-  // 禁用图片优化（静态导出要求）
+  // 🚀 Vercel 部署配置 - 简化版本确保部署成功
+
+  // 图片优化配置
   images: {
-    unoptimized: true,
+    unoptimized: true, // 保持图片优化禁用以提高兼容性
   },
-  
+
   // 配置尾部斜杠
-  trailingSlash: true,
-  
-  // 基础路径（如果部署在子目录）
-  // basePath: '/Period-Hub-Platform',
-  
+  trailingSlash: false, // Vercel 推荐设置为 false
+
   reactStrictMode: true,
 
   // 编译优化
@@ -28,26 +29,15 @@ const nextConfig = {
 
   // PWA 和性能优化
   poweredByHeader: false,
-  
-  // 跳过构建时的错误（用于静态导出）
+
+  // TypeScript 和 ESLint 配置
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false, // 启用类型检查
   },
-  
+
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false, // 启用 ESLint 检查
   },
-  
-  // 注意：静态导出不支持以下功能：
-  // - headers()
-  // - redirects() 
-  // - rewrites()
-  // - API Routes
-  // - Middleware
-  // - Image Optimization
-  // - Internationalization (i18n)
-  
-  // 这些功能将通过 Cloudflare 或客户端实现
 };
 
-module.exports = nextConfig;
+module.exports = withNextIntl(nextConfig);

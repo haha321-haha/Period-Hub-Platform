@@ -1,0 +1,46 @@
+{
+  "timestamp": "2025-06-09T19:59:03.614Z",
+  "summary": {
+    "totalIssues": 2,
+    "criticalIssues": 2,
+    "warningIssues": 0,
+    "infoIssues": 0,
+    "fixesApplied": 0
+  },
+  "testResults": {
+    "structureConsistency": {
+      "totalZhKeys": 637,
+      "totalEnKeys": 637,
+      "missingInEn": 0,
+      "missingInZh": 0,
+      "consistency": "100.00"
+    }
+  },
+  "issues": [
+    {
+      "category": "UNTRANSLATED",
+      "severity": "HIGH",
+      "description": "Untranslated key found: \"periodhub.health\"",
+      "location": "messages/zh.json:site.name",
+      "fix": null,
+      "timestamp": "2025-06-09T19:59:03.613Z"
+    },
+    {
+      "category": "UNTRANSLATED",
+      "severity": "HIGH",
+      "description": "Untranslated key found: \"periodhub.health\"",
+      "location": "messages/en.json:site.name",
+      "fix": null,
+      "timestamp": "2025-06-09T19:59:03.613Z"
+    }
+  ],
+  "fixes": [],
+  "recommendations": [
+    "Implement automated translation validation in CI/CD pipeline",
+    "Add translation key validation to prevent untranslated content",
+    "Create translation style guide for consistent terminology",
+    "Set up regular translation audits (weekly/monthly)",
+    "Implement fallback mechanisms for missing translations",
+    "Add translation coverage monitoring dashboard"
+  ]
+}

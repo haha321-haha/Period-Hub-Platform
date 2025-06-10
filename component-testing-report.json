@@ -1,0 +1,76 @@
+{
+  "timestamp": "2025-06-09T20:00:46.702Z",
+  "summary": {
+    "totalComponents": 5,
+    "totalTranslationPaths": 40,
+    "missingTranslations": 0,
+    "languageIssues": 0,
+    "criticalIssues": 0,
+    "overallHealth": "100.00"
+  },
+  "testResults": [
+    {
+      "name": "Symptom Assessment Tool",
+      "totalPaths": 13,
+      "criticalPaths": 3,
+      "zhMissing": [],
+      "enMissing": [],
+      "zhLanguageIssues": [],
+      "enLanguageIssues": [],
+      "criticalIssues": [],
+      "timestamp": "2025-06-09T20:00:46.700Z"
+    },
+    {
+      "name": "Constitution Test",
+      "totalPaths": 9,
+      "criticalPaths": 2,
+      "zhMissing": [],
+      "enMissing": [],
+      "zhLanguageIssues": [],
+      "enLanguageIssues": [],
+      "criticalIssues": [],
+      "timestamp": "2025-06-09T20:00:46.702Z"
+    },
+    {
+      "name": "Period Pain Assessment",
+      "totalPaths": 7,
+      "criticalPaths": 2,
+      "zhMissing": [],
+      "enMissing": [],
+      "zhLanguageIssues": [],
+      "enLanguageIssues": [],
+      "criticalIssues": [],
+      "timestamp": "2025-06-09T20:00:46.702Z"
+    },
+    {
+      "name": "Breathing Exercise",
+      "totalPaths": 5,
+      "criticalPaths": 1,
+      "zhMissing": [],
+      "enMissing": [],
+      "zhLanguageIssues": [],
+      "enLanguageIssues": [],
+      "criticalIssues": [],
+      "timestamp": "2025-06-09T20:00:46.702Z"
+    },
+    {
+      "name": "Pain Tracker",
+      "totalPaths": 6,
+      "criticalPaths": 1,
+      "zhMissing": [],
+      "enMissing": [],
+      "zhLanguageIssues": [],
+      "enLanguageIssues": [],
+      "criticalIssues": [],
+      "timestamp": "2025-06-09T20:00:46.702Z"
+    }
+  ],
+  "issues": [],
+  "recommendations": [
+    "Fix all critical translation paths immediately",
+    "Implement component-level translation validation",
+    "Add automated testing for interactive components",
+    "Create translation completeness monitoring",
+    "Set up language contamination detection"
+  ]
+}

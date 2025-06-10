@@ -1,0 +1,137 @@
+{
+  "timestamp": "2025-06-10T01:14:00.474Z",
+  "summary": {
+    "totalFiles": 36,
+    "processedFiles": 1,
+    "totalChanges": 16,
+    "errors": 0
+  },
+  "fixes": [
+    {
+      "file": "app/[locale]/interactive-tools/components/SymptomAssessmentTool.tsx",
+      "changes": [
+        {
+          "type": "HARDCODED_STRING_FIX",
+          "old": "'症状评估工具'",
+          "new": "{t('title', {}, locale === 'en' ? 'Symptom Assessment Tool' : '症状评估工具')}",
+          "translationKey": "title",
+          "line": 145
+        },
+        {
+          "type": "HARDCODED_STRING_FIX",
+          "old": "'开始评估'",
+          "new": "{t('start.startButton', {}, locale === 'en' ? 'Start Assessment' : '开始评估')}",
+          "translationKey": "start.startButton",
+          "line": 154
+        },
+        {
+          "type": "HARDCODED_STRING_FIX",
+          "old": "'开始评估'",
+          "new": "{t('start.startButton', {}, locale === 'en' ? 'Start Assessment' : '开始评估')}",
+          "translationKey": "start.startButton",
+          "line": 195
+        },
+        {
+          "type": "HARDCODED_STRING_FIX",
+          "old": "'评估结果'",
+          "new": "{t('result.title', {}, locale === 'en' ? 'Assessment Results' : '评估结果')}",
+          "translationKey": "result.title",
+          "line": 222
+        },
+        {
+          "type": "HARDCODED_STRING_FIX",
+          "old": "'您的得分'",
+          "new": "{t('result.yourScore', {}, locale === 'en' ? 'Your Score' : '您的得分')}",
+          "translationKey": "result.yourScore",
+          "line": 230
+        },
+        {
+          "type": "HARDCODED_STRING_FIX",
+          "old": "'无痛'",
+          "new": "{t('painScale.levels.none', {}, locale === 'en' ? 'None' : '无痛')}",
+          "translationKey": "painScale.levels.none",
+          "line": 501
+        },
+        {
+          "type": "HARDCODED_STRING_FIX",
+          "old": "'轻微'",
+          "new": "{t('painScale.levels.mild', {}, locale === 'en' ? 'Mild' : '轻微')}",
+          "translationKey": "painScale.levels.mild",
+          "line": 502
+        },
+        {
+          "type": "HARDCODED_STRING_FIX",
+          "old": "'中等'",
+          "new": "{t('painScale.levels.moderate', {}, locale === 'en' ? 'Moderate' : '中等')}",
+          "translationKey": "painScale.levels.moderate",
+          "line": 503
+        },
+        {
+          "type": "HARDCODED_STRING_FIX",
+          "old": "'严重'",
+          "new": "{t('painScale.levels.severe', {}, locale === 'en' ? 'Severe' : '严重')}",
+          "translationKey": "painScale.levels.severe",
+          "line": 504
+        },
+        {
+          "type": "HARDCODED_STRING_FIX",
+          "old": "'极重'",
+          "new": "{t('painScale.levels.extreme', {}, locale === 'en' ? 'Extreme' : '极重')}",
+          "translationKey": "painScale.levels.extreme",
+          "line": 505
+        },
+        {
+          "type": "HARDCODED_STRING_FIX",
+          "old": "'疼痛程度：'",
+          "new": "{t('painScale.title', {}, locale === 'en' ? 'Pain Level: ' : '疼痛程度：')}",
+          "translationKey": "painScale.title",
+          "line": 513
+        },
+        {
+          "type": "HARDCODED_STRING_FIX",
+          "old": "'无痛'",
+          "new": "{t('painScale.levels.none', {}, locale === 'en' ? 'None' : '无痛')}",
+          "translationKey": "painScale.levels.none",
+          "line": 520
+        },
+        {
+          "type": "HARDCODED_STRING_FIX",
+          "old": "'轻微'",
+          "new": "{t('painScale.levels.mild', {}, locale === 'en' ? 'Mild' : '轻微')}",
+          "translationKey": "painScale.levels.mild",
+          "line": 521
+        },
+        {
+          "type": "HARDCODED_STRING_FIX",
+          "old": "'中等'",
+          "new": "{t('painScale.levels.moderate', {}, locale === 'en' ? 'Moderate' : '中等')}",
+          "translationKey": "painScale.levels.moderate",
+          "line": 522
+        },
+        {
+          "type": "HARDCODED_STRING_FIX",
+          "old": "'严重'",
+          "new": "{t('painScale.levels.severe', {}, locale === 'en' ? 'Severe' : '严重')}",
+          "translationKey": "painScale.levels.severe",
+          "line": 523
+        },
+        {
+          "type": "HARDCODED_STRING_FIX",
+          "old": "'极重'",
+          "new": "{t('painScale.levels.extreme', {}, locale === 'en' ? 'Extreme' : '极重')}",
+          "translationKey": "painScale.levels.extreme",
+          "line": 524
+        }
+      ],
+      "timestamp": "2025-06-10T01:14:00.457Z"
+    }
+  ],
+  "errors": [],
+  "recommendations": [
+    "Review all automatic changes before committing",
+    "Test all modified components in both languages",
+    "Add missing translation keys to translation files",
+    "Verify that all fallback values are language-appropriate",
+    "Run comprehensive translation audit after fixes"
+  ]
+}
