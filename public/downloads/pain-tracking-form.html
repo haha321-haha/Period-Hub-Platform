@@ -9,16 +9,27 @@
             font-family: 'Microsoft YaHei', Arial, sans-serif;
             line-height: 1.6;
             margin: 0;
-            padding: 20px;
+            padding: 12px;
             background-color: #f9f9f9;
         }
         .container {
             max-width: 800px;
             margin: 0 auto;
             background: white;
-            padding: 30px;
+            padding: 20px;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* 📱 移动端优化 */
+        @media (max-width: 768px) {
+            body {
+                padding: 8px;
+            }
+            .container {
+                padding: 16px;
+                border-radius: 8px;
+            }
         }
         .header {
             text-align: center;
@@ -49,20 +60,49 @@
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
+            overflow-x: auto;
+            display: block;
+            white-space: nowrap;
         }
         th, td {
             border: 1px solid #ddd;
             padding: 12px;
             text-align: left;
             vertical-align: top;
+            min-width: 100px;
         }
         th {
             background-color: #f8f9fa;
             font-weight: bold;
             color: #333;
         }
+        .form-table {
+            display: table;
+            width: 100%;
+        }
         .form-table td {
             height: 40px;
+        }
+
+        /* 📱 移动端表格优化 */
+        @media (max-width: 768px) {
+            table {
+                font-size: 14px;
+            }
+            th, td {
+                padding: 8px;
+                min-width: 80px;
+            }
+            .form-table td {
+                height: 35px;
+            }
+            /* 表格横向滚动 */
+            .table-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                margin: 0 -16px;
+                padding: 0 16px;
+            }
         }
         .instructions {
             background-color: #f0f8ff;
@@ -95,9 +135,23 @@
         .checkbox-item {
             display: flex;
             align-items: center;
+            padding: 4px 0;
+            font-size: 14px;
         }
         .checkbox-item input[type="checkbox"] {
             margin-right: 8px;
+        }
+
+        /* 📱 移动端复选框优化 */
+        @media (max-width: 768px) {
+            .checkbox-list {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .checkbox-item {
+                font-size: 13px;
+                padding: 6px 0;
+            }
         }
         .pain-scale {
             display: flex;
@@ -107,10 +161,12 @@
             padding: 10px;
             background-color: #f8f9fa;
             border-radius: 5px;
+            overflow-x: auto;
         }
         .scale-item {
             text-align: center;
             flex: 1;
+            min-width: 80px;
         }
         .scale-number {
             font-weight: bold;
@@ -121,6 +177,24 @@
             font-size: 12px;
             color: #666;
             margin-top: 5px;
+            line-height: 1.3;
+        }
+
+        /* 📱 移动端疼痛评分优化 */
+        @media (max-width: 768px) {
+            .pain-scale {
+                padding: 8px;
+                flex-wrap: nowrap;
+            }
+            .scale-item {
+                min-width: 60px;
+            }
+            .scale-number {
+                font-size: 16px;
+            }
+            .scale-desc {
+                font-size: 10px;
+            }
         }
     </style>
 </head>
@@ -170,7 +244,8 @@
 
         <div class="section">
             <h2>症状追踪记录表</h2>
-            <table class="form-table">
+            <div class="table-container">
+                <table class="form-table">
                 <thead>
                     <tr>
                         <th style="width: 12%;">日期与时间</th>
@@ -205,7 +280,8 @@
                     <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
                     <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
                 </tbody>
-            </table>
+                </table>
+            </div>
         </div>
 
         <div class="section">
