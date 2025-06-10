@@ -36,7 +36,7 @@
 ### 本地开发
 ```bash
 # 克隆项目
-git clone https://github.com/haha321-hash/periodhub-health.git
+git clone https://github.com/haha321-haha/Period-Hub-Platform.git
 cd periodhub-health
 
 # 安装依赖
@@ -101,9 +101,12 @@ periodhub-health/
 ## 🎨 设计系统
 
 ### 颜色主题
-- **主色调**: Pink/Purple 渐变
-- **辅助色**: Blue, Green, Gray
-- **语义色**: Success, Warning, Error
+- **主色调**: Pink/Purple 渐变 - 用于品牌标识和主要按钮
+- **辅助色**: Blue, Green, Gray - 用于次要元素和背景
+- **语义色**:
+  - **Success (成功)**: 绿色 - 表示操作成功、健康状态良好
+  - **Warning (警告)**: 黄色/橙色 - 表示需要注意的信息、轻度症状
+  - **Error (错误)**: 红色 - 表示错误信息、严重症状或紧急情况
 
 ### 响应式设计
 - 移动优先设计
@@ -161,7 +164,7 @@ periodhub-health/
 ## 📞 联系方式
 
 - **GitHub**: [@haha321-haha](https://github.com/haha321-haha)
-- **项目地址**: [https://github.com/haha321-haha/Period-Hub-Platform]
+- **项目地址**: [https://github.com/haha321-haha/Period-Hub-Platform](https://github.com/haha321-haha/Period-Hub-Platform)
 
 ## 🙏 致谢
 
