@@ -743,9 +743,9 @@ export default function NaturalTherapiesPage({
                           <div className="grid md:grid-cols-2 gap-4">
                             {therapy.details.methods.map((method, index) => (
                               <div key={index} className={`p-4 ${getMethodCardClasses(therapy.color)} border rounded-lg`}>
-                                <h7 className={`font-medium ${getMethodTextClasses(therapy.color)} mb-2 block`}>
+                                <h6 className={`font-medium ${getMethodTextClasses(therapy.color)} mb-2 block`}>
                                   {method.name}
-                                </h7>
+                                </h6>
                                 <p className={`text-sm ${getMethodDescClasses(therapy.color)}`}>
                                   {method.description}
                                 </p>

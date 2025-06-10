@@ -124,11 +124,11 @@ export default async function HomePage({
                 <SearchBox
                   articles={articles}
                   locale={locale}
-                  placeholder={homePageT('searchPlaceholder', locale === 'en' ? '🔍 Quick search for pain relief solutions...' : '🔍 快速搜索痛经解决方案...')}
+                  placeholder={locale === 'en' ? '🔍 Quick search for pain relief solutions...' : '🔍 快速搜索痛经解决方案...'}
                   className="w-full"
                 />
                 <p className="text-xs sm:text-sm text-white/70 mt-2 text-center md:text-left leading-relaxed">
-                  {homePageT('searchTips', locale === 'en' ? '💡 Try searching "5-minute relief", "heat therapy", "prostaglandins"' : '💡 试试搜索"5分钟缓解"、"热敷"、"前列腺素"')}
+                  {locale === 'en' ? '💡 Try searching "5-minute relief", "heat therapy", "prostaglandins"' : '💡 试试搜索"5分钟缓解"、"热敷"、"前列腺素"'}
                 </p>
               </div>
 
@@ -174,10 +174,10 @@ export default async function HomePage({
         <div className="container-custom">
           <div className="text-center mb-8 md:mb-12">
             <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 md:mb-4 text-neutral-800">
-              {homePageT('statistics.title', locale === 'en' ? 'Data-Driven Results' : '数据说话，效果可见')}
+              {locale === 'en' ? 'Data-Driven Results' : '数据说话，效果可见'}
             </h2>
             <p className="text-neutral-600 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed px-4">
-              {homePageT('statistics.description', locale === 'en' ? 'Statistics based on real user feedback and scientific research' : '基于真实用户反馈和科学研究的数据统计')}
+              {locale === 'en' ? 'Statistics based on real user feedback and scientific research' : '基于真实用户反馈和科学研究的数据统计'}
             </p>
           </div>
 
@@ -186,27 +186,27 @@ export default async function HomePage({
             <div className="text-center animate-slide-up bg-white/80 backdrop-blur-sm rounded-lg p-3 sm:p-4 md:p-6 shadow-lg mobile-touch-target">
               <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-1 md:mb-2 text-primary-600">92%</div>
               <p className="text-neutral-600 text-xs sm:text-sm md:text-base leading-tight">
-                {homePageT('statistics.improvement', locale === 'en' ? 'Users Report Improvement' : '用户症状改善')}
+                {locale === 'en' ? 'Users Report Improvement' : '用户症状改善'}
               </p>
             </div>
             <div className="text-center animate-slide-up bg-white/80 backdrop-blur-sm rounded-lg p-3 sm:p-4 md:p-6 shadow-lg mobile-touch-target" style={{animationDelay: '0.1s'}}>
               <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-1 md:mb-2 text-primary-600">
-                {homePageT('statistics.users', locale === 'en' ? '100K+' : '10万+')}
+                {locale === 'en' ? '100K+' : '10万+'}
               </div>
               <p className="text-neutral-600 text-xs sm:text-sm md:text-base leading-tight">
-                {homePageT('statistics.totalUsers', locale === 'en' ? 'Total Users' : '累计用户')}
+                {locale === 'en' ? 'Total Users' : '累计用户'}
               </p>
             </div>
             <div className="text-center animate-slide-up bg-white/80 backdrop-blur-sm rounded-lg p-3 sm:p-4 md:p-6 shadow-lg mobile-touch-target" style={{animationDelay: '0.2s'}}>
               <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-1 md:mb-2 text-primary-600">24/7</div>
               <p className="text-neutral-600 text-xs sm:text-sm md:text-base leading-tight">
-                {homePageT('statistics.support', locale === 'en' ? 'Online Support' : '在线支持')}
+                {locale === 'en' ? 'Online Support' : '在线支持'}
               </p>
             </div>
             <div className="text-center animate-slide-up bg-white/80 backdrop-blur-sm rounded-lg p-3 sm:p-4 md:p-6 shadow-lg mobile-touch-target" style={{animationDelay: '0.3s'}}>
               <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-1 md:mb-2 text-primary-600">100+</div>
               <p className="text-neutral-600 text-xs sm:text-sm md:text-base leading-tight">
-                {homePageT('statistics.articles', locale === 'en' ? 'Expert Articles' : '专业文章')}
+                {locale === 'en' ? 'Expert Articles' : '专业文章'}
               </p>
             </div>
           </div>
@@ -284,10 +284,10 @@ export default async function HomePage({
                 </svg>
               </div>
               <h3 className="text-xl font-semibold text-neutral-800 mb-2">
-                {homePageT('healthGuide.title', locale === 'en' ? 'Health Guide' : '痛经健康指南')}
+                {locale === 'en' ? 'Health Guide' : '痛经健康指南'}
               </h3>
               <p className="text-neutral-600 mb-4 flex-grow">
-                {homePageT('healthGuide.description', locale === 'en' ? 'Comprehensive menstrual health knowledge system, from basic understanding to advanced management strategies.' : '全面的痛经健康知识体系，从基础理解到高级管理策略，助您掌握经期健康。')}
+                {locale === 'en' ? 'Comprehensive menstrual health knowledge system, from basic understanding to advanced management strategies.' : '全面的痛经健康知识体系，从基础理解到高级管理策略，助您掌握经期健康。'}
               </p>
               <Link href={`/${locale}/health-guide`} className="text-primary-600 hover:text-primary-700 font-medium inline-flex items-center">
                 {commonT('learnMore')}
@@ -305,10 +305,10 @@ export default async function HomePage({
         <div className="container-custom">
           <div className="text-center mb-10">
             <h2 className="text-2xl md:text-3xl font-bold text-neutral-800 mb-4">
-              {homePageT('smartTools.title', locale === 'en' ? 'Smart Health Tools' : '智能健康工具')}
+              {locale === 'en' ? 'Smart Health Tools' : '智能健康工具'}
             </h2>
             <p className="text-neutral-600 max-w-2xl mx-auto">
-              {homePageT('smartTools.description', locale === 'en' ? 'Professional assessment and tracking tools to help you better understand and manage your menstrual health' : '专业的评估和追踪工具，帮助您更好地了解和管理经期健康')}
+              {locale === 'en' ? 'Professional assessment and tracking tools to help you better understand and manage your menstrual health' : '专业的评估和追踪工具，帮助您更好地了解和管理经期健康'}
             </p>
           </div>
 
@@ -529,7 +529,7 @@ export default async function HomePage({
       <div className="container-custom">
         <div className="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 my-8" role="alert">
           <p className="font-bold">
-            {homePageT('medicalDisclaimer', locale === 'en' ? 'Medical Disclaimer' : '医疗免责声明')}
+            {locale === 'en' ? 'Medical Disclaimer' : '医疗免责声明'}
           </p>
           <p className="text-sm">
             {commonT('medicalDisclaimer')}
