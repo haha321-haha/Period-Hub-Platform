@@ -15,10 +15,16 @@ interface PainTrackerToolProps {
 
 type ActiveTab = 'overview' | 'add' | 'entries' | 'statistics' | 'export';
 
+interface EditingEntry {
+  id: string;
+  data: any;
+}
+
 export default function PainTrackerTool({ locale }: PainTrackerToolProps) {
   const t = useTranslations('painTracker');
   const [activeTab, setActiveTab] = useState<ActiveTab>('overview');
   const [isFormLoading, setIsFormLoading] = useState(false);
+  const [editingEntry, setEditingEntry] = useState<EditingEntry | null>(null);
   
   const {
     entries,
@@ -26,6 +32,8 @@ export default function PainTrackerTool({ locale }: PainTrackerToolProps) {
     isLoading,
     error,
     addEntry,
+    updateEntry,
+    deleteEntry,
     setError
   } = usePainTracker();
 
@@ -59,6 +67,68 @@ export default function PainTrackerTool({ locale }: PainTrackerToolProps) {
     } finally {
       setIsFormLoading(false);
     }
+  };
+
+  const handleEditEntry = async (data: any) => {
+    if (!editingEntry) return { success: false };
+
+    setIsFormLoading(true);
+    try {
+      const result = await updateEntry(editingEntry.id, data);
+      if (result.success) {
+        addSuccessNotification(
+          t('messages.updateSuccess'),
+          t('form.save')
+        );
+        setEditingEntry(null);
+        setActiveTab('entries');
+        return { success: true };
+      } else {
+        return result;
+      }
+    } catch (error) {
+      addErrorNotification(
+        t('messages.updateError'),
+        t('messages.validationError')
+      );
+      return { success: false };
+    } finally {
+      setIsFormLoading(false);
+    }
+  };
+
+  const handleDeleteEntry = async (id: string) => {
+    if (window.confirm(t('messages.confirmDelete'))) {
+      try {
+        const success = await deleteEntry(id);
+        if (success) {
+          addSuccessNotification(
+            t('messages.deleteSuccess'),
+            t('entries.delete')
+          );
+        } else {
+          addErrorNotification(
+            t('messages.deleteError'),
+            t('messages.validationError')
+          );
+        }
+      } catch (error) {
+        addErrorNotification(
+          t('messages.deleteError'),
+          t('messages.validationError')
+        );
+      }
+    }
+  };
+
+  const startEditEntry = (entry: any) => {
+    setEditingEntry({ id: entry.id, data: entry });
+    setActiveTab('add');
+  };
+
+  const cancelEdit = () => {
+    setEditingEntry(null);
+    setActiveTab('entries');
   };
 
   const tabs = [
@@ -159,13 +229,14 @@ export default function PainTrackerTool({ locale }: PainTrackerToolProps) {
           {activeTab === 'add' && (
             <div className="bg-white rounded-xl shadow-lg p-8">
               <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-                {t('form.title')}
+                {editingEntry ? t('form.editTitle') : t('form.title')}
               </h2>
               <PainEntryForm
-                onSubmit={handleAddEntry}
-                onCancel={() => setActiveTab('overview')}
+                onSubmit={editingEntry ? handleEditEntry : handleAddEntry}
+                onCancel={editingEntry ? cancelEdit : () => setActiveTab('overview')}
                 isLoading={isFormLoading}
                 locale={locale}
+                initialData={editingEntry?.data}
               />
             </div>
           )}
@@ -213,10 +284,16 @@ export default function PainTrackerTool({ locale }: PainTrackerToolProps) {
                           )}
                         </div>
                         <div className="flex space-x-2">
-                          <button className="text-blue-600 hover:text-blue-800 text-sm">
+                          <button
+                            onClick={() => startEditEntry(entry)}
+                            className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors"
+                          >
                             {t('entries.edit')}
                           </button>
-                          <button className="text-red-600 hover:text-red-800 text-sm">
+                          <button
+                            onClick={() => handleDeleteEntry(entry.id)}
+                            className="text-red-600 hover:text-red-800 text-sm font-medium transition-colors"
+                          >
                             {t('entries.delete')}
                           </button>
                         </div>

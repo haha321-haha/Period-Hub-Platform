@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { locales } from '@/lib/i18n';
+import { locales } from '@/i18n';
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -104,7 +104,7 @@ export default async function LocaleLayout({
   }
 
   // Get messages for the requested locale
-  const messages = await getMessages({ locale });
+  const messages = await getMessages();
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>

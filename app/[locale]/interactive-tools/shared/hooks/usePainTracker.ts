@@ -100,17 +100,22 @@ export const usePainTracker = (userId?: string): UsePainTrackerReturn => {
         return { success: false, errors: validationErrors };
       }
 
-      // Check for duplicate dates
+      // Check for duplicate dates - 允许用户选择是否覆盖
       const existingEntry = entries.find(entry => entry.date === data.date);
       if (existingEntry) {
-        return { 
-          success: false, 
-          errors: [{ 
-            field: 'date', 
-            message: 'An entry for this date already exists', 
-            code: 'DUPLICATE_DATE' 
-          }] 
-        };
+        // 如果用户明确表示要覆盖，则删除旧记录
+        if ((data as any).overwrite === true) {
+          setEntries(prev => prev.filter(entry => entry.date !== data.date));
+        } else {
+          return {
+            success: false,
+            errors: [{
+              field: 'date',
+              message: 'An entry for this date already exists. Do you want to overwrite it?',
+              code: 'DUPLICATE_DATE'
+            }]
+          };
+        }
       }
 
       // Create new entry

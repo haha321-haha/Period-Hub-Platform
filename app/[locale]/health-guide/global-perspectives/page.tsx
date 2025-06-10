@@ -2,7 +2,7 @@ import { useTranslations } from 'next-intl';
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Locale, locales } from '@/lib/i18n';
+import { Locale, locales } from '@/i18n';
 
 // Generate metadata for the page
 export async function generateMetadata({

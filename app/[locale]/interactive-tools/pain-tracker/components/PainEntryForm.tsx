@@ -46,6 +46,7 @@ const PainEntryForm: React.FC<PainEntryFormProps> = ({
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [showOverwriteConfirm, setShowOverwriteConfirm] = useState(false);
   const [touched, setTouched] = useState<Record<string, boolean>>({});
 
   // Get localized options
@@ -85,6 +86,8 @@ const PainEntryForm: React.FC<PainEntryFormProps> = ({
     } else {
       const selectedDate = new Date(formData.date);
       const today = new Date();
+      // 设置今天的时间为23:59:59，允许选择今天
+      today.setHours(23, 59, 59, 999);
       if (selectedDate > today) {
         newErrors.date = errorMessages.futureDate;
       }
@@ -114,26 +117,57 @@ const PainEntryForm: React.FC<PainEntryFormProps> = ({
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent, overwrite = false) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
     try {
-      const result = await onSubmit(formData);
-      if (!result.success && result.errors) {
+      const submitData = overwrite ? { ...formData, overwrite: true } : formData;
+      const result = await onSubmit(submitData);
+
+      if (result.success) {
+        // Reset form on success
+        setFormData({
+          date: formatDateShort(new Date()),
+          painLevel: 1,
+          duration: undefined,
+          location: [],
+          menstrualStatus: 'other',
+          symptoms: [],
+          remedies: [],
+          effectiveness: undefined,
+          notes: ''
+        });
+        setErrors({});
+        setShowOverwriteConfirm(false);
+      } else if (result.errors) {
         const errorMap: Record<string, string> = {};
         result.errors.forEach(error => {
           errorMap[error.field] = error.message;
         });
         setErrors(errorMap);
+
+        // 如果是重复日期错误，显示覆盖确认
+        if (result.errors[0]?.code === 'DUPLICATE_DATE') {
+          setShowOverwriteConfirm(true);
+        }
       }
     } catch (error) {
       console.error('Form submission error:', error);
       setErrors({ general: errorMessages.storageError });
     }
+  };
+
+  const handleOverwriteConfirm = (e: React.FormEvent) => {
+    handleSubmit(e, true);
+  };
+
+  const handleOverwriteCancel = () => {
+    setShowOverwriteConfirm(false);
+    setErrors({});
   };
 
   const currentPainLevel = painLevels.find(level => level.value === formData.painLevel);
@@ -158,6 +192,46 @@ const PainEntryForm: React.FC<PainEntryFormProps> = ({
         {errors.date && (
           <p className="mt-1 text-sm text-red-600">{errors.date}</p>
         )}
+
+        {/* 覆盖确认对话框 */}
+        {showOverwriteConfirm && (
+          <div className="mt-3 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <div className="flex items-start">
+              <div className="flex-shrink-0">
+                <svg className="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div className="ml-3 flex-1">
+                <h3 className="text-sm font-medium text-yellow-800">
+                  {locale === 'zh' ? '该日期已有记录' : 'Entry exists for this date'}
+                </h3>
+                <p className="mt-1 text-sm text-yellow-700">
+                  {locale === 'zh'
+                    ? '该日期已经有疼痛记录了。您想要覆盖现有记录吗？'
+                    : 'There is already a pain entry for this date. Do you want to overwrite the existing entry?'
+                  }
+                </p>
+                <div className="mt-3 flex space-x-3">
+                  <button
+                    type="button"
+                    onClick={handleOverwriteConfirm}
+                    className="bg-yellow-600 text-white px-3 py-1 rounded text-sm hover:bg-yellow-700 transition-colors"
+                  >
+                    {locale === 'zh' ? '覆盖' : 'Overwrite'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleOverwriteCancel}
+                    className="bg-gray-300 text-gray-700 px-3 py-1 rounded text-sm hover:bg-gray-400 transition-colors"
+                  >
+                    {locale === 'zh' ? '取消' : 'Cancel'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Pain Level Slider */}
@@ -166,24 +240,34 @@ const PainEntryForm: React.FC<PainEntryFormProps> = ({
           <Activity className="w-4 h-4 mr-2" />
           {t('form.painLevel')} ({formData.painLevel}/10)
         </label>
-        <div className="space-y-2">
+        <div className="space-y-4 pain-scale-container">
           <input
             type="range"
             min="1"
             max="10"
             value={formData.painLevel}
             onChange={(e) => handleInputChange('painLevel', parseInt(e.target.value))}
-            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-            style={{
-              background: `linear-gradient(to right, ${getPainLevelColor(1)} 0%, ${getPainLevelColor(formData.painLevel)} ${(formData.painLevel - 1) * 11.11}%, #e5e7eb ${(formData.painLevel - 1) * 11.11}%)`
-            }}
+            className="w-full pain-scale cursor-pointer"
           />
+          <div className="flex justify-between text-sm text-neutral-600 mt-2">
+            <span className="text-xs sm:text-sm">1</span>
+            <span className="text-xs sm:text-sm">3</span>
+            <span className="text-xs sm:text-sm">5</span>
+            <span className="text-xs sm:text-sm">7</span>
+            <span className="text-xs sm:text-sm">10</span>
+          </div>
           {currentPainLevel && (
             <div className="text-center">
-              <span className="text-sm font-medium" style={{ color: getPainLevelColor(formData.painLevel) }}>
-                {currentPainLevel.label}
-              </span>
-              <p className="text-xs text-gray-500">{currentPainLevel.description}</p>
+              <div className="inline-flex items-center bg-gradient-to-r from-pink-100 via-pink-50 to-purple-100 px-6 py-3 rounded-xl shadow-lg border border-pink-200">
+                <span className="text-lg font-bold text-pink-800">
+                  疼痛程度：
+                  <span className="text-2xl font-extrabold text-pink-600 mx-2">{formData.painLevel}</span>
+                  <span className="text-base font-medium text-pink-700">
+                    ({currentPainLevel.label})
+                  </span>
+                </span>
+              </div>
+              <p className="text-sm text-gray-600 mt-2">{currentPainLevel.description}</p>
             </div>
           )}
         </div>
@@ -264,22 +348,22 @@ const PainEntryForm: React.FC<PainEntryFormProps> = ({
         </div>
       </div>
 
-      {/* Symptoms */}
+      {/* Symptoms - 移动端优化 */}
       <div>
         <label className="flex items-center text-sm font-medium text-gray-700 mb-3">
           <Activity className="w-4 h-4 mr-2" />
           {t('form.symptoms')} ({t('form.optional')})
         </label>
-        <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto">
           {symptoms.map((symptom) => (
             <button
               key={symptom.value}
               type="button"
               onClick={() => handleMultiSelect('symptoms', symptom.value)}
-              className={`p-2 text-left border rounded-lg transition-colors text-sm ${
+              className={`p-3 sm:p-2 text-left border rounded-lg transition-colors text-sm mobile-touch-target ${
                 formData.symptoms.includes(symptom.value)
                   ? 'border-pink-500 bg-pink-50 text-pink-700'
-                  : 'border-gray-300 hover:border-gray-400'
+                  : 'border-gray-300 hover:border-gray-400 active:bg-gray-50'
               }`}
             >
               <span className="text-base mr-2">{symptom.icon}</span>
@@ -289,22 +373,22 @@ const PainEntryForm: React.FC<PainEntryFormProps> = ({
         </div>
       </div>
 
-      {/* Remedies */}
+      {/* Remedies - 移动端优化 */}
       <div>
         <label className="flex items-center text-sm font-medium text-gray-700 mb-3">
           <Heart className="w-4 h-4 mr-2" />
           {t('form.remedies')} ({t('form.optional')})
         </label>
-        <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto">
           {remedies.map((remedy) => (
             <button
               key={remedy.value}
               type="button"
               onClick={() => handleMultiSelect('remedies', remedy.value)}
-              className={`p-2 text-left border rounded-lg transition-colors text-sm ${
+              className={`p-3 sm:p-2 text-left border rounded-lg transition-colors text-sm mobile-touch-target ${
                 formData.remedies.includes(remedy.value)
                   ? 'border-pink-500 bg-pink-50 text-pink-700'
-                  : 'border-gray-300 hover:border-gray-400'
+                  : 'border-gray-300 hover:border-gray-400 active:bg-gray-50'
               }`}
             >
               <span className="text-base mr-2">{remedy.icon}</span>
@@ -370,12 +454,12 @@ const PainEntryForm: React.FC<PainEntryFormProps> = ({
         </div>
       </div>
 
-      {/* Submit and Cancel Buttons */}
-      <div className="flex space-x-3 pt-4">
+      {/* Submit and Cancel Buttons - 移动端优化 */}
+      <div className="flex flex-col sm:flex-row gap-3 sm:space-x-3 pt-4">
         <button
           type="submit"
           disabled={isLoading}
-          className="flex-1 bg-gradient-to-r from-pink-600 to-purple-600 text-white py-3 px-4 rounded-lg font-medium hover:from-pink-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="flex-1 bg-gradient-to-r from-pink-600 to-purple-600 text-white py-3 px-4 rounded-lg font-medium hover:from-pink-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors mobile-touch-target order-1"
         >
           {isLoading ? (
             <div className="flex items-center justify-center">
@@ -391,7 +475,7 @@ const PainEntryForm: React.FC<PainEntryFormProps> = ({
           <button
             type="button"
             onClick={onCancel}
-            className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors"
+            className="w-full sm:w-auto px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors mobile-touch-target order-2"
           >
             {t('form.cancel')}
           </button>

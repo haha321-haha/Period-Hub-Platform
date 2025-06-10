@@ -8,7 +8,10 @@ import DownloadButton from '@/components/DownloadButton';
 import NavigationTabs from '@/components/NavigationTabs';
 import ImagePlaceholder from '@/components/ImagePlaceholder';
 import SearchBox from '@/components/SearchBox';
-import { Locale, locales } from '@/lib/i18n';
+
+import { Locale, locales } from '@/i18n';
+
+
 
 // PDF Resources Interface
 interface PDFResource {
@@ -16,154 +19,142 @@ interface PDFResource {
   titleKey: string;
   descriptionKey: string;
   filename: string;
-  category: 'emergency' | 'education' | 'health' | 'communication' | 'tools';
+  category: 'management-tools' | 'health-management' | 'communication-guidance';
   icon: React.ComponentType<any>;
   size: string;
   pages: number;
 }
 
 const pdfResources: PDFResource[] = [
-  // Health Management Tools - New Priority
+  // 🛠️ 管理工具类 (Management Tools)
   {
     id: 'pain-tracking-form',
     titleKey: 'resources.painTrackingForm.title',
     descriptionKey: 'resources.painTrackingForm.description',
-    filename: 'pain-tracking-form.pdf',
-    category: 'tools',
+    filename: 'pain-tracking-form.html',
+    category: 'management-tools',
     icon: ClipboardList,
-    size: '1.2 MB',
-    pages: 4
+    size: '移动端友好',
+    pages: 1
   },
   {
     id: 'menstrual-cycle-nutrition-plan',
     titleKey: 'resources.menstrualCycleNutritionPlan.title',
     descriptionKey: 'resources.menstrualCycleNutritionPlan.description',
-    filename: 'menstrual-cycle-nutrition-plan.pdf',
-    category: 'tools',
+    filename: 'menstrual-cycle-nutrition-plan.html',
+    category: 'management-tools',
     icon: Calendar,
-    size: '2.8 MB',
-    pages: 12
+    size: '移动端友好',
+    pages: 1
   },
   {
     id: 'natural-therapy-assessment',
     titleKey: 'resources.naturalTherapyAssessment.title',
     descriptionKey: 'resources.naturalTherapyAssessment.description',
-    filename: 'natural-therapy-assessment.pdf',
-    category: 'tools',
+    filename: 'natural-therapy-assessment.html',
+    category: 'management-tools',
     icon: BarChart3,
-    size: '1.8 MB',
-    pages: 8
-  },
-  // New Professional Articles with PDF Downloads
-  {
-    id: 'specific-menstrual-pain-management-guide',
-    titleKey: 'resources.specificPainManagement.title',
-    descriptionKey: 'resources.specificPainManagement.description',
-    filename: 'specific-menstrual-pain-management-guide.pdf',
-    category: 'health',
-    icon: Heart,
-    size: '4.2 MB',
-    pages: 35
-  },
-  {
-    id: 'menstrual-pain-complications-management',
-    titleKey: 'resources.painComplications.title',
-    descriptionKey: 'resources.painComplications.description',
-    filename: 'menstrual-pain-complications-management.pdf',
-    category: 'health',
-    icon: Heart,
-    size: '3.8 MB',
-    pages: 28
-  },
-  {
-    id: 'magnesium-gut-health-menstrual-pain-guide',
-    titleKey: 'resources.magnesiumGutHealth.title',
-    descriptionKey: 'resources.magnesiumGutHealth.description',
-    filename: 'magnesium-gut-health-menstrual-pain-guide.pdf',
-    category: 'health',
-    icon: Heart,
-    size: '4.5 MB',
-    pages: 32
-  },
-  // {
-  //   id: 'natural-physical-therapy-comprehensive-guide',
-  //   titleKey: 'resources.naturalTherapy.title',
-  //   descriptionKey: 'resources.naturalTherapy.description',
-  //   filename: 'natural-physical-therapy-comprehensive-guide.pdf',
-  //   category: 'health',
-  //   icon: Heart,
-  //   size: '4.5 MB',
-  //   pages: 32
-  // },
-  // Existing Resources
-  {
-    id: 'campus-emergency-checklist',
-    titleKey: 'resources.campusEmergency.title',
-    descriptionKey: 'resources.campusEmergency.description',
-    filename: 'campus-emergency-checklist.html',
-    category: 'emergency',
-    icon: CheckCircle,
-    size: '2.1 MB',
-    pages: 8
-  },
-  {
-    id: 'parent-communication-guide',
-    titleKey: 'resources.parentGuide.title',
-    descriptionKey: 'resources.parentGuide.description',
-    filename: 'parent-communication-guide.html',
-    category: 'communication',
-    icon: Users,
-    size: '1.8 MB',
-    pages: 12
-  },
-  {
-    id: 'teacher-health-manual',
-    titleKey: 'resources.teacherManual.title',
-    descriptionKey: 'resources.teacherManual.description',
-    filename: 'teacher-health-manual.html',
-    category: 'education',
-    icon: GraduationCap,
-    size: '3.2 MB',
-    pages: 16
+    size: '移动端友好',
+    pages: 1
   },
   {
     id: 'healthy-habits-checklist',
     titleKey: 'resources.healthyHabits.title',
     descriptionKey: 'resources.healthyHabits.description',
     filename: 'healthy-habits-checklist.html',
-    category: 'health',
+    category: 'management-tools',
+    icon: CheckCircle,
+    size: '移动端友好',
+    pages: 1
+  },
+  // 🏥 健康管理类 (Health Management)
+  {
+    id: 'specific-menstrual-pain-management-guide',
+    titleKey: 'resources.specificPainManagement.title',
+    descriptionKey: 'resources.specificPainManagement.description',
+    filename: 'specific-menstrual-pain-management-guide.html',
+    category: 'health-management',
     icon: Heart,
-    size: '1.5 MB',
-    pages: 6
+    size: '移动端友好',
+    pages: 1
+  },
+  {
+    id: 'menstrual-pain-complications-management',
+    titleKey: 'resources.painComplications.title',
+    descriptionKey: 'resources.painComplications.description',
+    filename: 'menstrual-pain-complications-management.html',
+    category: 'health-management',
+    icon: Heart,
+    size: '移动端友好',
+    pages: 1
+  },
+  {
+    id: 'magnesium-gut-health-menstrual-pain-guide',
+    titleKey: 'resources.magnesiumGutHealth.title',
+    descriptionKey: 'resources.magnesiumGutHealth.description',
+    filename: 'magnesium-gut-health-menstrual-pain-guide.html',
+    category: 'health-management',
+    icon: Heart,
+    size: '移动端友好',
+    pages: 1
   },
   {
     id: 'zhan-zhuang-baduanjin-guide',
     titleKey: 'resources.zhanZhuangBaduanjin.title',
     descriptionKey: 'resources.zhanZhuangBaduanjin.description',
     filename: 'zhan-zhuang-baduanjin-illustrated-guide.html',
-    category: 'health',
+    category: 'health-management',
     icon: Heart,
-    size: '2.8 MB',
-    pages: 14
+    size: '移动端友好',
+    pages: 1
+  },
+  // 💬 沟通指导类 (Communication Guidance)
+  {
+    id: 'campus-emergency-checklist',
+    titleKey: 'resources.campusEmergency.title',
+    descriptionKey: 'resources.campusEmergency.description',
+    filename: 'campus-emergency-checklist.html',
+    category: 'communication-guidance',
+    icon: CheckCircle,
+    size: '移动端友好',
+    pages: 1
+  },
+  {
+    id: 'parent-communication-guide',
+    titleKey: 'resources.parentGuide.title',
+    descriptionKey: 'resources.parentGuide.description',
+    filename: 'parent-communication-guide.html',
+    category: 'communication-guidance',
+    icon: Users,
+    size: '移动端友好',
+    pages: 1
+  },
+  {
+    id: 'teacher-health-manual',
+    titleKey: 'resources.teacherManual.title',
+    descriptionKey: 'resources.teacherManual.description',
+    filename: 'teacher-health-manual.html',
+    category: 'communication-guidance',
+    icon: GraduationCap,
+    size: '移动端友好',
+    pages: 1
   },
   {
     id: 'teacher-collaboration-handbook',
     titleKey: 'resources.teacherCollaborationHandbook.title',
     descriptionKey: 'resources.teacherCollaborationHandbook.description',
     filename: 'teacher-collaboration-handbook.html',
-    category: 'education',
+    category: 'communication-guidance',
     icon: GraduationCap,
-    size: '3.5 MB',
-    pages: 18
+    size: '移动端友好',
+    pages: 1
   }
 ];
 
 const categoryColors = {
-  emergency: 'bg-red-50 border-red-200 text-red-800',
-  education: 'bg-blue-50 border-blue-200 text-blue-800',
-  health: 'bg-green-50 border-green-200 text-green-800',
-  communication: 'bg-purple-50 border-purple-200 text-purple-800',
-  tools: 'bg-orange-50 border-orange-200 text-orange-800'
+  'management-tools': 'bg-blue-50 border-blue-200 text-blue-800',
+  'health-management': 'bg-green-50 border-green-200 text-green-800',
+  'communication-guidance': 'bg-orange-50 border-orange-200 text-orange-800'
 };
 
 // Generate metadata for the page
@@ -249,11 +240,11 @@ export default function ArticlesPage({
   return (
     <div className="space-y-12">
       {/* Page Header */}
-      <header className="text-center">
-        <h1 className="text-3xl md:text-4xl font-bold text-primary-700 mb-4">
+      <header className="text-center px-4 sm:px-0">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary-700 mb-4 leading-tight">
           {locale === 'zh' ? '文章PDF下载中心' : 'Articles & Downloads Center'}
         </h1>
-        <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
+        <p className="text-base sm:text-lg text-neutral-600 max-w-3xl mx-auto leading-relaxed">
           {locale === 'zh'
             ? '浏览专业的痛经健康文章，下载实用的PDF资源指南，获取全面的经期健康支持。'
             : 'Browse professional menstrual health articles, download practical PDF resource guides, and get comprehensive period health support.'
@@ -309,16 +300,16 @@ export default function ArticlesPage({
           </div>
 
           {/* 即时缓解类 */}
-          <div className="bg-gradient-to-r from-red-50 to-pink-50 rounded-xl p-6">
+          <div className="bg-gradient-to-r from-red-50 to-pink-50 rounded-xl p-4 sm:p-6">
             <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4 text-2xl">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-red-100 rounded-full flex items-center justify-center mr-3 sm:mr-4 text-xl sm:text-2xl">
                 🚨
               </div>
               <div>
-                <h4 className="text-lg font-bold text-red-800">
+                <h4 className="text-base sm:text-lg font-bold text-red-800">
                   {locale === 'zh' ? '即时缓解类' : 'Immediate Relief'}
                 </h4>
-                <p className="text-sm text-red-600">
+                <p className="text-xs sm:text-sm text-red-600">
                   {locale === 'zh'
                     ? `${getArticleCount(articleCategories.immediate)}篇文章 • 紧急止痛与快速缓解`
                     : `${getArticleCount(articleCategories.immediate)} Articles • Emergency Pain Relief & Quick Solutions`
@@ -326,28 +317,28 @@ export default function ArticlesPage({
                 </p>
               </div>
             </div>
-            <div className="grid md:grid-cols-3 gap-4">
-              <Link href={`/${locale}/articles/5-minute-period-pain-relief`} className="bg-white rounded-lg p-4 hover:shadow-md transition-shadow">
-                <h5 className="font-semibold text-red-700 mb-2">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+              <Link href={`/${locale}/articles/5-minute-period-pain-relief`} className="bg-white rounded-lg p-3 sm:p-4 hover:shadow-md transition-shadow mobile-touch-target">
+                <h5 className="font-semibold text-red-700 mb-2 text-sm sm:text-base">
                   {locale === 'zh' ? '5分钟快速缓解' : '5-Minute Quick Relief'}
                 </h5>
-                <p className="text-sm text-gray-600">
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                   {locale === 'zh' ? '突发痛经的即时缓解技巧' : 'Immediate relief techniques for sudden menstrual pain'}
                 </p>
               </Link>
-              <Link href={`/${locale}/articles/heat-therapy-complete-guide`} className="bg-white rounded-lg p-4 hover:shadow-md transition-shadow">
-                <h5 className="font-semibold text-red-700 mb-2">
+              <Link href={`/${locale}/articles/heat-therapy-complete-guide`} className="bg-white rounded-lg p-3 sm:p-4 hover:shadow-md transition-shadow mobile-touch-target">
+                <h5 className="font-semibold text-red-700 mb-2 text-sm sm:text-base">
                   {locale === 'zh' ? '热敷疗法指南' : 'Heat Therapy Guide'}
                 </h5>
-                <p className="text-sm text-gray-600">
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                   {locale === 'zh' ? '专业物理缓解方法' : 'Professional physical relief methods'}
                 </p>
               </Link>
-              <Link href={`/${locale}/articles/hidden-culprits-of-menstrual-pain`} className="bg-white rounded-lg p-4 hover:shadow-md transition-shadow">
-                <h5 className="font-semibold text-red-700 mb-2">
+              <Link href={`/${locale}/articles/hidden-culprits-of-menstrual-pain`} className="bg-white rounded-lg p-3 sm:p-4 hover:shadow-md transition-shadow mobile-touch-target sm:col-span-2 lg:col-span-1">
+                <h5 className="font-semibold text-red-700 mb-2 text-sm sm:text-base">
                   {locale === 'zh' ? '痛经隐藏元凶' : 'Hidden Culprits of Pain'}
                 </h5>
-                <p className="text-sm text-gray-600">
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                   {locale === 'zh' ? '快速识别疼痛根源' : 'Quickly identify pain sources'}
                 </p>
               </Link>
@@ -355,16 +346,16 @@ export default function ArticlesPage({
           </div>
 
           {/* 自然疗法类 */}
-          <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6">
+          <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 sm:p-6">
             <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4 text-2xl">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-full flex items-center justify-center mr-3 sm:mr-4 text-xl sm:text-2xl">
                 🌿
               </div>
               <div>
-                <h4 className="text-lg font-bold text-green-800">
+                <h4 className="text-base sm:text-lg font-bold text-green-800">
                   {locale === 'zh' ? '自然疗法类' : 'Natural Therapies'}
                 </h4>
-                <p className="text-sm text-green-600">
+                <p className="text-xs sm:text-sm text-green-600">
                   {locale === 'zh'
                     ? `${getArticleCount(articleCategories.natural)}篇文章 • 传统智慧与现代验证`
                     : `${getArticleCount(articleCategories.natural)} Articles • Traditional Wisdom & Modern Validation`
@@ -372,7 +363,7 @@ export default function ArticlesPage({
                 </p>
               </div>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               <Link href={`/${locale}/articles/natural-physical-therapy-comprehensive-guide`} className="bg-white rounded-lg p-4 hover:shadow-md transition-shadow">
                 <h5 className="font-semibold text-green-700 mb-2">
                   {locale === 'zh' ? '自然疗法综合指南' : 'Natural Therapy Guide'}
@@ -803,16 +794,18 @@ export default function ArticlesPage({
         </div>
       </section>
 
+
+
       {/* PDF Downloads Section */}
-      <section id="downloads-section" className="space-y-8">
+      <section id="downloads-section" className="space-y-12">
         <div className="text-center">
           <h2 className="text-2xl md:text-3xl font-bold text-neutral-800 mb-4">
-            {locale === 'zh' ? 'PDF资源下载' : 'PDF Resource Downloads'}
+            {locale === 'zh' ? '📋 健康管理资源下载' : '📋 Health Management Resources'}
           </h2>
           <p className="text-neutral-600 max-w-2xl mx-auto">
             {locale === 'zh'
-              ? '下载实用的PDF指南和清单，包括应急处理、沟通指导和健康管理等资源。'
-              : 'Download practical PDF guides and checklists, including emergency care, communication guidance, and health management resources.'
+              ? '专业的健康管理工具和指导资源，按类别分类，支持移动端友好的HTML格式，一键查看下载。'
+              : 'Professional health management tools and guidance resources, categorized by type, supporting mobile-friendly HTML format for easy viewing and downloading.'
             }
           </p>
         </div>
@@ -842,107 +835,211 @@ export default function ArticlesPage({
           </div>
         </div>
 
-        {/* PDF Resources Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {pdfResources.map((resource) => {
-            const IconComponent = resource.icon;
-            return (
-              <div key={resource.id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
-                <div className="p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${categoryColors[resource.category]}`}>
-                      <IconComponent className="w-4 h-4 mr-2" />
+        {/* 🛠️ 管理工具类 */}
+        <div className="space-y-6">
+          <div className="flex items-center mb-6">
+            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4 text-2xl">
+              🛠️
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-blue-800">
+                {locale === 'zh' ? '管理工具类' : 'Management Tools'}
+              </h3>
+              <p className="text-sm text-blue-600">
+                {locale === 'zh' ? '日常健康管理和症状追踪工具' : 'Daily health management and symptom tracking tools'}
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {pdfResources.filter(resource => resource.category === 'management-tools').map((resource) => {
+              const IconComponent = resource.icon;
+              return (
+                <div key={resource.id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border-2 border-blue-100 hover:border-blue-200">
+                  <div className="p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${categoryColors[resource.category]}`}>
+                        <span className="mr-2">🛠️</span>
+                        {locale === 'zh' ? '管理工具' : 'Management Tools'}
+                      </div>
+                    </div>
+
+                    <h3 className="text-lg font-semibold text-neutral-900 mb-3">
                       {locale === 'zh' ?
-                        (resource.category === 'emergency' ? '应急处理' :
-                         resource.category === 'education' ? '教育指导' :
-                         resource.category === 'health' ? '健康管理' :
-                         resource.category === 'communication' ? '沟通指导' :
-                         resource.category === 'tools' ? '管理工具' : resource.category) :
-                        (resource.category === 'emergency' ? 'Emergency' :
-                         resource.category === 'education' ? 'Education' :
-                         resource.category === 'health' ? 'Health' :
-                         resource.category === 'communication' ? 'Communication' :
-                         resource.category === 'tools' ? 'Management Tools' : resource.category)
+                        (resource.id === 'pain-tracking-form' ? '痛经症状追踪表' :
+                         resource.id === 'menstrual-cycle-nutrition-plan' ? '月经周期营养计划' :
+                         resource.id === 'natural-therapy-assessment' ? '自然疗法效果评估表' :
+                         resource.id === 'healthy-habits-checklist' ? '健康习惯养成清单' : resource.titleKey) :
+                        (resource.id === 'pain-tracking-form' ? 'Pain Tracking Form' :
+                         resource.id === 'menstrual-cycle-nutrition-plan' ? 'Cycle Nutrition Plan' :
+                         resource.id === 'natural-therapy-assessment' ? 'Natural Therapy Assessment' :
+                         resource.id === 'healthy-habits-checklist' ? 'Healthy Habits Checklist' : resource.titleKey)
                       }
-                    </div>
-                    <div className="text-sm text-neutral-500">
-                      {resource.pages} {locale === 'zh' ? '页' : 'pages'} • {resource.size}
-                    </div>
-                  </div>
+                    </h3>
 
-                  <h3 className="text-xl font-semibold text-neutral-900 mb-3">
-                    {locale === 'zh' ?
-                      (resource.id === 'pain-tracking-form' ? '痛经症状追踪表' :
-                       resource.id === 'menstrual-cycle-nutrition-plan' ? '月经周期营养与活动计划模板' :
-                       resource.id === 'natural-therapy-assessment' ? '自然疗法效果评估表' :
-                       resource.id === 'specific-menstrual-pain-management-guide' ? '特定情况下的痛经管理与关联疾病专题' :
-                       resource.id === 'menstrual-pain-complications-management' ? '痛经并发症与伴随症状管理' :
-                       resource.id === 'magnesium-gut-health-menstrual-pain-guide' ? '镁平衡与肠道健康：痛经缓解的双重密码' :
-                       resource.id === 'natural-physical-therapy-comprehensive-guide' ? '痛经的自然与物理疗法综合指南' :
-                       resource.id === 'campus-emergency-checklist' ? '校园应急处理清单' :
-                       resource.id === 'parent-communication-guide' ? '家长沟通指导手册' :
-                       resource.id === 'teacher-health-manual' ? '教师健康管理手册' :
-                       resource.id === 'healthy-habits-checklist' ? '健康习惯养成清单' :
-                       resource.id === 'zhan-zhuang-baduanjin-guide' ? '站桩八段锦图解指南' :
-                       resource.id === 'teacher-collaboration-handbook' ? '教师协作手册：理解与支持经期不适的青少年学生' : resource.titleKey) :
-                      (resource.id === 'pain-tracking-form' ? 'Menstrual Pain Symptom Tracking Form' :
-                       resource.id === 'menstrual-cycle-nutrition-plan' ? 'Menstrual Cycle Nutrition & Activity Plan Template' :
-                       resource.id === 'natural-therapy-assessment' ? 'Natural Therapy Effectiveness Assessment Form' :
-                       resource.id === 'specific-menstrual-pain-management-guide' ? 'Specific Menstrual Pain Management & Associated Conditions' :
-                       resource.id === 'menstrual-pain-complications-management' ? 'Menstrual Pain Complications & Symptom Management' :
-                       resource.id === 'magnesium-gut-health-menstrual-pain-guide' ? 'Magnesium Balance & Gut Health: The Dual Key to Menstrual Pain Relief' :
-                       resource.id === 'natural-physical-therapy-comprehensive-guide' ? 'Natural & Physical Therapies for Menstrual Pain' :
-                       resource.id === 'campus-emergency-checklist' ? 'Campus Emergency Checklist' :
-                       resource.id === 'parent-communication-guide' ? 'Parent Communication Guide' :
-                       resource.id === 'teacher-health-manual' ? 'Teacher Health Manual' :
-                       resource.id === 'healthy-habits-checklist' ? 'Healthy Habits Checklist' :
-                       resource.id === 'zhan-zhuang-baduanjin-guide' ? 'Zhan Zhuang & Baduanjin Illustrated Guide' :
-                       resource.id === 'teacher-collaboration-handbook' ? 'Teacher Collaboration Handbook: Understanding and Supporting Students with Menstrual Discomfort' : resource.titleKey)
-                    }
-                  </h3>
+                    <p className="text-neutral-600 mb-4 text-sm line-clamp-3">
+                      {locale === 'zh' ?
+                        (resource.id === 'pain-tracking-form' ? '详细记录痛经症状、触发因素和缓解方法的专业表格。' :
+                         resource.id === 'menstrual-cycle-nutrition-plan' ? '根据月经周期四个阶段的个性化饮食营养建议。' :
+                         resource.id === 'natural-therapy-assessment' ? '系统评估不同自然疗法效果的专业工具。' :
+                         resource.id === 'healthy-habits-checklist' ? '日常生活中预防和缓解痛经的健康习惯清单。' : resource.descriptionKey) :
+                        (resource.id === 'pain-tracking-form' ? 'Professional form for detailed recording of menstrual pain symptoms and triggers.' :
+                         resource.id === 'menstrual-cycle-nutrition-plan' ? 'Personalized dietary nutrition recommendations for four menstrual cycle phases.' :
+                         resource.id === 'natural-therapy-assessment' ? 'Professional tool for systematically evaluating natural therapy effectiveness.' :
+                         resource.id === 'healthy-habits-checklist' ? 'Checklist for developing healthy habits to prevent and relieve menstrual pain.' : resource.descriptionKey)
+                      }
+                    </p>
 
-                  <p className="text-neutral-600 mb-6 line-clamp-3">
-                    {locale === 'zh' ?
-                      (resource.id === 'pain-tracking-form' ? '详细记录痛经症状、触发因素和缓解方法的专业表格。包含疼痛程度评分、症状描述、可能诱因分析和治疗效果评估，帮助您系统追踪痛经模式并找到最有效的缓解策略。' :
-                       resource.id === 'menstrual-cycle-nutrition-plan' ? '根据月经周期四个阶段（月经期、卵泡期、排卵期、黄体期）的生理特点，提供个性化的饮食营养建议和运动活动计划。科学指导您在不同阶段优化身体状态，缓解经期不适。' :
-                       resource.id === 'natural-therapy-assessment' ? '用于系统评估不同自然疗法（如饮食调整、运动、冥想、草药等）效果的专业工具。通过详细记录和结构化评估，帮助您找到最适合的个性化自然疗法组合。' :
-                       resource.id === 'specific-menstrual-pain-management-guide' ? '深入解析痛经的激素原理，识别妇科疾病的7个危险信号，掌握IUD、孕期、更年期等特定情况下的痛经管理策略。包含症状自检指南、疾病对照表和长期管理方案。' :
-                       resource.id === 'menstrual-pain-complications-management' ? '深入解析痛经伴随症状的成因机制，提供腹胀、恶心呕吐、腰痛的专业缓解策略。包含症状关联矩阵、经期恶心缓解指南、腰痛专题解析和就医警示信号识别。' :
-                       resource.id === 'magnesium-gut-health-menstrual-pain-guide' ? '从营养-肠道-激素轴的整体视角，深度解析镁缺乏与肠道菌群失衡对痛经的影响，提供科学的镁补充策略和肠道健康调理方案。融合现代营养学与微生物组学最新研究成果。' :
-                       resource.id === 'natural-physical-therapy-comprehensive-guide' ? '全面介绍15种经过科学验证的痛经自然缓解方法，包括热疗、冷疗、按摩、瑜伽、针灸、艾灸、草药疗法、营养补充、阿育吠陀疗法等。融合现代科学与传统智慧。' :
-                       resource.id === 'campus-emergency-checklist' ? '为学校和教育机构提供的痛经应急处理标准流程和清单。' :
-                       resource.id === 'parent-communication-guide' ? '帮助家长与青少年女儿就经期健康进行有效沟通的指导手册。' :
-                       resource.id === 'teacher-health-manual' ? '为教师和学校健康工作者提供的痛经管理专业指南。' :
-                       resource.id === 'healthy-habits-checklist' ? '日常生活中预防和缓解痛经的健康习惯养成清单。' :
-                       resource.id === 'zhan-zhuang-baduanjin-guide' ? '传统中医站桩和八段锦练习的详细图解指南，专门针对痛经缓解。' :
-                       resource.id === 'teacher-collaboration-handbook' ? '为教师和学校工作人员提供实用信息和建议，帮助识别学生的不适迹象，了解如何提供恰当的支持。' : resource.descriptionKey) :
-                      (resource.id === 'pain-tracking-form' ? 'Professional form for detailed recording of menstrual pain symptoms, trigger factors, and relief methods. Includes pain intensity scoring, symptom description, potential trigger analysis, and treatment effectiveness assessment to help you systematically track pain patterns and find the most effective relief strategies.' :
-                       resource.id === 'menstrual-cycle-nutrition-plan' ? 'Based on the physiological characteristics of the four menstrual cycle phases (menstrual, follicular, ovulatory, luteal), provides personalized dietary nutrition recommendations and exercise activity plans. Scientifically guides you to optimize your body condition and relieve menstrual discomfort at different phases.' :
-                       resource.id === 'natural-therapy-assessment' ? 'Professional tool for systematically evaluating the effectiveness of different natural therapies (such as dietary adjustments, exercise, meditation, herbs, etc.). Through detailed recording and structured assessment, helps you find the most suitable personalized natural therapy combination.' :
-                       resource.id === 'specific-menstrual-pain-management-guide' ? 'Comprehensive analysis of hormonal mechanisms of dysmenorrhea, identification of 7 warning signs of gynecological diseases, and management strategies for specific situations including IUD, pregnancy, and perimenopause.' :
-                       resource.id === 'menstrual-pain-complications-management' ? 'In-depth analysis of the mechanisms behind menstrual pain complications, providing professional relief strategies for bloating, nausea, vomiting, and back pain. Includes symptom correlation matrix and medical warning signs identification.' :
-                       resource.id === 'magnesium-gut-health-menstrual-pain-guide' ? 'From the holistic perspective of the nutrition-gut-hormone axis, in-depth analysis of how magnesium deficiency and gut microbiota imbalance affect menstrual pain, providing scientific magnesium supplementation strategies and gut health management plans. Integrates latest research in nutritional science and microbiome studies.' :
-                       resource.id === 'natural-physical-therapy-comprehensive-guide' ? 'Comprehensive introduction to 15 scientifically validated natural relief methods for menstrual pain, including heat therapy, cold therapy, massage, yoga, acupuncture, moxibustion, herbal remedies, nutritional supplements, and Ayurvedic therapies.' :
-                       resource.id === 'campus-emergency-checklist' ? 'Standard emergency procedures and checklist for menstrual pain management in schools and educational institutions.' :
-                       resource.id === 'parent-communication-guide' ? 'A guide to help parents communicate effectively with teenage daughters about menstrual health.' :
-                       resource.id === 'teacher-health-manual' ? 'Professional guide for teachers and school health workers on menstrual pain management.' :
-                       resource.id === 'healthy-habits-checklist' ? 'Checklist for developing healthy habits to prevent and relieve menstrual pain in daily life.' :
-                       resource.id === 'zhan-zhuang-baduanjin-guide' ? 'Detailed illustrated guide for traditional Chinese Zhan Zhuang and Baduanjin exercises, specifically for menstrual pain relief.' :
-                       resource.id === 'teacher-collaboration-handbook' ? 'Practical information and advice for teachers and school staff to help identify signs of student discomfort and provide appropriate support.' : resource.descriptionKey)
-                    }
-                  </p>
-
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center text-sm text-neutral-500">
-                      <FileText className="w-4 h-4 mr-1" />
-                      {locale === 'zh' ? 'PDF文档' : 'PDF Document'}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center text-sm text-neutral-500">
+                        <FileText className="w-4 h-4 mr-1" />
+                        {locale === 'zh' ? 'HTML文档' : 'HTML Document'}
+                      </div>
+                      <DownloadButton filename={resource.filename} />
                     </div>
-                    <DownloadButton filename={resource.filename} />
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+        </div>
+
+        {/* 🏥 健康管理类 */}
+        <div className="space-y-6">
+          <div className="flex items-center mb-6">
+            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4 text-2xl">
+              🏥
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-green-800">
+                {locale === 'zh' ? '健康管理类' : 'Health Management'}
+              </h3>
+              <p className="text-sm text-green-600">
+                {locale === 'zh' ? '专业健康指导和疾病管理资源' : 'Professional health guidance and disease management resources'}
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {pdfResources.filter(resource => resource.category === 'health-management').map((resource) => {
+              const IconComponent = resource.icon;
+              return (
+                <div key={resource.id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border-2 border-green-100 hover:border-green-200">
+                  <div className="p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${categoryColors[resource.category]}`}>
+                        <span className="mr-2">🏥</span>
+                        {locale === 'zh' ? '健康管理' : 'Health Management'}
+                      </div>
+                    </div>
+
+                    <h3 className="text-lg font-semibold text-neutral-900 mb-3">
+                      {locale === 'zh' ?
+                        (resource.id === 'specific-menstrual-pain-management-guide' ? '特定痛经管理专题' :
+                         resource.id === 'menstrual-pain-complications-management' ? '痛经并发症管理' :
+                         resource.id === 'magnesium-gut-health-menstrual-pain-guide' ? '镁平衡与肠道健康' :
+                         resource.id === 'zhan-zhuang-baduanjin-guide' ? '站桩八段锦图解指南' : resource.titleKey) :
+                        (resource.id === 'specific-menstrual-pain-management-guide' ? 'Specific Pain Management' :
+                         resource.id === 'menstrual-pain-complications-management' ? 'Pain Complications Management' :
+                         resource.id === 'magnesium-gut-health-menstrual-pain-guide' ? 'Magnesium & Gut Health' :
+                         resource.id === 'zhan-zhuang-baduanjin-guide' ? 'Traditional Exercise Guide' : resource.titleKey)
+                      }
+                    </h3>
+
+                    <p className="text-neutral-600 mb-4 text-sm line-clamp-3">
+                      {locale === 'zh' ?
+                        (resource.id === 'specific-menstrual-pain-management-guide' ? '深入解析痛经的激素原理，识别妇科疾病危险信号。' :
+                         resource.id === 'menstrual-pain-complications-management' ? '深入解析痛经伴随症状的成因机制和缓解策略。' :
+                         resource.id === 'magnesium-gut-health-menstrual-pain-guide' ? '从营养-肠道-激素轴视角解析痛经缓解方案。' :
+                         resource.id === 'zhan-zhuang-baduanjin-guide' ? '传统中医站桩和八段锦练习的详细图解指南。' : resource.descriptionKey) :
+                        (resource.id === 'specific-menstrual-pain-management-guide' ? 'Comprehensive analysis of hormonal mechanisms and warning signs.' :
+                         resource.id === 'menstrual-pain-complications-management' ? 'In-depth analysis of pain complications and relief strategies.' :
+                         resource.id === 'magnesium-gut-health-menstrual-pain-guide' ? 'Nutrition-gut-hormone axis perspective on pain relief.' :
+                         resource.id === 'zhan-zhuang-baduanjin-guide' ? 'Detailed illustrated guide for traditional Chinese exercises.' : resource.descriptionKey)
+                      }
+                    </p>
+
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center text-sm text-neutral-500">
+                        <FileText className="w-4 h-4 mr-1" />
+                        {locale === 'zh' ? 'HTML文档' : 'HTML Document'}
+                      </div>
+                      <DownloadButton filename={resource.filename} />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* 💬 沟通指导类 */}
+        <div className="space-y-6">
+          <div className="flex items-center mb-6">
+            <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-4 text-2xl">
+              💬
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-orange-800">
+                {locale === 'zh' ? '沟通指导类' : 'Communication Guidance'}
+              </h3>
+              <p className="text-sm text-orange-600">
+                {locale === 'zh' ? '家长、教师和学校的沟通支持资源' : 'Communication support resources for parents, teachers, and schools'}
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {pdfResources.filter(resource => resource.category === 'communication-guidance').map((resource) => {
+              const IconComponent = resource.icon;
+              return (
+                <div key={resource.id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border-2 border-orange-100 hover:border-orange-200">
+                  <div className="p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${categoryColors[resource.category]}`}>
+                        <span className="mr-2">💬</span>
+                        {locale === 'zh' ? '沟通指导' : 'Communication'}
+                      </div>
+                    </div>
+
+                    <h3 className="text-lg font-semibold text-neutral-900 mb-3">
+                      {locale === 'zh' ?
+                        (resource.id === 'campus-emergency-checklist' ? '校园应急处理清单' :
+                         resource.id === 'parent-communication-guide' ? '家长沟通指导手册' :
+                         resource.id === 'teacher-health-manual' ? '教师健康管理手册' :
+                         resource.id === 'teacher-collaboration-handbook' ? '教师协作手册' : resource.titleKey) :
+                        (resource.id === 'campus-emergency-checklist' ? 'Campus Emergency Checklist' :
+                         resource.id === 'parent-communication-guide' ? 'Parent Communication Guide' :
+                         resource.id === 'teacher-health-manual' ? 'Teacher Health Manual' :
+                         resource.id === 'teacher-collaboration-handbook' ? 'Teacher Collaboration Handbook' : resource.titleKey)
+                      }
+                    </h3>
+
+                    <p className="text-neutral-600 mb-4 text-sm line-clamp-3">
+                      {locale === 'zh' ?
+                        (resource.id === 'campus-emergency-checklist' ? '为学校和教育机构提供的痛经应急处理标准流程。' :
+                         resource.id === 'parent-communication-guide' ? '帮助家长与青少年女儿就经期健康进行有效沟通。' :
+                         resource.id === 'teacher-health-manual' ? '为教师和学校健康工作者提供的痛经管理专业指南。' :
+                         resource.id === 'teacher-collaboration-handbook' ? '为教师提供实用信息，帮助识别和支持学生。' : resource.descriptionKey) :
+                        (resource.id === 'campus-emergency-checklist' ? 'Standard emergency procedures for schools and educational institutions.' :
+                         resource.id === 'parent-communication-guide' ? 'Guide to help parents communicate effectively about menstrual health.' :
+                         resource.id === 'teacher-health-manual' ? 'Professional guide for teachers and school health workers.' :
+                         resource.id === 'teacher-collaboration-handbook' ? 'Practical information for teachers to identify and support students.' : resource.descriptionKey)
+                      }
+                    </p>
+
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center text-sm text-neutral-500">
+                        <FileText className="w-4 h-4 mr-1" />
+                        {locale === 'zh' ? 'HTML文档' : 'HTML Document'}
+                      </div>
+                      <DownloadButton filename={resource.filename} />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 

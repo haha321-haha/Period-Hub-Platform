@@ -21,7 +21,11 @@ export const formatDate = (date: string | Date, locale: string = 'en'): string =
 
 export const formatDateShort = (date: string | Date): string => {
   const dateObj = typeof date === 'string' ? new Date(date) : date;
-  return dateObj.toISOString().split('T')[0]; // YYYY-MM-DD
+  // 使用本地时间而不是UTC时间，避免时区问题
+  const year = dateObj.getFullYear();
+  const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const day = String(dateObj.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`; // YYYY-MM-DD
 };
 
 export const isValidDate = (dateString: string): boolean => {

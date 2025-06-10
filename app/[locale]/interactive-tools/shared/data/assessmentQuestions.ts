@@ -184,7 +184,7 @@ export const assessmentQuestions: Record<string, Question[]> = {
         { value: 'acupuncture', label: '针灸', weight: 0 },
         { value: 'yoga', label: '瑜伽', weight: 0 },
         { value: 'dietary_changes', label: '饮食调整', weight: 0 },
-        { value: 'none', label: '从未尝试过任何治疗', weight: 2 }
+        { value: 'no_treatment', label: '从未尝试过任何治疗', weight: 2 }
       ]
     },
     {
@@ -256,6 +256,160 @@ export const assessmentQuestions: Record<string, Question[]> = {
         weight: i + 1
       }))
     },
-    // ... (继续添加英文版本的其他问题)
+    {
+      id: 'pain_timing',
+      type: 'multiple',
+      category: 'pain',
+      weight: 2,
+      title: 'When do you usually experience pain?',
+      description: 'You can select multiple options',
+      validation: { required: true },
+      options: [
+        { value: 'before_period', label: 'Before period starts', weight: 1 },
+        { value: 'first_day', label: 'First day of period', weight: 2 },
+        { value: 'first_few_days', label: 'First few days', weight: 2 },
+        { value: 'throughout', label: 'Throughout entire period', weight: 3 },
+        { value: 'end_period', label: 'End of period', weight: 1 }
+      ]
+    },
+    {
+      id: 'pain_location',
+      type: 'multiple',
+      category: 'pain',
+      weight: 2,
+      title: 'Where do you mainly experience pain?',
+      description: 'You can select multiple areas',
+      validation: { required: true },
+      options: [
+        { value: 'lower_abdomen', label: 'Lower abdomen', icon: '🤰', weight: 2 },
+        { value: 'lower_back', label: 'Lower back', icon: '🔙', weight: 2 },
+        { value: 'upper_back', label: 'Upper back', icon: '⬆️', weight: 1 },
+        { value: 'thighs', label: 'Inner thighs', icon: '🦵', weight: 1 },
+        { value: 'head', label: 'Head', icon: '🧠', weight: 1 },
+        { value: 'chest', label: 'Chest/breasts', icon: '💗', weight: 1 }
+      ]
+    },
+    {
+      id: 'pain_impact',
+      type: 'single',
+      category: 'pain',
+      weight: 3,
+      title: 'How much does pain affect your daily activities?',
+      validation: { required: true },
+      options: [
+        { value: 'no_impact', label: 'Almost no impact', weight: 0 },
+        { value: 'mild_impact', label: 'Mild impact, but can function normally', weight: 1 },
+        { value: 'moderate_impact', label: 'Moderate impact, need to adjust activities', weight: 2 },
+        { value: 'severe_impact', label: 'Severe impact, difficult to do daily activities', weight: 3 },
+        { value: 'unable_function', label: 'Unable to function normally, need bed rest', weight: 4 }
+      ]
+    },
+
+    // Symptoms
+    {
+      id: 'accompanying_symptoms',
+      type: 'multiple',
+      category: 'symptoms',
+      weight: 2,
+      title: 'What other symptoms do you experience during your period?',
+      description: 'Select all that apply',
+      validation: { required: false },
+      options: [
+        { value: 'nausea', label: 'Nausea/vomiting', icon: '🤢', weight: 2 },
+        { value: 'headache', label: 'Headache', icon: '🤕', weight: 1 },
+        { value: 'diarrhea', label: 'Diarrhea', icon: '💩', weight: 1 },
+        { value: 'constipation', label: 'Constipation', icon: '🚫', weight: 1 },
+        { value: 'bloating', label: 'Bloating', icon: '🎈', weight: 1 },
+        { value: 'breast_tenderness', label: 'Breast tenderness', icon: '💗', weight: 1 },
+        { value: 'mood_changes', label: 'Mood changes', icon: '😤', weight: 1 },
+        { value: 'fatigue', label: 'Fatigue', icon: '😴', weight: 1 },
+        { value: 'dizziness', label: 'Dizziness', icon: '💫', weight: 1 },
+        { value: 'depression', label: 'Low mood', icon: '😢', weight: 2 }
+      ]
+    },
+
+    // Lifestyle
+    {
+      id: 'exercise_frequency',
+      type: 'single',
+      category: 'lifestyle',
+      weight: 1,
+      title: 'How often do you exercise?',
+      validation: { required: true },
+      options: [
+        { value: 'daily', label: 'Daily', weight: 0 },
+        { value: 'few_times_week', label: 'Few times a week', weight: 0 },
+        { value: 'weekly', label: 'Once a week', weight: 1 },
+        { value: 'monthly', label: 'Few times a month', weight: 2 },
+        { value: 'rarely', label: 'Rarely exercise', weight: 3 }
+      ]
+    },
+    {
+      id: 'stress_level',
+      type: 'scale',
+      category: 'lifestyle',
+      weight: 2,
+      title: 'What is your recent stress level?',
+      description: '1 means no stress, 10 means extremely stressed',
+      validation: { required: true, min: 1, max: 10 },
+      options: Array.from({ length: 10 }, (_, i) => ({
+        value: i + 1,
+        label: `${i + 1}`,
+        weight: Math.floor(i / 3)
+      }))
+    },
+    {
+      id: 'sleep_quality',
+      type: 'single',
+      category: 'lifestyle',
+      weight: 1,
+      title: 'How is your sleep quality?',
+      validation: { required: true },
+      options: [
+        { value: 'excellent', label: 'Excellent, sufficient sleep', weight: 0 },
+        { value: 'good', label: 'Good', weight: 0 },
+        { value: 'fair', label: 'Fair', weight: 1 },
+        { value: 'poor', label: 'Poor, often have insomnia', weight: 2 },
+        { value: 'very_poor', label: 'Very poor, severe insomnia', weight: 3 }
+      ]
+    },
+    {
+      id: 'diet_habits',
+      type: 'multiple',
+      category: 'lifestyle',
+      weight: 1,
+      title: 'Which of the following describes your diet habits?',
+      description: 'Select all that apply',
+      validation: { required: true },
+      options: [
+        { value: 'balanced', label: 'Balanced diet with fruits and vegetables', weight: 0 },
+        { value: 'high_sugar', label: 'Often eat sweets and desserts', weight: 2 },
+        { value: 'high_caffeine', label: 'Drink a lot of coffee/tea', weight: 1 },
+        { value: 'irregular_meals', label: 'Irregular meal times', weight: 2 },
+        { value: 'processed_foods', label: 'Often eat processed foods', weight: 2 },
+        { value: 'adequate_water', label: 'Drink enough water daily', weight: 0 }
+      ]
+    },
+
+    // Treatment history
+    {
+      id: 'current_treatments',
+      type: 'multiple',
+      category: 'lifestyle',
+      weight: 1,
+      title: 'What methods do you currently use to manage menstrual pain?',
+      description: 'Select all that apply',
+      validation: { required: false },
+      options: [
+        { value: 'pain_medication', label: 'Pain medication (ibuprofen, etc.)', weight: 0 },
+        { value: 'heat_therapy', label: 'Heat therapy (heating pad, hot water bottle)', weight: 0 },
+        { value: 'exercise', label: 'Light exercise', weight: 0 },
+        { value: 'rest', label: 'Rest and sleep', weight: 1 },
+        { value: 'massage', label: 'Massage', weight: 0 },
+        { value: 'herbal_remedies', label: 'Herbal remedies', weight: 0 },
+        { value: 'birth_control', label: 'Birth control pills', weight: 0 },
+        { value: 'none', label: 'No specific treatment', weight: 2 }
+      ]
+    }
   ]
 };

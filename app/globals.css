@@ -5,9 +5,9 @@
 /* 🚀 高级主题系统 */
 :root {
   /* 颜色变量 */
-  --color-primary: #3b82f6;
-  --color-primary-dark: #1d4ed8;
-  --color-secondary: #8b5cf6;
+  --color-primary: #9333ea;
+  --color-primary-dark: #7c3aed;
+  --color-secondary: #ec4899;
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
@@ -75,9 +75,9 @@
 /* 高级主题系统 */
 :root {
   /* 颜色变量 */
-  --color-primary: #3b82f6;
-  --color-primary-dark: #1d4ed8;
-  --color-secondary: #8b5cf6;
+  --color-primary: #9333ea;
+  --color-primary-dark: #7c3aed;
+  --color-secondary: #ec4899;
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
@@ -248,6 +248,8 @@ main {
     @apply bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-lg;
     /* 移动端更紧凑的内边距 */
     padding: 1rem; /* 16px */
+    /* 移动端触摸优化 */
+    min-height: 44px; /* iOS推荐最小触摸目标 */
   }
 
   /* 平板及以上设备的卡片内边距 */
@@ -266,7 +268,7 @@ main {
 
   /* 主要按钮 - 移动端优化 */
   .btn-primary {
-    @apply inline-flex items-center justify-center border border-transparent rounded-lg shadow-lg text-white bg-gradient-to-r from-primary-600 to-pink-600 hover:from-primary-700 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-300;
+    @apply inline-flex items-center justify-center border border-transparent rounded-lg shadow-lg text-white bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-300;
     /* 移动端按钮尺寸 */
     padding: 0.75rem 1.25rem; /* 12px 20px */
     font-size: 0.875rem; /* 14px */
@@ -299,7 +301,7 @@ main {
 
   /* 辅助按钮 - 移动端优化 */
   .btn-secondary {
-    @apply inline-flex items-center justify-center border border-transparent rounded-lg shadow-lg text-white bg-gradient-to-r from-secondary-600 to-teal-600 hover:from-secondary-700 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary-500 transition-all duration-300;
+    @apply inline-flex items-center justify-center border border-transparent rounded-lg shadow-lg text-white bg-gradient-to-r from-secondary-600 to-primary-600 hover:from-secondary-700 hover:to-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary-500 transition-all duration-300;
     padding: 0.75rem 1.25rem; /* 12px 20px */
     font-size: 0.875rem; /* 14px */
     min-height: 44px;
@@ -369,7 +371,7 @@ main {
 
   /* Gradient backgrounds */
   .gradient-purple-pink {
-    @apply bg-gradient-to-br from-purple-600 via-purple-500 to-pink-500;
+    @apply bg-gradient-to-br from-primary-700 via-primary-600 to-secondary-600;
   }
 
   .gradient-red-orange {
@@ -422,6 +424,91 @@ main {
     @apply text-green-800 mb-2 last:mb-0;
   }
 
+  /* 📱 文章页面移动端优化 */
+  .article-content {
+    /* 移动端文字优化 */
+    line-height: 1.7;
+    word-break: break-word;
+  }
+
+  .article-content h1,
+  .article-content h2,
+  .article-content h3,
+  .article-content h4,
+  .article-content h5,
+  .article-content h6 {
+    scroll-margin-top: 80px; /* 为固定头部留出空间 */
+  }
+
+  /* 移动端表格优化 */
+  @media (max-width: 768px) {
+    .article-content table {
+      font-size: 0.875rem;
+    }
+
+    .article-content th,
+    .article-content td {
+      padding: 0.5rem !important;
+    }
+  }
+
+  /* 代码块移动端优化 */
+  .article-content pre {
+    @apply text-sm overflow-x-auto;
+    max-width: 100%;
+  }
+
+  @media (max-width: 640px) {
+    .article-content pre {
+      font-size: 0.75rem;
+      padding: 0.75rem;
+    }
+  }
+
+  /* 引用块移动端优化 */
+  .article-content blockquote {
+    @apply border-l-4 border-primary-400 pl-4 py-2 bg-primary-50 italic my-4 rounded-r-lg;
+  }
+
+  @media (max-width: 640px) {
+    .article-content blockquote {
+      @apply pl-3 py-3 text-sm;
+    }
+  }
+
+  /* 列表移动端优化 */
+  .article-content ul,
+  .article-content ol {
+    @apply space-y-2;
+  }
+
+  @media (max-width: 640px) {
+    .article-content ul,
+    .article-content ol {
+      @apply space-y-1 text-sm;
+    }
+  }
+
+  /* 图片移动端优化 */
+  .article-content img {
+    @apply rounded-lg shadow-sm max-w-full h-auto;
+  }
+
+  /* 文本截断工具类 */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
   .treatment-recommendation strong {
     @apply text-green-900 font-bold;
   }
@@ -448,6 +535,25 @@ input[type="range"].pain-scale {
     #dc2626 100%);
   height: 12px;
   border-radius: 6px;
+}
+
+/* Prevent text overflow in pain scale cards */
+.pain-scale-container {
+  overflow: hidden;
+}
+
+.pain-scale-container .text-sm {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.75rem;
+}
+
+/* Mobile responsive pain scale labels */
+@media (max-width: 640px) {
+  .pain-scale-container .text-sm {
+    font-size: 0.625rem;
+  }
 }
 
 input[type="range"]::-webkit-slider-track {
@@ -575,7 +681,31 @@ input[type="range"]::-moz-range-thumb:hover {
   input, textarea, select {
     font-size: 16px; /* 防止iOS缩放 */
     -webkit-appearance: none;
-    border-radius: 0;
+    border-radius: 0.5rem; /* 移动端友好的圆角 */
+    min-height: 44px; /* iOS推荐最小触摸目标 */
+    padding: 0.75rem 1rem; /* 更舒适的内边距 */
+  }
+
+  /* 移动端表单元素间距优化 */
+  .form-group {
+    margin-bottom: 1.5rem; /* 24px - 移动端更大间距 */
+  }
+
+  /* 移动端单选框和复选框优化 */
+  input[type="radio"], input[type="checkbox"] {
+    min-width: 20px;
+    min-height: 20px;
+    margin-right: 0.75rem;
+  }
+
+  /* 移动端标签优化 */
+  label {
+    display: flex;
+    align-items: center;
+    min-height: 44px; /* 确保足够的触摸目标 */
+    padding: 0.5rem 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(59, 130, 246, 0.1);
   }
 }
 
@@ -604,6 +734,20 @@ input[type="range"]::-moz-range-thumb:hover {
     font-size: 0.8125rem;
     min-height: 40px;
   }
+
+  /* 超小屏网格优化 */
+  .grid-cols-2 {
+    grid-template-columns: 1fr; /* 强制单列 */
+  }
+
+  /* 超小屏文字大小调整 */
+  .text-3xl {
+    font-size: 1.5rem; /* 24px */
+  }
+
+  .text-2xl {
+    font-size: 1.25rem; /* 20px */
+  }
 }
 
 /* Accessibility improvements */
@@ -612,6 +756,75 @@ input[type="range"]::-moz-range-thumb:hover {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Performance optimizations */
+.mobile-touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Loading states */
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Focus improvements */
+.focus-visible:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Smooth scrolling for better UX */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Better text rendering */
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent layout shift */
+img, video {
+  height: auto;
+  max-width: 100%;
+}
+
+/* Better button states */
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Improved form elements */
+input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Better link accessibility */
+a:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 /* 📱 高对比度移动端优化 */
@@ -623,4 +836,135 @@ input[type="range"]::-moz-range-thumb:hover {
   .card {
     border: 1px solid var(--border-primary);
   }
+}
+
+/* 📱 移动端专用工具类 */
+@media (max-width: 767px) {
+  /* 移动端安全区域 */
+  .mobile-safe-area {
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* 移动端全宽按钮 */
+  .mobile-full-width {
+    width: 100% !important;
+  }
+
+  /* 移动端紧凑间距 */
+  .mobile-compact {
+    padding: 0.5rem !important;
+    margin: 0.25rem 0 !important;
+  }
+
+  /* 移动端大触摸目标 */
+  .mobile-touch-target {
+    min-height: 44px !important;
+    min-width: 44px !important;
+  }
+
+  /* 移动端隐藏元素 */
+  .mobile-hidden {
+    display: none !important;
+  }
+
+  /* 移动端显示元素 */
+  .mobile-show {
+    display: block !important;
+  }
+
+  /* 移动端滑块优化 */
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 12px !important;
+    border-radius: 6px;
+    outline: none;
+    background: transparent;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    background: #3b82f6;
+    cursor: pointer;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    background: #3b82f6;
+    cursor: pointer;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Purple theme enhancements for constitution test */
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced purple gradient backgrounds */
+.gradient-purple-light {
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+}
+
+/* Custom purple range slider styling */
+input[type="range"].pain-scale::-webkit-slider-thumb {
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+  box-shadow: 0 2px 6px rgba(139, 92, 246, 0.3);
+}
+
+input[type="range"].pain-scale::-webkit-slider-thumb:hover {
+  background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+}
+
+input[type="range"].pain-scale::-moz-range-thumb {
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+  box-shadow: 0 2px 6px rgba(139, 92, 246, 0.3);
+}
+
+/* Enhanced card hover effects */
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(139, 92, 246, 0.15);
+}
+
+/* Purple button enhancements */
+.btn-purple {
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+  border: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+}
+
+.btn-purple:hover {
+  background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
 }

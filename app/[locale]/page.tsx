@@ -1,11 +1,18 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { useTranslations, useLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import ImagePlaceholder from '@/components/ImagePlaceholder';
 import SearchBox from '@/components/SearchBox';
 import { getAllArticles } from '@/lib/articles';
+import StructuredData from '@/components/StructuredData';
+
+// Lazy load non-critical components
+const UserSuccessStories = dynamic(() => import('@/components/UserSuccessStories'), {
+  loading: () => <div className="loading-skeleton h-64 rounded-lg"></div>,
+  ssr: false
+});
 
 // Generate metadata for the page
 export async function generateMetadata({
@@ -14,39 +21,102 @@ export async function generateMetadata({
   params: { locale: string }
 }): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: 'site' });
-  
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://period-hub.com'
+  const homeUrl = `${baseUrl}/${locale}`
+
   return {
     title: t('title'),
     description: t('description'),
+    keywords: locale === 'zh'
+      ? '痛经缓解,月经疼痛,经期健康,女性健康,痛经治疗,月经周期,生理期,痛经管理,自然疗法,热敷疗法'
+      : 'menstrual pain relief,period pain,menstrual health,women health,dysmenorrhea treatment,menstrual cycle,period management,natural therapy,heat therapy',
+    openGraph: {
+      title: t('title'),
+      description: t('description'),
+      url: homeUrl,
+      siteName: 'Period Hub',
+      images: [
+        {
+          url: `${baseUrl}/og-image.jpg`,
+          width: 1200,
+          height: 630,
+          alt: t('title'),
+        }
+      ],
+      type: 'website',
+      locale: locale,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t('title'),
+      description: t('description'),
+      images: [`${baseUrl}/og-image.jpg`],
+    },
+    alternates: {
+      canonical: homeUrl,
+      languages: {
+        'zh-CN': `${baseUrl}/zh`,
+        'en-US': `${baseUrl}/en`,
+      },
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
   };
 }
 
-export default function HomePage() {
+export default async function HomePage({
+  params: { locale }
+}: {
+  params: { locale: string }
+}) {
   // Get translations for the homepage
-  const t = useTranslations('homepage');
-  const commonT = useTranslations('common');
-  const locale = useLocale();
+  const t = await getTranslations({ locale, namespace: 'homepage' });
+  const commonT = await getTranslations({ locale, namespace: 'common' });
+  const homePageT = await getTranslations({ locale, namespace: 'homePageContent' });
+  const siteT = await getTranslations({ locale, namespace: 'site' });
 
   // Get all articles for search functionality
   const articles = getAllArticles(locale);
-  
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://period-hub.com'
+  const homeUrl = `${baseUrl}/${locale}`
+
   return (
+    <>
+      {/* SEO结构化数据 */}
+      <StructuredData
+        type="website"
+        data={{
+          title: siteT('title'),
+          description: siteT('description'),
+          url: homeUrl,
+          locale: locale,
+        }}
+      />
     <div className="space-y-8 md:space-y-12 lg:space-y-16 py-2 md:py-4">
       {/* 📱 移动端优化 Hero Section */}
-      <section className="py-8 md:py-12 lg:py-20 bg-gradient-to-br from-primary-50 to-secondary-50 rounded-xl md:rounded-2xl">
+      <section className="py-8 md:py-12 lg:py-20 gradient-purple-pink text-white rounded-xl md:rounded-2xl">
         <div className="container-custom">
           <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-center">
             <div className="space-y-4 md:space-y-6 text-center md:text-left">
               {/* 移动端优化标题 */}
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-neutral-900 leading-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
                 {t('hero.headline')}
               </h1>
               {/* 移动端优化副标题 */}
-              <p className="text-base sm:text-lg md:text-xl text-neutral-700 leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed">
                 {t('hero.subheadline')}
               </p>
               {/* 移动端优化描述文本 */}
-              <p className="text-sm sm:text-base text-neutral-600 max-w-lg mx-auto md:mx-0 leading-relaxed">
+              <p className="text-sm sm:text-base text-white/80 max-w-lg mx-auto md:mx-0 leading-relaxed">
                 {t('hero.bodyCopy')}
               </p>
               {/* 📱 移动端优化搜索框 */}
@@ -54,23 +124,20 @@ export default function HomePage() {
                 <SearchBox
                   articles={articles}
                   locale={locale}
-                  placeholder={locale === 'zh' ? '🔍 快速搜索痛经解决方案...' : '🔍 Quick search for pain relief solutions...'}
+                  placeholder={homePageT('searchPlaceholder', locale === 'en' ? '🔍 Quick search for pain relief solutions...' : '🔍 快速搜索痛经解决方案...')}
                   className="w-full"
                 />
-                <p className="text-xs sm:text-sm text-neutral-500 mt-2 text-center md:text-left leading-relaxed">
-                  {locale === 'zh'
-                    ? '💡 试试搜索"5分钟缓解"、"热敷"、"前列腺素"'
-                    : '💡 Try searching "5-minute relief", "heat therapy", "prostaglandins"'
-                  }
+                <p className="text-xs sm:text-sm text-white/70 mt-2 text-center md:text-left leading-relaxed">
+                  {homePageT('searchTips', locale === 'en' ? '💡 Try searching "5-minute relief", "heat therapy", "prostaglandins"' : '💡 试试搜索"5分钟缓解"、"热敷"、"前列腺素"')}
                 </p>
               </div>
 
               {/* 📱 移动端优化按钮组 */}
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start">
-                <Link href={`/${locale}/immediate-relief`} className="btn-primary w-full sm:w-auto">
+                <Link href={`/${locale}/immediate-relief`} className="btn-primary w-full sm:w-auto mobile-touch-target">
                   {t('hero.ctaExplore')}
                 </Link>
-                <Link href={`/${locale}/interactive-tools`} className="btn-outline w-full sm:w-auto">
+                <Link href={`/${locale}/interactive-tools`} className="btn-outline w-full sm:w-auto mobile-touch-target">
                   {t('hero.ctaCheckSymptoms')}
                 </Link>
               </div>
@@ -78,7 +145,7 @@ export default function HomePage() {
             {/* 📱 移动端优化图片区域 */}
             <div className="relative h-48 sm:h-56 md:h-80 lg:h-96 rounded-lg md:rounded-xl overflow-hidden shadow-lg order-first md:order-last">
               {/* Hero image placeholder - shows required image specifications */}
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-pink-100 to-purple-100">
+              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary-100 to-secondary-100">
                 <ImagePlaceholder
                   filename="hero-main-banner.jpg"
                   alt="Professional healthcare illustration showing diverse women in comfortable poses, conveying comfort and medical trust"
@@ -103,46 +170,43 @@ export default function HomePage() {
       </section>
 
       {/* 📱 移动端优化统计数据部分 */}
-      <section className="py-8 md:py-12 gradient-purple-pink text-white">
+      <section className="py-8 md:py-12 bg-gradient-to-br from-primary-50 to-secondary-50">
         <div className="container-custom">
           <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 md:mb-4">
-              {locale === 'zh' ? '数据说话，效果可见' : 'Data-Driven Results'}
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 md:mb-4 text-neutral-800">
+              {homePageT('statistics.title', locale === 'en' ? 'Data-Driven Results' : '数据说话，效果可见')}
             </h2>
-            <p className="text-primary-100 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed px-4">
-              {locale === 'zh'
-                ? '基于真实用户反馈和科学研究的数据统计'
-                : 'Statistics based on real user feedback and scientific research'
-              }
+            <p className="text-neutral-600 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed px-4">
+              {homePageT('statistics.description', locale === 'en' ? 'Statistics based on real user feedback and scientific research' : '基于真实用户反馈和科学研究的数据统计')}
             </p>
           </div>
 
           {/* 📱 移动端优化数据网格 */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mb-8 md:mb-12">
-            <div className="text-center animate-slide-up bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 md:p-0 md:bg-transparent">
-              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-1 md:mb-2">92%</div>
-              <p className="text-primary-100 text-xs sm:text-sm md:text-base leading-tight">
-                {locale === 'zh' ? '用户症状改善' : 'Users Report Improvement'}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 lg:gap-8 mb-8 md:mb-12">
+            <div className="text-center animate-slide-up bg-white/80 backdrop-blur-sm rounded-lg p-3 sm:p-4 md:p-6 shadow-lg mobile-touch-target">
+              <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-1 md:mb-2 text-primary-600">92%</div>
+              <p className="text-neutral-600 text-xs sm:text-sm md:text-base leading-tight">
+                {homePageT('statistics.improvement', locale === 'en' ? 'Users Report Improvement' : '用户症状改善')}
               </p>
             </div>
-            <div className="text-center animate-slide-up bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 md:p-0 md:bg-transparent" style={{animationDelay: '0.1s'}}>
-              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-1 md:mb-2">
-                {locale === 'zh' ? '10万+' : '100K+'}
+            <div className="text-center animate-slide-up bg-white/80 backdrop-blur-sm rounded-lg p-3 sm:p-4 md:p-6 shadow-lg mobile-touch-target" style={{animationDelay: '0.1s'}}>
+              <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-1 md:mb-2 text-primary-600">
+                {homePageT('statistics.users', locale === 'en' ? '100K+' : '10万+')}
               </div>
-              <p className="text-primary-100 text-xs sm:text-sm md:text-base leading-tight">
-                {locale === 'zh' ? '累计用户' : 'Total Users'}
+              <p className="text-neutral-600 text-xs sm:text-sm md:text-base leading-tight">
+                {homePageT('statistics.totalUsers', locale === 'en' ? 'Total Users' : '累计用户')}
               </p>
             </div>
-            <div className="text-center animate-slide-up bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 md:p-0 md:bg-transparent" style={{animationDelay: '0.2s'}}>
-              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-1 md:mb-2">24/7</div>
-              <p className="text-primary-100 text-xs sm:text-sm md:text-base leading-tight">
-                {locale === 'zh' ? '在线支持' : 'Online Support'}
+            <div className="text-center animate-slide-up bg-white/80 backdrop-blur-sm rounded-lg p-3 sm:p-4 md:p-6 shadow-lg mobile-touch-target" style={{animationDelay: '0.2s'}}>
+              <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-1 md:mb-2 text-primary-600">24/7</div>
+              <p className="text-neutral-600 text-xs sm:text-sm md:text-base leading-tight">
+                {homePageT('statistics.support', locale === 'en' ? 'Online Support' : '在线支持')}
               </p>
             </div>
-            <div className="text-center animate-slide-up bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 md:p-0 md:bg-transparent" style={{animationDelay: '0.3s'}}>
-              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-1 md:mb-2">100+</div>
-              <p className="text-primary-100 text-xs sm:text-sm md:text-base leading-tight">
-                {locale === 'zh' ? '专业文章' : 'Expert Articles'}
+            <div className="text-center animate-slide-up bg-white/80 backdrop-blur-sm rounded-lg p-3 sm:p-4 md:p-6 shadow-lg mobile-touch-target" style={{animationDelay: '0.3s'}}>
+              <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-1 md:mb-2 text-primary-600">100+</div>
+              <p className="text-neutral-600 text-xs sm:text-sm md:text-base leading-tight">
+                {homePageT('statistics.articles', locale === 'en' ? 'Expert Articles' : '专业文章')}
               </p>
             </div>
           </div>
@@ -154,7 +218,7 @@ export default function HomePage() {
               alt="Medical statistics infographic showing women's health data with clean data visualization"
               width={800}
               height={400}
-              className="bg-white/20 backdrop-blur-sm"
+              className="bg-white/90 backdrop-blur-sm shadow-lg rounded-lg"
               description="Medical statistics infographic, clean data visualization, pink and blue color scheme, professional charts and graphs"
             />
           </div>
@@ -220,13 +284,10 @@ export default function HomePage() {
                 </svg>
               </div>
               <h3 className="text-xl font-semibold text-neutral-800 mb-2">
-                {locale === 'zh' ? '痛经健康指南' : 'Health Guide'}
+                {homePageT('healthGuide.title', locale === 'en' ? 'Health Guide' : '痛经健康指南')}
               </h3>
               <p className="text-neutral-600 mb-4 flex-grow">
-                {locale === 'zh'
-                  ? '全面的痛经健康知识体系，从基础理解到高级管理策略，助您掌握经期健康。'
-                  : 'Comprehensive menstrual health knowledge system, from basic understanding to advanced management strategies.'
-                }
+                {homePageT('healthGuide.description', locale === 'en' ? 'Comprehensive menstrual health knowledge system, from basic understanding to advanced management strategies.' : '全面的痛经健康知识体系，从基础理解到高级管理策略，助您掌握经期健康。')}
               </p>
               <Link href={`/${locale}/health-guide`} className="text-primary-600 hover:text-primary-700 font-medium inline-flex items-center">
                 {commonT('learnMore')}
@@ -244,76 +305,73 @@ export default function HomePage() {
         <div className="container-custom">
           <div className="text-center mb-10">
             <h2 className="text-2xl md:text-3xl font-bold text-neutral-800 mb-4">
-              {locale === 'zh' ? '智能健康工具' : 'Smart Health Tools'}
+              {homePageT('smartTools.title', locale === 'en' ? 'Smart Health Tools' : '智能健康工具')}
             </h2>
             <p className="text-neutral-600 max-w-2xl mx-auto">
-              {locale === 'zh'
-                ? '专业的评估和追踪工具，帮助您更好地了解和管理经期健康'
-                : 'Professional assessment and tracking tools to help you better understand and manage your menstrual health'
-              }
+              {homePageT('smartTools.description', locale === 'en' ? 'Professional assessment and tracking tools to help you better understand and manage your menstrual health' : '专业的评估和追踪工具，帮助您更好地了解和管理经期健康')}
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
             {/* Smart Symptom Assessment */}
-            <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col h-full">
+            <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 flex flex-col h-full mobile-touch-target">
               <div className="w-12 h-12 flex items-center justify-center rounded-full bg-primary-100 text-primary-600 mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-primary-700 mb-3">
+              <h3 className="text-lg sm:text-xl font-bold text-primary-700 mb-3">
                 {locale === 'zh' ? '智能症状评估' : 'Smart Symptom Assessment'}
               </h3>
-              <p className="text-neutral-600 mb-6 flex-grow">
+              <p className="text-neutral-600 mb-4 sm:mb-6 flex-grow text-sm sm:text-base leading-relaxed">
                 {locale === 'zh'
                   ? '通过专业问卷快速识别疼痛类型，为您提供精准的个性化建议。只需回答5个简单问题，获取针对您特定情况的缓解方案。'
                   : 'Quickly identify pain types through professional questionnaires and receive precise personalized recommendations. Just answer 5 simple questions to get relief solutions tailored to your specific situation.'
                 }
               </p>
-              <Link href={`/${locale}/interactive-tools/symptom-assessment`} className="btn-primary w-full text-center">
+              <Link href={`/${locale}/interactive-tools/symptom-assessment`} className="btn-primary w-full text-center mobile-touch-target">
                 {locale === 'zh' ? '立即评估' : 'Start Assessment'}
               </Link>
             </div>
 
             {/* Period Pain Assessment Tool */}
-            <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col h-full">
+            <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 flex flex-col h-full mobile-touch-target">
               <div className="w-12 h-12 flex items-center justify-center rounded-full bg-secondary-100 text-secondary-600 mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-secondary-700 mb-3">
+              <h3 className="text-lg sm:text-xl font-bold text-secondary-700 mb-3">
                 {locale === 'zh' ? '痛经速测小工具' : 'Period Pain Assessment'}
               </h3>
-              <p className="text-neutral-600 mb-6 flex-grow">
+              <p className="text-neutral-600 mb-4 sm:mb-6 flex-grow text-sm sm:text-base leading-relaxed">
                 {locale === 'zh'
                   ? '回答几个简单问题，初步了解你的痛经类型和严重程度，获得个性化的健康建议和就医指导。'
                   : 'Answer a few simple questions to understand your period pain type and severity, and get personalized health recommendations and medical guidance.'
                 }
               </p>
-              <Link href={`/${locale}/interactive-tools/period-pain-assessment`} className="btn-secondary w-full text-center">
+              <Link href={`/${locale}/interactive-tools/period-pain-assessment`} className="btn-secondary w-full text-center mobile-touch-target">
                 {locale === 'zh' ? '立即评估' : 'Quick Assessment'}
               </Link>
             </div>
 
             {/* Smart Tracking System */}
-            <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col h-full">
+            <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 flex flex-col h-full mobile-touch-target sm:col-span-2 lg:col-span-1">
               <div className="w-12 h-12 flex items-center justify-center rounded-full bg-accent-100 text-accent-600 mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-accent-700 mb-3">
+              <h3 className="text-lg sm:text-xl font-bold text-accent-700 mb-3">
                 {locale === 'zh' ? '智能追踪系统' : 'Smart Tracking System'}
               </h3>
-              <p className="text-neutral-600 mb-6 flex-grow">
+              <p className="text-neutral-600 mb-4 sm:mb-6 flex-grow text-sm sm:text-base leading-relaxed">
                 {locale === 'zh'
                   ? '记录疼痛模式，分析趋势变化，优化治疗效果。通过可视化图表了解您的经期健康状况，发现规律，调整方案。'
                   : 'Record pain patterns, analyze trend changes, and optimize treatment effectiveness. Understand your menstrual health through visual charts, discover patterns, and adjust your approach.'
                 }
               </p>
-              <Link href={`/${locale}/interactive-tools/pain-tracker`} className="btn-outline w-full text-center">
+              <Link href={`/${locale}/interactive-tools/pain-tracker`} className="btn-outline w-full text-center mobile-touch-target">
                 {locale === 'zh' ? '开始记录' : 'Start Tracking'}
               </Link>
             </div>
@@ -390,91 +448,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* User Success Stories */}
-      <section className="py-12">
-        <div className="container-custom">
-          <h2 className="text-2xl md:text-3xl font-bold text-neutral-800 mb-10 text-center">
-            {locale === 'zh' ? '用户成功案例' : 'User Success Stories'}
-          </h2>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="card">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center text-lg font-bold text-primary-600 mr-4">
-                  {locale === 'zh' ? '李' : 'L'}
-                </div>
-                <div>
-                  <h3 className="font-semibold">{locale === 'zh' ? '李小雅' : 'Lisa Li'}</h3>
-                  <p className="text-sm text-neutral-500">{locale === 'zh' ? 'IT从业者，25岁' : 'IT Professional, 25'}</p>
-                </div>
-              </div>
-              <p className="text-neutral-600 mb-4">
-                {locale === 'zh'
-                  ? '"通过个性化评估发现我属于前列腺素过度分泌型痛经，按照平台建议调整饮食和运动，3个月后疼痛强度从8分降到3分，工作效率大幅提升！"'
-                  : '"Through personalized assessment, I discovered I have prostaglandin-excess type dysmenorrhea. Following the platform\'s dietary and exercise recommendations, my pain intensity dropped from 8 to 3 points in 3 months, and my work efficiency improved significantly!"'
-                }
-              </p>
-              <div className="flex text-yellow-400">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-              </div>
-            </div>
-            
-            <div className="card">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 rounded-full bg-secondary-100 flex items-center justify-center text-lg font-bold text-secondary-600 mr-4">
-                  {locale === 'zh' ? '张' : 'T'}
-                </div>
-                <div>
-                  <h3 className="font-semibold">{locale === 'zh' ? '张婷婷' : 'Tina Zhang'}</h3>
-                  <p className="text-sm text-neutral-500">{locale === 'zh' ? '大学生，20岁' : 'University Student, 20'}</p>
-                </div>
-              </div>
-              <p className="text-neutral-600 mb-4">
-                {locale === 'zh'
-                  ? '"青少年专区的内容太有用了！学会了热敷、瑜伽和呼吸法，现在考试期间来大姨妈也不怕了。还帮助室友一起改善，大家感情更好了。"'
-                  : '"The teen section content is so helpful! I learned heat therapy, yoga, and breathing techniques. Now I\'m not afraid of getting my period during exams. I even helped my roommates improve, and our relationships got better!"'
-                }
-              </p>
-              <div className="flex text-yellow-400">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-              </div>
-            </div>
-            
-            <div className="card">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 rounded-full bg-accent-100 flex items-center justify-center text-lg font-bold text-accent-600 mr-4">
-                  {locale === 'zh' ? '王' : 'W'}
-                </div>
-                <div>
-                  <h3 className="font-semibold">{locale === 'zh' ? '王芳' : 'Wendy Wang'}</h3>
-                  <p className="text-sm text-neutral-500">{locale === 'zh' ? '职场妈妈，32岁' : 'Working Mother, 32'}</p>
-                </div>
-              </div>
-              <p className="text-neutral-600 mb-4">
-                {locale === 'zh'
-                  ? '"疼痛日志功能帮我发现了痛经与压力的关联性。配合医生治疗使用平台建议，现在基本告别了每月的痛苦，生活质量改善明显。"'
-                  : '"The pain diary feature helped me discover the connection between menstrual pain and stress. Combined with doctor\'s treatment and platform recommendations, I\'ve basically said goodbye to monthly suffering, and my quality of life has improved significantly."'
-                }
-              </p>
-              <div className="flex text-yellow-400">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-              </div>
-            </div>
-          </div>
-          
-          <div className="text-center mt-8">
-            <p className="text-neutral-700">
-              {locale === 'zh'
-                ? '已有超过10,000+女性在这里找到了属于自己的解决方案'
-                : 'Over 10,000+ women have found their own solutions here'
-              }
-            </p>
-            <Link href={`/${locale}/interactive-tools`} className="btn-primary mt-4">
-              {locale === 'zh' ? '加入她们，开始您的康复之旅' : 'Join them and start your healing journey'}
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* User Success Stories - Lazy loaded for better performance */}
+      <UserSuccessStories />
 
       {/* Professional Content Section */}
       <section className="py-12 bg-gradient-to-br from-neutral-50 to-primary-50">
@@ -554,7 +529,7 @@ export default function HomePage() {
       <div className="container-custom">
         <div className="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 my-8" role="alert">
           <p className="font-bold">
-            {locale === 'zh' ? '医疗免责声明' : 'Medical Disclaimer'}
+            {homePageT('medicalDisclaimer', locale === 'en' ? 'Medical Disclaimer' : '医疗免责声明')}
           </p>
           <p className="text-sm">
             {commonT('medicalDisclaimer')}
@@ -562,5 +537,6 @@ export default function HomePage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

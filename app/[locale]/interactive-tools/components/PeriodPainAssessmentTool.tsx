@@ -81,58 +81,58 @@ const PeriodPainAssessmentTool: React.FC<PeriodPainAssessmentToolProps> = ({ loc
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-primary mb-4">{t('title')}</h2>
-        <p className="text-gray-600">
+    <div className="max-w-4xl mx-auto p-4 sm:p-6 bg-white rounded-lg shadow-lg mobile-safe-area">
+      <div className="text-center mb-6 sm:mb-8">
+        <h2 className="text-2xl sm:text-3xl font-bold text-primary mb-3 sm:mb-4">{t('title')}</h2>
+        <p className="text-gray-600 text-sm sm:text-base px-2">
           {t('subtitle')}
         </p>
       </div>
 
       {!showResult ? (
-        <div className="space-y-8">
+        <div className="space-y-6 sm:space-y-8">
           {/* 痛经强度 */}
-          <div>
-            <h3 className="text-xl font-semibold mb-4">{t('questions.intensity.title')}</h3>
-            <div className="space-y-3">
+          <div className="form-group">
+            <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">{t('questions.intensity.title')}</h3>
+            <div className="space-y-2 sm:space-y-3">
               {[
                 { value: 'mild', label: t('questions.intensity.options.mild') },
                 { value: 'moderate', label: t('questions.intensity.options.moderate') },
                 { value: 'severe', label: t('questions.intensity.options.severe') }
               ].map((option) => (
-                <label key={option.value} className="flex items-center space-x-3 cursor-pointer">
+                <label key={option.value} className="flex items-center space-x-3 cursor-pointer mobile-touch-target p-2 sm:p-1 rounded-lg hover:bg-gray-50 transition-colors">
                   <input
                     type="radio"
                     name="intensity"
                     value={option.value}
                     checked={intensity === option.value}
                     onChange={(e) => setIntensity(e.target.value)}
-                    className="w-4 h-4 text-primary"
+                    className="w-5 h-5 sm:w-4 sm:h-4 text-primary"
                   />
-                  <span className="text-gray-700">{option.label}</span>
+                  <span className="text-gray-700 text-sm sm:text-base">{option.label}</span>
                 </label>
               ))}
             </div>
           </div>
 
           {/* 痛经开始时间 */}
-          <div>
-            <h3 className="text-xl font-semibold mb-4">{t('questions.onset.title')}</h3>
-            <div className="space-y-3">
+          <div className="form-group">
+            <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">{t('questions.onset.title')}</h3>
+            <div className="space-y-2 sm:space-y-3">
               {[
                 { value: 'early', label: t('questions.onset.options.recent') },
                 { value: 'late', label: t('questions.onset.options.later') }
               ].map((option) => (
-                <label key={option.value} className="flex items-center space-x-3 cursor-pointer">
+                <label key={option.value} className="flex items-center space-x-3 cursor-pointer mobile-touch-target p-2 sm:p-1 rounded-lg hover:bg-gray-50 transition-colors">
                   <input
                     type="radio"
                     name="onset"
                     value={option.value}
                     checked={onset === option.value}
                     onChange={(e) => setOnset(e.target.value)}
-                    className="w-4 h-4 text-primary"
+                    className="w-5 h-5 sm:w-4 sm:h-4 text-primary"
                   />
-                  <span className="text-gray-700">{option.label}</span>
+                  <span className="text-gray-700 text-sm sm:text-base">{option.label}</span>
                 </label>
               ))}
             </div>
@@ -163,10 +163,10 @@ const PeriodPainAssessmentTool: React.FC<PeriodPainAssessmentToolProps> = ({ loc
             </div>
           </div>
 
-          <div className="text-center">
+          <div className="text-center pt-4">
             <button
               onClick={evaluateAssessment}
-              className="btn-primary text-lg font-bold min-w-[200px]"
+              className="btn-primary text-base sm:text-lg font-bold w-full sm:w-auto sm:min-w-[200px] mobile-touch-target"
             >
               {t('actions.assess')}
             </button>
@@ -199,16 +199,16 @@ const PeriodPainAssessmentTool: React.FC<PeriodPainAssessmentToolProps> = ({ loc
             </div>
           )}
 
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
             <button
               onClick={resetAssessment}
-              className="btn-outline px-6 py-3 font-semibold"
+              className="btn-outline px-4 sm:px-6 py-3 font-semibold mobile-touch-target order-2 sm:order-1"
             >
               {t('actions.reset')}
             </button>
             <a
               href={`/${locale}/teen-health`}
-              className="btn-secondary px-6 py-3 font-semibold text-center"
+              className="btn-secondary px-4 sm:px-6 py-3 font-semibold text-center mobile-touch-target order-1 sm:order-2"
             >
               {t('actions.moreInfo')}
             </a>

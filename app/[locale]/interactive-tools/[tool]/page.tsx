@@ -428,6 +428,26 @@ const getToolBySlug = async (slug: string, locale: Locale): Promise<Tool | null>
   return tool || null;
 };
 
+// Generate static params for all tools
+export async function generateStaticParams() {
+  const locales: Locale[] = ['en', 'zh'];
+  const toolSlugs = [
+    'symptom-assessment',
+    'pain-tracker',
+    'constitution-test',
+    'period-pain-assessment'
+  ];
+
+  const params = [];
+  for (const locale of locales) {
+    for (const tool of toolSlugs) {
+      params.push({ locale, tool });
+    }
+  }
+
+  return params;
+}
+
 // Generate metadata for the tool
 export async function generateMetadata({
   params: { locale, tool }

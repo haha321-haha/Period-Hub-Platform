@@ -44,7 +44,7 @@ interface ConstitutionTestToolProps {
 
 export default function ConstitutionTestTool({ locale }: ConstitutionTestToolProps) {
   const { t } = useInteractiveToolTranslations('constitutionTest');
-  const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
+  const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string | string[]>>({});
 
   const {
     currentSession,
@@ -76,6 +76,7 @@ export default function ConstitutionTestTool({ locale }: ConstitutionTestToolPro
     setSelectedAnswers({});
   };
 
+  // 处理单选答案
   const handleAnswerSelect = (questionId: string, value: string | number) => {
     const stringValue = String(value);
     setSelectedAnswers(prev => ({
@@ -86,6 +87,45 @@ export default function ConstitutionTestTool({ locale }: ConstitutionTestToolPro
     const answer: ConstitutionAnswer = {
       questionId,
       selectedValues: [stringValue],
+      timestamp: new Date().toISOString()
+    };
+
+    answerQuestion(answer);
+  };
+
+  // 处理多选答案
+  const handleMultipleAnswerSelect = (questionId: string, value: string) => {
+    const currentValues = Array.isArray(selectedAnswers[questionId])
+      ? selectedAnswers[questionId] as string[]
+      : selectedAnswers[questionId]
+        ? [selectedAnswers[questionId] as string]
+        : [];
+
+    let newValues: string[];
+
+    // 处理"以上都没有"选项的逻辑
+    const isNoneOption = value === 'none';
+    const hasNoneSelected = currentValues.includes('none');
+
+    if (isNoneOption) {
+      // 如果选择"以上都没有"，清除其他所有选择
+      newValues = currentValues.includes('none') ? [] : ['none'];
+    } else {
+      // 如果选择其他选项，先移除"以上都没有"选项
+      const filteredValues = currentValues.filter(v => v !== 'none');
+      newValues = filteredValues.includes(value)
+        ? filteredValues.filter(v => v !== value)
+        : [...filteredValues, value];
+    }
+
+    setSelectedAnswers(prev => ({
+      ...prev,
+      [questionId]: newValues
+    }));
+
+    const answer: ConstitutionAnswer = {
+      questionId,
+      selectedValues: newValues,
       timestamp: new Date().toISOString()
     };
 
@@ -121,7 +161,17 @@ export default function ConstitutionTestTool({ locale }: ConstitutionTestToolPro
   };
 
   const canProceed = () => {
-    return getCurrentAnswer() !== undefined;
+    if (!currentQuestion) return false;
+
+    const answer = getCurrentAnswer();
+
+    // 对于多选题，检查是否有选择（可以为空数组，因为有些多选题不是必填的）
+    if (currentQuestion.type === 'multiple') {
+      return true; // 多选题允许不选择任何选项
+    }
+
+    // 对于单选题和滑块题，必须有选择
+    return answer !== undefined && answer !== null && answer !== '';
   };
 
   // 检查是否有痛经症状
@@ -153,80 +203,101 @@ export default function ConstitutionTestTool({ locale }: ConstitutionTestToolPro
           onRemove={removeNotification}
         />
         
-        {/* 介绍页面 */}
-        <div className="text-center mb-8">
-          <div className="w-20 h-20 mx-auto mb-6 bg-green-100 rounded-full flex items-center justify-center">
-            <User className="w-10 h-10 text-green-600" />
+        {/* 介绍页面 - 紫色主题 */}
+        <div className="text-center mb-8 animate-fade-in">
+          <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-purple-100 to-purple-200 rounded-full flex items-center justify-center shadow-lg">
+            <User className="w-12 h-12 text-purple-600" />
           </div>
-          <h1 className="text-3xl font-bold text-neutral-800 mb-4">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent mb-4">
             {t('title')}
           </h1>
-          <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
             {t('subtitle')}
           </p>
         </div>
 
-        {/* 测试特点 */}
+        {/* 测试特点 - 紫色主题卡片 */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="text-center p-4">
-            <Clock className="w-8 h-8 text-blue-600 mx-auto mb-2" />
-            <h3 className="font-semibold text-neutral-800 mb-1">
+          <div className="text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-purple-100">
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-100 to-purple-200 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Clock className="w-6 h-6 text-purple-600" />
+            </div>
+            <h3 className="font-semibold text-gray-800 mb-2">
               {t('features.quick.title')}
             </h3>
-            <p className="text-sm text-neutral-600">
+            <p className="text-sm text-gray-600 leading-relaxed">
               {t('features.quick.description')}
             </p>
           </div>
-          <div className="text-center p-4">
-            <Heart className="w-8 h-8 text-red-600 mx-auto mb-2" />
-            <h3 className="font-semibold text-neutral-800 mb-1">
+          <div className="text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-purple-100">
+            <div className="w-12 h-12 bg-gradient-to-br from-pink-100 to-pink-200 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Heart className="w-6 h-6 text-pink-600" />
+            </div>
+            <h3 className="font-semibold text-gray-800 mb-2">
               {t('features.professional.title')}
             </h3>
-            <p className="text-sm text-neutral-600">
+            <p className="text-sm text-gray-600 leading-relaxed">
               {t('features.professional.description')}
             </p>
           </div>
-          <div className="text-center p-4">
-            <Leaf className="w-8 h-8 text-green-600 mx-auto mb-2" />
-            <h3 className="font-semibold text-neutral-800 mb-1">
+          <div className="text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-purple-100">
+            <div className="w-12 h-12 bg-gradient-to-br from-green-100 to-green-200 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Leaf className="w-6 h-6 text-green-600" />
+            </div>
+            <h3 className="font-semibold text-gray-800 mb-2">
               {t('features.personalized.title')}
             </h3>
-            <p className="text-sm text-neutral-600">
+            <p className="text-sm text-gray-600 leading-relaxed">
               {t('features.personalized.description')}
             </p>
           </div>
-          <div className="text-center p-4">
-            <Activity className="w-8 h-8 text-purple-600 mx-auto mb-2" />
-            <h3 className="font-semibold text-neutral-800 mb-1">
+          <div className="text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-purple-100">
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-100 to-purple-200 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Activity className="w-6 h-6 text-purple-600" />
+            </div>
+            <h3 className="font-semibold text-gray-800 mb-2">
               {t('features.practical.title')}
             </h3>
-            <p className="text-sm text-neutral-600">
+            <p className="text-sm text-gray-600 leading-relaxed">
               {t('features.practical.description')}
             </p>
           </div>
         </div>
 
-        {/* 测试说明 */}
-        <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8">
-          <h3 className="font-semibold text-blue-800 mb-2">
+        {/* 测试说明 - 紫色主题 */}
+        <div className="bg-gradient-to-r from-purple-50 to-purple-100 border-l-4 border-purple-500 p-6 mb-8 rounded-r-lg shadow-sm">
+          <h3 className="font-semibold text-purple-800 mb-3 flex items-center">
+            <AlertCircle className="w-5 h-5 mr-2" />
             {t('instructions.title')}
           </h3>
-          <ul className="text-blue-700 space-y-1">
-            <li>• {t('instructions.item1')}</li>
-            <li>• {t('instructions.item2')}</li>
-            <li>• {t('instructions.item3')}</li>
-            <li>• {t('instructions.item4')}</li>
+          <ul className="text-purple-700 space-y-2">
+            <li className="flex items-start">
+              <span className="w-2 h-2 bg-purple-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              {t('instructions.item1')}
+            </li>
+            <li className="flex items-start">
+              <span className="w-2 h-2 bg-purple-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              {t('instructions.item2')}
+            </li>
+            <li className="flex items-start">
+              <span className="w-2 h-2 bg-purple-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              {t('instructions.item3')}
+            </li>
+            <li className="flex items-start">
+              <span className="w-2 h-2 bg-purple-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              {t('instructions.item4')}
+            </li>
           </ul>
         </div>
 
-        {/* 开始按钮 */}
+        {/* 开始按钮 - 紫色渐变 */}
         <div className="text-center">
           <button
             onClick={handleStartTest}
-            className="btn-primary text-lg px-8 py-3"
+            className="inline-flex items-center justify-center bg-gradient-to-r from-purple-600 to-purple-700 text-white text-lg px-10 py-4 rounded-xl font-semibold hover:from-purple-700 hover:to-purple-800 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl shadow-lg"
           >
-            <Play className="w-5 h-5 mr-2" />
-            {t('navigation.startTest')}
+            <Play className="w-6 h-6 mr-3 flex-shrink-0" />
+            <span>{t('navigation.startTest')}</span>
           </button>
         </div>
       </div>
@@ -500,9 +571,7 @@ export default function ConstitutionTestTool({ locale }: ConstitutionTestToolPro
             </h3>
 
             <p className="text-orange-700 mb-6">
-              {locale === 'zh'
-                ? '根据您的体质特点，为您推荐专属的应急包物品清单。提前准备，让经期更从容。'
-                : 'Based on your constitution characteristics, we recommend a personalized emergency kit item list. Be prepared for a more comfortable period.'}
+              {t('emergencyKit.description')}
             </p>
 
             <div className="space-y-6">
@@ -527,9 +596,9 @@ export default function ConstitutionTestTool({ locale }: ConstitutionTestToolPro
                             item.priority === 'medium' ? 'bg-yellow-100 text-yellow-700' :
                             'bg-green-100 text-green-700'
                           }`}>
-                            {item.priority === 'high' ? (locale === 'zh' ? '必需' : 'Essential') :
-                             item.priority === 'medium' ? (locale === 'zh' ? '推荐' : 'Recommended') :
-                             (locale === 'zh' ? '可选' : 'Optional')}
+                            {item.priority === 'high' ? t('emergencyKit.priority.high') :
+                             item.priority === 'medium' ? t('emergencyKit.priority.medium') :
+                             t('emergencyKit.priority.low')}
                           </span>
                         </div>
 
@@ -545,10 +614,8 @@ export default function ConstitutionTestTool({ locale }: ConstitutionTestToolPro
 
             <div className="mt-6 p-4 bg-orange-100 rounded-lg">
               <p className="text-sm text-orange-800">
-                <strong>{locale === 'zh' ? '📦 打包建议：' : '📦 Packing Tips:'}</strong>
-                {locale === 'zh'
-                  ? ' 优先携带"必需"物品，根据外出时间和场景选择"推荐"和"可选"物品。建议准备一个专用的小包，方便随时取用。'
-                  : ' Prioritize "Essential" items, choose "Recommended" and "Optional" items based on outing duration and scenarios. Consider preparing a dedicated small bag for easy access.'}
+                <strong>{t('emergencyKit.packingTips')}</strong>
+                {t('emergencyKit.packingAdvice')}
               </p>
             </div>
           </div>
@@ -558,7 +625,7 @@ export default function ConstitutionTestTool({ locale }: ConstitutionTestToolPro
         <div className="bg-white p-8 rounded-xl shadow-sm mb-8">
           <h3 className="text-2xl font-semibold text-neutral-800 mb-6 flex items-center">
             <BookOpen className="w-7 h-7 mr-3 text-blue-600" />
-            {locale === 'zh' ? '为您推荐的健康文章' : 'Recommended Health Articles'}
+            {t('articles.title')}
           </h3>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -582,7 +649,7 @@ export default function ConstitutionTestTool({ locale }: ConstitutionTestToolPro
                   href={article.link}
                   className="inline-flex items-center text-blue-600 hover:text-blue-800 text-sm font-medium"
                 >
-                  {locale === 'zh' ? '阅读全文' : 'Read More'}
+                  {t('articles.readMore')}
                   <ArrowRight className="w-4 h-4 ml-1" />
                 </a>
               </div>
@@ -595,13 +662,11 @@ export default function ConstitutionTestTool({ locale }: ConstitutionTestToolPro
           <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-xl mb-8">
             <h3 className="text-2xl font-semibold text-indigo-800 mb-6 flex items-center">
               <MessageCircle className="w-7 h-7 mr-3 text-blue-600" />
-              {locale === 'zh' ? '沟通模板助手' : 'Communication Templates'}
+              {t('communication.title')}
             </h3>
 
             <p className="text-indigo-700 mb-6">
-              {locale === 'zh'
-                ? '经期不适时，与身边的人沟通很重要。这些模板可以帮助你更好地表达需求和寻求理解。'
-                : 'Communication is important when experiencing menstrual discomfort. These templates can help you better express your needs and seek understanding.'}
+              {t('communication.description')}
             </p>
 
             <div className="grid lg:grid-cols-3 gap-6">
@@ -622,9 +687,9 @@ export default function ConstitutionTestTool({ locale }: ConstitutionTestToolPro
                             template.tone === 'casual' ? 'bg-green-100 text-green-700' :
                             'bg-blue-100 text-blue-700'
                           }`}>
-                            {template.tone === 'intimate' ? (locale === 'zh' ? '亲密' : 'Intimate') :
-                             template.tone === 'casual' ? (locale === 'zh' ? '随意' : 'Casual') :
-                             (locale === 'zh' ? '正式' : 'Formal')}
+                            {template.tone === 'intimate' ? t('communication.styles.intimate') :
+                             template.tone === 'casual' ? t('communication.styles.casual') :
+                             t('communication.styles.formal')}
                           </span>
                         </div>
 
@@ -640,7 +705,7 @@ export default function ConstitutionTestTool({ locale }: ConstitutionTestToolPro
                           className="flex items-center text-xs text-indigo-600 hover:text-indigo-800 transition-colors"
                         >
                           <Copy className="w-3 h-3 mr-1" />
-                          {locale === 'zh' ? '复制文本' : 'Copy Text'}
+                          {t('communication.copyText')}
                         </button>
                       </div>
                     ))}
@@ -651,10 +716,8 @@ export default function ConstitutionTestTool({ locale }: ConstitutionTestToolPro
 
             <div className="mt-6 p-4 bg-blue-100 rounded-lg">
               <p className="text-sm text-blue-800">
-                <strong>{locale === 'zh' ? '💡 使用提示：' : '💡 Usage Tips:'}</strong>
-                {locale === 'zh'
-                  ? ' 这些模板仅供参考，请根据你的实际情况和关系亲密度进行调整。真诚的沟通是建立理解的关键。'
-                  : ' These templates are for reference only. Please adjust them based on your actual situation and relationship intimacy. Sincere communication is key to building understanding.'}
+                <strong>{t('communication.usageTips')}</strong>
+                {t('communication.usageAdvice')}
               </p>
             </div>
           </div>
@@ -683,36 +746,36 @@ export default function ConstitutionTestTool({ locale }: ConstitutionTestToolPro
       
       {isLoading && <LoadingSpinner />}
       
-      {/* 进度条 */}
-      <div className="mb-8">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-neutral-600">
-            {t('progress.questionOf', {
-              current: currentQuestionIndex + 1,
-              total: totalQuestions
-            })}
+      {/* 进度条 - 紫色主题 */}
+      <div className="mb-8 bg-white p-6 rounded-xl shadow-lg border border-purple-100">
+        <div className="flex justify-between items-center mb-4">
+          <span className="text-sm font-medium text-gray-700 bg-purple-50 px-3 py-1 rounded-full">
+            {locale === 'zh'
+              ? `第 ${currentQuestionIndex + 1} 题，共 ${totalQuestions} 题`
+              : `Question ${currentQuestionIndex + 1} of ${totalQuestions}`
+            }
           </span>
-          <span className="text-sm text-neutral-600">
-            {Math.round(progress)}% {t('progress.complete')}
+          <span className="text-sm font-medium text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
+            {Math.round(progress)}% {locale === 'zh' ? '完成' : 'Complete'}
           </span>
         </div>
-        <div className="w-full bg-neutral-200 rounded-full h-2">
-          <div 
-            className="bg-green-600 h-2 rounded-full transition-all duration-300"
+        <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+          <div
+            className="bg-gradient-to-r from-purple-500 to-purple-600 h-3 rounded-full transition-all duration-500 ease-out shadow-sm"
             style={{ width: `${progress}%` }}
           />
         </div>
       </div>
 
       {currentQuestion && (
-        <div className="card">
-          {/* 问题标题 */}
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold text-neutral-800 mb-2">
+        <div className="bg-white rounded-xl shadow-lg border border-purple-100 p-8 animate-fade-in">
+          {/* 问题标题 - 紫色主题 */}
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-gray-800 mb-3 leading-tight">
               {currentQuestion.title}
             </h2>
             {currentQuestion.description && (
-              <p className="text-neutral-600">
+              <p className="text-gray-600 text-lg leading-relaxed">
                 {currentQuestion.description}
               </p>
             )}
@@ -723,7 +786,7 @@ export default function ConstitutionTestTool({ locale }: ConstitutionTestToolPro
             {currentQuestion.type === 'scale' ? (
               // 滑块类型问题
               <div className="space-y-6">
-                <div className="px-4">
+                <div className="px-4 pain-scale-container">
                   <input
                     type="range"
                     min={currentQuestion.validation?.min || 0}
@@ -733,51 +796,106 @@ export default function ConstitutionTestTool({ locale }: ConstitutionTestToolPro
                     className="w-full pain-scale cursor-pointer"
                   />
                   <div className="flex justify-between text-sm text-neutral-600 mt-2">
-                    <span>{t('painScale.levels.none')}</span>
-                    <span>{t('painScale.levels.mild')}</span>
-                    <span>{t('painScale.levels.moderate')}</span>
-                    <span>{t('painScale.levels.severe')}</span>
-                    <span>{t('painScale.levels.extreme')}</span>
+                    <span className="text-xs sm:text-sm">{t('painScale.levels.none')}</span>
+                    <span className="text-xs sm:text-sm">{t('painScale.levels.mild')}</span>
+                    <span className="text-xs sm:text-sm">{t('painScale.levels.moderate')}</span>
+                    <span className="text-xs sm:text-sm">{t('painScale.levels.severe')}</span>
+                    <span className="text-xs sm:text-sm">{t('painScale.levels.extreme')}</span>
                   </div>
                 </div>
 
-                {/* 当前选择的值显示 */}
+                {/* 当前选择的值显示 - 增强紫色主题 */}
                 <div className="text-center">
-                  <div className="inline-flex items-center bg-gradient-to-r from-purple-100 to-pink-100 px-6 py-3 rounded-full">
-                    <Heart className="w-5 h-5 text-purple-600 mr-2" />
-                    <span className="text-lg font-semibold text-purple-800">
+                  <div className="inline-flex items-center bg-gradient-to-r from-purple-100 via-purple-50 to-pink-100 px-8 py-4 rounded-2xl shadow-lg border border-purple-200">
+                    <Heart className="w-6 h-6 text-purple-600 mr-3" />
+                    <span className="text-xl font-bold text-purple-800">
                       {t('painScale.title')}
-                      <span className="text-2xl">{selectedAnswers[currentQuestion.id] || 0}</span>
-                      <span className="text-sm ml-2">
+                      <span className="text-3xl font-extrabold text-purple-600 mx-2">{selectedAnswers[currentQuestion.id] || 0}</span>
+                      <span className="text-base font-medium text-purple-700 ml-2">
                         ({currentQuestion.options.find(opt => opt.value == (selectedAnswers[currentQuestion.id] || 0))?.label})
                       </span>
                     </span>
                   </div>
                 </div>
 
-                {/* 疼痛程度说明 */}
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <h4 className="font-medium text-blue-800 mb-2">
+                {/* 疼痛程度说明 - 紫色主题 */}
+                <div className="bg-gradient-to-r from-purple-50 to-purple-100 p-6 rounded-xl overflow-hidden border border-purple-200 shadow-sm">
+                  <h4 className="font-semibold text-purple-800 mb-4 flex items-center">
+                    <BookOpen className="w-5 h-5 mr-2" />
                     {t('painScale.reference')}
                   </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-blue-700">
-                    <div>• 0-2: {t('painScale.descriptions.0-2')}</div>
-                    <div>• 3-4: {t('painScale.descriptions.3-4')}</div>
-                    <div>• 5-7: {t('painScale.descriptions.5-7')}</div>
-                    <div>• 8-10: {t('painScale.descriptions.8-10')}</div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-purple-700">
+                    <div className="flex items-start break-words bg-white p-3 rounded-lg shadow-sm">
+                      <span className="w-2 h-2 bg-green-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                      <span><strong>0-2:</strong> {t('painScale.descriptions.0-2')}</span>
+                    </div>
+                    <div className="flex items-start break-words bg-white p-3 rounded-lg shadow-sm">
+                      <span className="w-2 h-2 bg-yellow-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                      <span><strong>3-4:</strong> {t('painScale.descriptions.3-4')}</span>
+                    </div>
+                    <div className="flex items-start break-words bg-white p-3 rounded-lg shadow-sm">
+                      <span className="w-2 h-2 bg-orange-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                      <span><strong>5-7:</strong> {t('painScale.descriptions.5-7')}</span>
+                    </div>
+                    <div className="flex items-start break-words bg-white p-3 rounded-lg shadow-sm">
+                      <span className="w-2 h-2 bg-red-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                      <span><strong>8-10:</strong> {t('painScale.descriptions.8-10')}</span>
+                    </div>
                   </div>
                 </div>
               </div>
+            ) : currentQuestion.type === 'multiple' ? (
+              // 多选问题 - 紫色主题
+              <div className="space-y-4">
+                {currentQuestion.options.map((option) => {
+                  const currentValues = Array.isArray(selectedAnswers[currentQuestion.id])
+                    ? selectedAnswers[currentQuestion.id] as string[]
+                    : selectedAnswers[currentQuestion.id]
+                      ? [selectedAnswers[currentQuestion.id] as string]
+                      : [];
+                  const isSelected = currentValues.includes(String(option.value));
+
+                  return (
+                    <label
+                      key={option.value}
+                      className={`block p-5 border-2 rounded-xl cursor-pointer transition-all duration-300 transform hover:-translate-y-1 ${
+                        isSelected
+                          ? 'border-purple-500 bg-gradient-to-r from-purple-50 to-purple-100 shadow-lg'
+                          : 'border-gray-200 hover:border-purple-300 hover:shadow-md bg-white'
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => handleMultipleAnswerSelect(currentQuestion.id, String(option.value))}
+                        className="sr-only"
+                      />
+                      <div className="flex items-center">
+                        <div className={`w-5 h-5 rounded border-2 mr-4 flex items-center justify-center ${
+                          isSelected
+                            ? 'border-purple-500 bg-purple-500'
+                            : 'border-gray-300'
+                        }`}>
+                          {isSelected && (
+                            <CheckCircle className="w-3 h-3 text-white" />
+                          )}
+                        </div>
+                        <span className="text-gray-800 font-medium">{option.label}</span>
+                      </div>
+                    </label>
+                  );
+                })}
+              </div>
             ) : (
-              // 普通单选/多选问题
-              <div className="space-y-3">
+              // 普通单选问题 - 紫色主题
+              <div className="space-y-4">
                 {currentQuestion.options.map((option) => (
                   <label
                     key={option.value}
-                    className={`block p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                    className={`block p-5 border-2 rounded-xl cursor-pointer transition-all duration-300 transform hover:-translate-y-1 ${
                       selectedAnswers[currentQuestion.id] === option.value
-                        ? 'border-green-500 bg-green-50'
-                        : 'border-neutral-200 hover:border-green-300'
+                        ? 'border-purple-500 bg-gradient-to-r from-purple-50 to-purple-100 shadow-lg'
+                        : 'border-gray-200 hover:border-purple-300 hover:shadow-md bg-white'
                     }`}
                   >
                     <input
@@ -788,34 +906,45 @@ export default function ConstitutionTestTool({ locale }: ConstitutionTestToolPro
                       onChange={() => handleAnswerSelect(currentQuestion.id, option.value)}
                       className="sr-only"
                     />
-                    <span className="text-neutral-800">{option.label}</span>
+                    <div className="flex items-center">
+                      <div className={`w-5 h-5 rounded-full border-2 mr-4 flex items-center justify-center ${
+                        selectedAnswers[currentQuestion.id] === option.value
+                          ? 'border-purple-500 bg-purple-500'
+                          : 'border-gray-300'
+                      }`}>
+                        {selectedAnswers[currentQuestion.id] === option.value && (
+                          <div className="w-2 h-2 bg-white rounded-full"></div>
+                        )}
+                      </div>
+                      <span className="text-gray-800 font-medium">{option.label}</span>
+                    </div>
                   </label>
                 ))}
               </div>
             )}
           </div>
 
-          {/* 导航按钮 */}
-          <div className="flex justify-between">
+          {/* 导航按钮 - 紫色主题 */}
+          <div className="flex justify-between items-center pt-6">
             <button
               onClick={handlePrevious}
               disabled={currentQuestionIndex === 0}
-              className="btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center px-6 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100"
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />
+              <ArrowLeft className="w-5 h-5 mr-2" />
               {t('navigation.previous')}
             </button>
 
             <button
               onClick={handleNext}
               disabled={!canProceed()}
-              className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center px-8 py-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-xl font-semibold hover:from-purple-700 hover:to-purple-800 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none disabled:hover:shadow-none"
             >
               {currentQuestionIndex >= totalQuestions - 1
                 ? t('navigation.completeTest')
                 : t('navigation.next')
               }
-              <ArrowRight className="w-4 h-4 ml-2" />
+              <ArrowRight className="w-5 h-5 ml-2" />
             </button>
           </div>
         </div>

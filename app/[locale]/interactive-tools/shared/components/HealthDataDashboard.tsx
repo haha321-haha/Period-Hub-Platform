@@ -163,7 +163,7 @@ export default function HealthDataDashboard({ locale }: HealthDataDashboardProps
           </h3>
           <div className="space-y-2">
             {Object.entries(painTrends).slice(-7).map(([date, levels]) => {
-              const avgLevel = levels.reduce((a, b) => a + b, 0) / levels.length;
+              const avgLevel = (levels as number[]).reduce((a, b) => a + b, 0) / (levels as number[]).length;
               return (
                 <div key={date} className="flex items-center justify-between">
                   <span className="text-sm text-gray-600">{date}</span>
