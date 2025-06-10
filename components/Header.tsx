@@ -2,12 +2,11 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useTranslations, useLocale } from 'next-intl';
+import { useLocale } from 'next-intl';
 import { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
 
 export default function Header() {
-  const t = useTranslations('header');
   const locale = useLocale();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,13 +14,13 @@ export default function Header() {
 
   // Navigation items
   const navigation = [
-    { name: t('home'), href: `/${locale}` },
-    { name: t('interactiveSolutions', locale === 'en' ? 'Interactive Solutions' : '互动解决方案'), href: `/${locale}/interactive-tools` },
-    { name: t('articlesDownloads', locale === 'en' ? 'Articles & Downloads' : '文章PDF下载中心'), href: `/${locale}/articles` },
-    { name: t('scenarioSolutions'), href: `/${locale}/scenario-solutions` },
-    // { name: t('frameworkDemo', locale === 'en' ? '🚀 Framework Demo' : '🚀 框架演示'), href: `/${locale}/framework-demo` }, // 暂时隐藏 - 可快速恢复
-    { name: t('naturalCare', locale === 'en' ? 'Natural Care' : '平时调理'), href: `/${locale}/natural-therapies` },
-    { name: t('healthGuide', locale === 'en' ? 'Health Guide' : '痛经健康指南'), href: `/${locale}/health-guide` },
+    { name: locale === 'en' ? 'Home' : '首页', href: `/${locale}` },
+    { name: locale === 'en' ? 'Interactive Solutions' : '互动解决方案', href: `/${locale}/interactive-tools` },
+    { name: locale === 'en' ? 'Articles & Downloads' : '文章PDF下载中心', href: `/${locale}/articles` },
+    { name: locale === 'en' ? 'Scenario Solutions' : '场景解决方案', href: `/${locale}/scenario-solutions` },
+    // { name: locale === 'en' ? '🚀 Framework Demo' : '🚀 框架演示', href: `/${locale}/framework-demo` }, // 暂时隐藏 - 可快速恢复
+    { name: locale === 'en' ? 'Natural Care' : '平时调理', href: `/${locale}/natural-therapies` },
+    { name: locale === 'en' ? 'Health Guide' : '痛经健康指南', href: `/${locale}/health-guide` },
   ];
 
   // Handle scroll effect for header

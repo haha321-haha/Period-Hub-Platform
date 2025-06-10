@@ -4,8 +4,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Search, X } from 'lucide-react';
 import { Article } from '@/lib/articles';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
-
 interface SearchBoxProps {
   articles: Article[];
   locale: string;
@@ -19,7 +17,6 @@ interface SearchResult extends Article {
 }
 
 export default function SearchBox({ articles, locale, placeholder, className = '' }: SearchBoxProps) {
-  const t = useTranslations('searchBox');
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -163,10 +160,10 @@ export default function SearchBox({ articles, locale, placeholder, className = '
   // 获取匹配类型的显示文本
   const getMatchTypeLabel = (matchType: string) => {
     const labels = {
-      title: t('matchTypes.title', locale === 'en' ? 'Title' : '标题'),
-      summary: t('matchTypes.summary', locale === 'en' ? 'Summary' : '摘要'),
-      tag: t('matchTypes.tag', locale === 'en' ? 'Tag' : '标签'),
-      content: t('matchTypes.content', locale === 'en' ? 'Content' : '内容')
+      title: locale === 'en' ? 'Title' : '标题',
+      summary: locale === 'en' ? 'Summary' : '摘要',
+      tag: locale === 'en' ? 'Tag' : '标签',
+      content: locale === 'en' ? 'Content' : '内容'
     };
     return labels[matchType as keyof typeof labels] || '';
   };
@@ -185,7 +182,7 @@ export default function SearchBox({ articles, locale, placeholder, className = '
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
           onFocus={() => query && setIsOpen(true)}
-          placeholder={placeholder || t('placeholder', locale === 'en' ? 'Search articles...' : '搜索文章...')}
+          placeholder={placeholder || (locale === 'en' ? 'Search articles...' : '搜索文章...')}
           className="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent bg-white text-gray-900 placeholder-gray-500"
         />
         {query && (
@@ -245,7 +242,7 @@ export default function SearchBox({ articles, locale, placeholder, className = '
       {isOpen && query && results.length === 0 && (
         <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg p-4">
           <p className="text-sm text-gray-500 text-center">
-            {t('noResults', locale === 'en' ? 'No articles found' : '未找到相关文章')}
+            {locale === 'en' ? 'No articles found' : '未找到相关文章'}
           </p>
         </div>
       )}

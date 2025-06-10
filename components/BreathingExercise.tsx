@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
 
 interface BreathingExerciseProps {
   locale: string;
@@ -15,7 +14,6 @@ interface Phase {
 }
 
 export default function BreathingExercise({ locale }: BreathingExerciseProps) {
-  const t = useTranslations('breathingExercise');
   const [isActive, setIsActive] = useState(false);
   const [currentPhase, setCurrentPhase] = useState(0);
   const [timeLeft, setTimeLeft] = useState(0);
@@ -91,20 +89,20 @@ export default function BreathingExercise({ locale }: BreathingExerciseProps) {
           <span className="text-2xl">🫁</span>
         </div>
         <h3 className="text-2xl font-bold text-blue-800 mb-2">
-          {t('title', locale === 'en' ? '4-7-8 Breathing Exercise' : '4-7-8 深呼吸练习')}
+          {locale === 'en' ? '4-7-8 Breathing Exercise' : '4-7-8 深呼吸练习'}
         </h3>
         <p className="text-blue-600 text-sm">
-          {t('subtitle', locale === 'en'
+          {locale === 'en'
             ? 'Natural pain relief through nervous system regulation'
             : '通过调节神经系统自然缓解疼痛'
-          )}
+          }
         </p>
       </div>
 
       {/* Instructions */}
       <div className="bg-blue-50 rounded-lg p-4 mb-6">
         <h4 className="font-semibold text-blue-800 mb-2">
-          {t('instructions', locale === 'en' ? 'How to practice:' : '练习方法：')}
+          {locale === 'en' ? 'How to practice:' : '练习方法：'}
         </h4>
         <div className="grid grid-cols-3 gap-3 text-center text-sm">
           <div>
@@ -112,7 +110,7 @@ export default function BreathingExercise({ locale }: BreathingExerciseProps) {
               <span className="text-lg font-bold text-blue-600">4</span>
             </div>
             <p className="text-blue-700">
-              {t('phases.inhale', locale === 'en' ? 'Inhale' : '吸气')} 4{t('timeUnit', locale === 'en' ? 's' : '秒')}
+              {locale === 'en' ? 'Inhale' : '吸气'} 4{locale === 'en' ? 's' : '秒'}
             </p>
           </div>
           <div>
@@ -120,7 +118,7 @@ export default function BreathingExercise({ locale }: BreathingExerciseProps) {
               <span className="text-lg font-bold text-purple-600">7</span>
             </div>
             <p className="text-purple-700">
-              {t('phases.hold', locale === 'en' ? 'Hold' : '屏息')} 7{t('timeUnit', locale === 'en' ? 's' : '秒')}
+              {locale === 'en' ? 'Hold' : '屏息'} 7{locale === 'en' ? 's' : '秒'}
             </p>
           </div>
           <div>
@@ -128,7 +126,7 @@ export default function BreathingExercise({ locale }: BreathingExerciseProps) {
               <span className="text-lg font-bold text-pink-600">8</span>
             </div>
             <p className="text-pink-700">
-              {t('phases.exhale', locale === 'en' ? 'Exhale' : '呼气')} 8{t('timeUnit', locale === 'en' ? 's' : '秒')}
+              {locale === 'en' ? 'Exhale' : '呼气'} 8{locale === 'en' ? 's' : '秒'}
             </p>
           </div>
         </div>
@@ -147,7 +145,7 @@ export default function BreathingExercise({ locale }: BreathingExerciseProps) {
               </div>
             </div>
             <p className="text-gray-600">
-              {t('currentPhase', locale === 'en' ? 'Current:' : '正在进行：')} {locale === 'zh' ? getCurrentPhase().name : getCurrentPhase().nameEn}
+              {locale === 'en' ? 'Current:' : '正在进行：'} {locale === 'zh' ? getCurrentPhase().name : getCurrentPhase().nameEn}
             </p>
           </div>
         ) : (
@@ -164,7 +162,7 @@ export default function BreathingExercise({ locale }: BreathingExerciseProps) {
             onClick={startExercise}
             className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors w-full"
           >
-            {t('startButton', locale === 'en' ? '🫁 Start Guided Practice' : '🫁 开始引导练习')}
+            {locale === 'en' ? '🫁 Start Guided Practice' : '🫁 开始引导练习'}
           </button>
         )}
 
@@ -172,14 +170,14 @@ export default function BreathingExercise({ locale }: BreathingExerciseProps) {
           <div className="space-y-3">
             <div className="bg-green-50 border border-green-200 rounded-lg p-3">
               <p className="text-green-700 font-medium">
-                {t('completed', locale === 'en' ? '✅ One cycle completed!' : '✅ 一轮练习完成！')}
+                {locale === 'en' ? '✅ One cycle completed!' : '✅ 一轮练习完成！'}
               </p>
             </div>
             <button
               onClick={startExercise}
               className="bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors w-full"
             >
-              {t('practiceAgain', locale === 'en' ? 'Practice Again' : '再次练习')}
+              {locale === 'en' ? 'Practice Again' : '再次练习'}
             </button>
           </div>
         )}
@@ -189,7 +187,7 @@ export default function BreathingExercise({ locale }: BreathingExerciseProps) {
             onClick={resetExercise}
             className="bg-gray-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-gray-600 transition-colors"
           >
-            {t('stopButton', locale === 'en' ? 'Stop Practice' : '停止练习')}
+            {locale === 'en' ? 'Stop Practice' : '停止练习'}
           </button>
         )}
       </div>
@@ -197,25 +195,25 @@ export default function BreathingExercise({ locale }: BreathingExerciseProps) {
       {/* Benefits */}
       <div className="mt-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4">
         <h5 className="font-semibold text-gray-800 mb-2">
-          {t('benefits.title', locale === 'en' ? 'Scientific Benefits:' : '科学效果：')}
+          {locale === 'en' ? 'Scientific Benefits:' : '科学效果：'}
         </h5>
         <div className="grid grid-cols-3 gap-3 text-center text-xs">
           <div>
             <div className="text-lg font-bold text-blue-600">-40%</div>
             <div className="text-gray-600">
-              {t('benefits.painPerception', locale === 'en' ? 'Pain Perception' : '疼痛感知')}
+              {locale === 'en' ? 'Pain Perception' : '疼痛感知'}
             </div>
           </div>
           <div>
             <div className="text-lg font-bold text-purple-600">-35%</div>
             <div className="text-gray-600">
-              {t('benefits.muscleTension', locale === 'en' ? 'Muscle Tension' : '肌肉紧张')}
+              {locale === 'en' ? 'Muscle Tension' : '肌肉紧张'}
             </div>
           </div>
           <div>
             <div className="text-lg font-bold text-pink-600">+60%</div>
             <div className="text-gray-600">
-              {t('benefits.relaxation', locale === 'en' ? 'Relaxation' : '放松感受')}
+              {locale === 'en' ? 'Relaxation' : '放松感受'}
             </div>
           </div>
         </div>
@@ -224,10 +222,10 @@ export default function BreathingExercise({ locale }: BreathingExerciseProps) {
       {/* Tips */}
       <div className="mt-4 text-xs text-gray-600">
         <p>
-          {t('tip', locale === 'en'
+          {locale === 'en'
             ? '💡 Tip: Find a comfortable sitting or lying position, relax all muscles. Beginners should do 3-4 cycles.'
             : '💡 建议：找一个舒适的坐位或躺位，放松全身肌肉。初学者建议进行3-4个循环。'
-          )}
+          }
         </p>
       </div>
     </div>

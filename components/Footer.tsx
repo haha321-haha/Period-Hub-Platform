@@ -1,10 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { useTranslations, useLocale } from 'next-intl';
+import { useLocale } from 'next-intl';
 
 export default function Footer() {
-  const t = useTranslations('footer');
   const locale = useLocale();
   const currentYear = new Date().getFullYear();
 
@@ -19,40 +18,40 @@ export default function Footer() {
               periodhub.health
             </Link>
             <p className="mt-2 text-sm text-neutral-600 max-w-xs">
-              {t('disclaimer')}
+              {locale === 'en' ? 'Your trusted menstrual health companion' : '您值得信赖的经期健康伙伴'}
             </p>
           </div>
 
           {/* Quick Links */}
           <div className="flex flex-col items-center md:items-start">
-            <h3 className="font-semibold text-neutral-800 mb-4">{t('linksTitle', locale === 'en' ? 'Links' : '链接')}</h3>
+            <h3 className="font-semibold text-neutral-800 mb-4">{locale === 'en' ? 'Links' : '链接'}</h3>
             <nav className="flex flex-col space-y-2">
               <Link href={`/${locale}/privacy-policy`} className="text-sm text-neutral-600 hover:text-primary-600 transition-colors">
-                {t('privacy')}
+                {locale === 'en' ? 'Privacy Policy' : '隐私政策'}
               </Link>
               <Link href={`/${locale}/terms-of-service`} className="text-sm text-neutral-600 hover:text-primary-600 transition-colors">
-                {t('terms')}
+                {locale === 'en' ? 'Terms of Service' : '服务条款'}
               </Link>
               <Link href={`/${locale}/medical-disclaimer`} className="text-sm text-neutral-600 hover:text-primary-600 transition-colors">
-                {t('medicalDisclaimer', locale === 'en' ? 'Medical Disclaimer' : '医疗免责声明')}
+                {locale === 'en' ? 'Medical Disclaimer' : '医疗免责声明'}
               </Link>
               <Link href={`/${locale}/articles`} className="text-sm text-neutral-600 hover:text-primary-600 transition-colors">
-                {t('articles', locale === 'en' ? 'Articles' : '文章PDF下载中心')}
+                {locale === 'en' ? 'Articles' : '文章PDF下载中心'}
               </Link>
               <Link href={`/${locale}/natural-therapies`} className="text-sm text-neutral-600 hover:text-primary-600 transition-colors">
-                {t('naturalTherapies', locale === 'en' ? 'Natural Therapies' : '平时调理')}
+                {locale === 'en' ? 'Natural Therapies' : '平时调理'}
               </Link>
             </nav>
           </div>
 
           {/* Contact Information */}
           <div className="flex flex-col items-center md:items-start">
-            <h3 className="font-semibold text-neutral-800 mb-4">{t('contactTitle', locale === 'en' ? 'Contact' : '联系我们')}</h3>
-            <a 
-              href={`mailto:${t('contact_email')}`} 
+            <h3 className="font-semibold text-neutral-800 mb-4">{locale === 'en' ? 'Contact' : '联系我们'}</h3>
+            <a
+              href="mailto:support@periodhub.com"
               className="text-sm text-neutral-600 hover:text-primary-600 transition-colors"
             >
-              {t('contact_email')}
+              support@periodhub.com
             </a>
             
             {/* Social Media Links (placeholders) */}
@@ -77,13 +76,13 @@ export default function Footer() {
         {/* Copyright and Medical Disclaimer */}
         <div className="mt-8 pt-8 border-t border-neutral-200 text-center">
           <p className="text-sm text-neutral-500">
-            {t('copyright', { currentYear })}
+            {locale === 'en' ? `© ${currentYear} Period Hub Platform. All rights reserved.` : `© ${currentYear} 痛经健康平台。保留所有权利。`}
           </p>
           <p className="mt-4 text-xs text-neutral-500 max-w-2xl mx-auto">
-            {t('medicalDisclaimerFull', locale === 'en'
+            {locale === 'en'
               ? 'Medical Disclaimer: The content on this website is for informational and educational purposes only and is not intended to be a substitute for professional medical advice, diagnosis, or treatment. We are not healthcare professionals. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition. In case of emergency, seek immediate medical attention. Use of this website does not establish a doctor-patient relationship.'
               : '医疗免责声明：本网站内容仅供信息和教育目的，不能替代专业医疗建议、诊断或治疗。我们不是医疗专业人员。如有任何医疗问题，请咨询您的医生或其他合格的医疗服务提供者。紧急情况下，请立即寻求医疗救助。使用本网站不构成医患关系。'
-            )}
+            }
           </p>
         </div>
       </div>
