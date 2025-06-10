@@ -364,7 +364,7 @@ export const InputField: React.FC<InputFieldProps> = ({
         {renderInput()}
         
         {/* 状态图标 */}
-        {config.type !== 'checkbox' && config.type !== 'radio' && config.type !== 'file' && (
+        {!['checkbox', 'radio', 'file', 'range'].includes(config.type) && (
           <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
             {hasError && <AlertCircle className="w-4 h-4 text-red-500" />}
             {isValid && <CheckCircle className="w-4 h-4 text-green-500" />}

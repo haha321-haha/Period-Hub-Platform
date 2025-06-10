@@ -2,22 +2,24 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 interface EmbeddedPainAssessmentProps {
   locale?: string;
   className?: string;
 }
 
-const EmbeddedPainAssessment: React.FC<EmbeddedPainAssessmentProps> = ({ 
-  locale = 'zh', 
-  className = '' 
+const EmbeddedPainAssessment: React.FC<EmbeddedPainAssessmentProps> = ({
+  locale = 'zh',
+  className = ''
 }) => {
+  const t = useTranslations('embeddedPainAssessment');
   const [intensity, setIntensity] = useState<string>('');
   const [showQuickResult, setShowQuickResult] = useState(false);
 
   const getQuickAssessment = () => {
     if (!intensity) {
-      alert(locale === 'zh' ? '请先选择痛经强度' : 'Please select pain intensity first');
+      alert(t('selectIntensityFirst', {}, locale === 'en' ? 'Please select pain intensity first' : '请先选择痛经强度'));
       return;
     }
 
@@ -26,17 +28,17 @@ const EmbeddedPainAssessment: React.FC<EmbeddedPainAssessmentProps> = ({
 
   const getResultMessage = () => {
     if (intensity === 'mild') {
-      return locale === 'zh' 
-        ? '您的痛经程度较轻，可以尝试热敷、轻度运动等自然缓解方法。'
-        : 'Your menstrual pain is mild. You can try natural relief methods like heat therapy and light exercise.';
+      return t('results.mild', {}, locale === 'en'
+        ? 'Your menstrual pain is mild. You can try natural relief methods like heat therapy and light exercise.'
+        : '您的痛经程度较轻，可以尝试热敷、轻度运动等自然缓解方法。');
     } else if (intensity === 'moderate') {
-      return locale === 'zh'
-        ? '您的痛经程度中等，建议结合多种缓解方法，如有需要可考虑非处方止痛药。'
-        : 'Your menstrual pain is moderate. Consider combining multiple relief methods, and over-the-counter pain medication if needed.';
+      return t('results.moderate', {}, locale === 'en'
+        ? 'Your menstrual pain is moderate. Consider combining multiple relief methods, and over-the-counter pain medication if needed.'
+        : '您的痛经程度中等，建议结合多种缓解方法，如有需要可考虑非处方止痛药。');
     } else {
-      return locale === 'zh'
-        ? '您的痛经程度较重，建议咨询医生获得专业评估和治疗建议。'
-        : 'Your menstrual pain is severe. We recommend consulting a doctor for professional assessment and treatment advice.';
+      return t('results.severe', {}, locale === 'en'
+        ? 'Your menstrual pain is severe. We recommend consulting a doctor for professional assessment and treatment advice.'
+        : '您的痛经程度较重，建议咨询医生获得专业评估和治疗建议。');
     }
   };
 
@@ -50,13 +52,13 @@ const EmbeddedPainAssessment: React.FC<EmbeddedPainAssessmentProps> = ({
     <div className={`bg-gradient-to-br from-secondary-50 to-primary-50 rounded-xl p-6 ${className}`}>
       <div className="text-center mb-6">
         <h3 className="text-xl font-bold text-primary-700 mb-2">
-          {locale === 'zh' ? '💡 痛经快速自测' : '💡 Quick Pain Assessment'}
+          {t('title', {}, locale === 'en' ? '💡 Quick Pain Assessment' : '💡 痛经快速自测')}
         </h3>
         <p className="text-gray-600 text-sm">
-          {locale === 'zh' 
-            ? '1分钟了解您的痛经程度，获得初步建议'
-            : 'Understand your pain level in 1 minute and get initial recommendations'
-          }
+          {t('subtitle', {}, locale === 'en'
+            ? 'Understand your pain level in 1 minute and get initial recommendations'
+            : '1分钟了解您的痛经程度，获得初步建议'
+          )}
         </p>
       </div>
 
@@ -64,23 +66,23 @@ const EmbeddedPainAssessment: React.FC<EmbeddedPainAssessmentProps> = ({
         <div className="space-y-4">
           <div>
             <h4 className="font-medium mb-3 text-gray-800">
-              {locale === 'zh' ? '您的痛经强度如何？' : 'How intense is your menstrual pain?'}
+              {t('question', {}, locale === 'en' ? 'How intense is your menstrual pain?' : '您的痛经强度如何？')}
             </h4>
             <div className="space-y-2">
               {[
-                { 
-                  value: 'mild', 
-                  label: locale === 'zh' ? '轻微（可以忍受，不影响日常活动）' : 'Mild (tolerable, doesn\'t affect daily activities)',
+                {
+                  value: 'mild',
+                  label: t('options.mild', {}, locale === 'en' ? 'Mild (tolerable, doesn\'t affect daily activities)' : '轻微（可以忍受，不影响日常活动）'),
                   emoji: '😊'
                 },
-                { 
-                  value: 'moderate', 
-                  label: locale === 'zh' ? '中度（影响部分活动，但能坚持）' : 'Moderate (affects some activities, but manageable)',
+                {
+                  value: 'moderate',
+                  label: t('options.moderate', {}, locale === 'en' ? 'Moderate (affects some activities, but manageable)' : '中度（影响部分活动，但能坚持）'),
                   emoji: '😐'
                 },
-                { 
-                  value: 'severe', 
-                  label: locale === 'zh' ? '重度（完全影响日常活动，需要休息）' : 'Severe (completely affects daily activities, need rest)',
+                {
+                  value: 'severe',
+                  label: t('options.severe', {}, locale === 'en' ? 'Severe (completely affects daily activities, need rest)' : '重度（完全影响日常活动，需要休息）'),
                   emoji: '😰'
                 }
               ].map((option) => (
@@ -108,13 +110,13 @@ const EmbeddedPainAssessment: React.FC<EmbeddedPainAssessmentProps> = ({
               onClick={getQuickAssessment}
               className="flex-1 btn-primary text-sm py-2 px-4 font-semibold"
             >
-              {locale === 'zh' ? '获取建议' : 'Get Advice'}
+              {t('buttons.getAdvice', {}, locale === 'en' ? 'Get Advice' : '获取建议')}
             </button>
             <Link
               href={`/${locale}/interactive-tools/period-pain-assessment`}
               className="flex-1 btn-outline text-sm py-2 px-4 font-semibold text-center"
             >
-              {locale === 'zh' ? '详细评估' : 'Detailed Assessment'}
+              {t('buttons.detailedAssessment', {}, locale === 'en' ? 'Detailed Assessment' : '详细评估')}
             </Link>
           </div>
         </div>
@@ -122,7 +124,7 @@ const EmbeddedPainAssessment: React.FC<EmbeddedPainAssessmentProps> = ({
         <div className="space-y-4">
           <div className={`p-4 rounded-lg border-l-4 ${getResultColor()}`}>
             <h4 className="font-medium mb-2">
-              {locale === 'zh' ? '评估结果' : 'Assessment Result'}
+              {t('resultTitle', {}, locale === 'en' ? 'Assessment Result' : '评估结果')}
             </h4>
             <p className="text-sm leading-relaxed">
               {getResultMessage()}
@@ -137,13 +139,13 @@ const EmbeddedPainAssessment: React.FC<EmbeddedPainAssessmentProps> = ({
               }}
               className="flex-1 btn-outline text-sm py-2 px-4 font-semibold"
             >
-              {locale === 'zh' ? '重新测试' : 'Test Again'}
+              {t('buttons.testAgain', {}, locale === 'en' ? 'Test Again' : '重新测试')}
             </button>
             <Link
               href={`/${locale}/interactive-tools/period-pain-assessment`}
               className="flex-1 btn-primary text-sm py-2 px-4 font-semibold text-center"
             >
-              {locale === 'zh' ? '完整评估' : 'Full Assessment'}
+              {t('buttons.fullAssessment', {}, locale === 'en' ? 'Full Assessment' : '完整评估')}
             </Link>
           </div>
         </div>
@@ -151,10 +153,10 @@ const EmbeddedPainAssessment: React.FC<EmbeddedPainAssessmentProps> = ({
 
       <div className="mt-4 text-center">
         <p className="text-xs text-gray-500">
-          {locale === 'zh' 
-            ? '⚠️ 此工具仅供参考，不能替代专业医疗建议'
-            : '⚠️ This tool is for reference only and cannot replace professional medical advice'
-          }
+          {t('disclaimer', {}, locale === 'en'
+            ? '⚠️ This tool is for reference only and cannot replace professional medical advice'
+            : '⚠️ 此工具仅供参考，不能替代专业医疗建议'
+          )}
         </p>
       </div>
     </div>

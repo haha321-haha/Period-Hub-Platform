@@ -38,16 +38,22 @@ function processNSAIDContent(content: string): string {
     // Convert links
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
     
-    // Convert tables - improved table processing
+    // Convert tables - improved table processing with center alignment for first column
     .replace(/\|(.+)\|\n\|[-\s|]+\|\n((?:\|.+\|\n?)*)/g, (match, header, rows) => {
       const headerCells = header.split('|').map((cell: string) => cell.trim()).filter(Boolean);
-      const headerRow = '<tr>' + headerCells.map((cell: string) => `<th class="border border-gray-300 px-4 py-3 bg-primary-100 font-semibold text-left text-primary-800">${cell}</th>`).join('') + '</tr>';
-      
+      const headerRow = '<tr>' + headerCells.map((cell: string, index: number) => {
+        const alignment = index === 0 ? 'text-center' : 'text-left';
+        return `<th class="border border-gray-300 px-4 py-3 bg-primary-100 font-semibold ${alignment} text-primary-800">${cell}</th>`;
+      }).join('') + '</tr>';
+
       const bodyRows = rows.trim().split('\n').map((row: string) => {
         const cells = row.replace(/^\||\|$/g, '').split('|').map((cell: string) => cell.trim());
-        return '<tr class="even:bg-gray-50 hover:bg-primary-25">' + cells.map((cell: string) => `<td class="border border-gray-300 px-4 py-3 text-neutral-700">${cell}</td>`).join('') + '</tr>';
+        return '<tr class="even:bg-gray-50 hover:bg-primary-25">' + cells.map((cell: string, index: number) => {
+          const alignment = index === 0 ? 'text-center' : 'text-left';
+          return `<td class="border border-gray-300 px-4 py-3 text-neutral-700 ${alignment}">${cell}</td>`;
+        }).join('') + '</tr>';
       }).join('');
-      
+
       return `<div class="overflow-x-auto my-6"><table class="min-w-full border-collapse border border-gray-300 bg-white rounded-lg shadow-sm"><thead class="bg-primary-50">${headerRow}</thead><tbody>${bodyRows}</tbody></table></div>`;
     })
     
@@ -62,6 +68,25 @@ function processNSAIDContent(content: string): string {
   htmlBlocks.forEach((block, index) => {
     processedContent = processedContent.replace(`__HTML_BLOCK_${index}__`, block);
   });
+
+  // Ensure video element has proper attributes for visibility
+  processedContent = processedContent.replace(
+    /<video([^>]*id="nsaidAnimationPlayer"[^>]*)>/g,
+    '<video$1 style="display: block !important; width: 100% !important; height: auto !important; min-height: 250px !important; background: #000 !important; opacity: 1 !important; visibility: visible !important; position: relative !important; z-index: 100 !important;" controls playsinline>'
+  );
+
+  // Debug: Log the processed content to see if video element is present
+  if (processedContent.includes('nsaidAnimationPlayer')) {
+    console.log('🎬 Video element found in processed content');
+  } else {
+    console.warn('❌ Video element NOT found in processed content');
+  }
+
+  // Remove test message and ensure clean video container
+  processedContent = processedContent.replace(
+    /<div class="nsaid-animation-player">/g,
+    '<div class="nsaid-animation-player">'
+  );
 
   return processedContent;
 }
@@ -90,14 +115,19 @@ export default function NSAIDContent({ content }: NSAIDContentProps) {
         const elements = document.querySelectorAll(selector);
         elements.forEach(el => {
           const element = el as HTMLElement;
-          // Remove all possible filter properties
+          // Remove all possible filter properties to eliminate gray overlay
           element.style.setProperty('filter', 'none', 'important');
           element.style.setProperty('-webkit-filter', 'none', 'important');
           element.style.setProperty('-moz-filter', 'none', 'important');
           element.style.setProperty('-ms-filter', 'none', 'important');
           element.style.setProperty('-o-filter', 'none', 'important');
           element.style.setProperty('opacity', '1', 'important');
-          element.style.setProperty('background', 'transparent', 'important');
+          // Keep video background black for better contrast
+          if (element.tagName.toLowerCase() === 'video') {
+            element.style.setProperty('background', '#000000', 'important');
+          } else {
+            element.style.setProperty('background', 'transparent', 'important');
+          }
         });
       });
     };
@@ -115,26 +145,43 @@ export default function NSAIDContent({ content }: NSAIDContentProps) {
         background: #f8fafc;
         border-radius: 0.75rem;
         border: 1px solid #e2e8f0;
+        display: block !important;
+        visibility: visible !important;
+        position: relative !important;
+        z-index: 1 !important;
       }
       .animation-container {
         max-width: 100%;
+        display: block !important;
+        visibility: visible !important;
+        position: relative !important;
       }
       .video-player-container {
         margin-bottom: 1rem;
+        display: block !important;
+        visibility: visible !important;
+        position: relative !important;
+        min-height: 300px !important;
+        background: #000 !important;
+        border-radius: 0.5rem !important;
       }
       .animation-video {
         width: 100% !important;
         height: auto !important;
+        min-height: 250px !important;
         border-radius: 0.5rem !important;
         background: #000000 !important;
-        filter: brightness(1.1) contrast(1.05) saturate(1.05) !important;
+        filter: none !important;
         opacity: 1 !important;
-        -webkit-filter: brightness(1.1) contrast(1.05) saturate(1.05) !important;
-        -moz-filter: brightness(1.1) contrast(1.05) saturate(1.05) !important;
-        -ms-filter: brightness(1.1) contrast(1.05) saturate(1.05) !important;
-        -o-filter: brightness(1.1) contrast(1.05) saturate(1.05) !important;
+        -webkit-filter: none !important;
+        -moz-filter: none !important;
+        -ms-filter: none !important;
+        -o-filter: none !important;
         position: relative !important;
         z-index: 10 !important;
+        display: block !important;
+        visibility: visible !important;
+        object-fit: contain !important;
       }
 
       .animation-video::before,
@@ -161,9 +208,9 @@ export default function NSAIDContent({ content }: NSAIDContentProps) {
         display: none !important;
       }
 
-      /* Ensure video is always visible and bright */
+      /* Ensure video is always visible and clear */
       video, .animation-video {
-        filter: brightness(1.1) contrast(1.05) saturate(1.05) !important;
+        filter: none !important;
         opacity: 1 !important;
         background: #000 !important;
         position: relative !important;
@@ -485,6 +532,57 @@ export default function NSAIDContent({ content }: NSAIDContentProps) {
           box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2) !important;
         }
       }
+
+      /* 强制移除所有可能的灰色滤镜和覆盖层 */
+      * {
+        filter: none !important;
+        -webkit-filter: none !important;
+        -moz-filter: none !important;
+        -ms-filter: none !important;
+        -o-filter: none !important;
+      }
+
+      /* 特别针对视频和动画元素 */
+      video, .animation-video, #nsaidAnimationPlayer {
+        filter: none !important;
+        -webkit-filter: none !important;
+        -moz-filter: none !important;
+        -ms-filter: none !important;
+        -o-filter: none !important;
+        opacity: 1 !important;
+        background: #000 !important;
+        position: relative !important;
+        z-index: 1000 !important;
+      }
+
+      /* 移除任何可能的覆盖层 */
+      div[style*="filter"],
+      div[style*="opacity"],
+      div[class*="overlay"],
+      div[class*="backdrop"],
+      .video-overlay,
+      .video-backdrop {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        filter: none !important;
+      }
+
+      /* 确保视频容器清洁 */
+      .video-player-container,
+      .animation-container {
+        filter: none !important;
+        opacity: 1 !important;
+        background: transparent !important;
+        position: relative !important;
+      }
+
+      /* 移除任何伪元素覆盖 */
+      *::before,
+      *::after {
+        filter: none !important;
+        opacity: 1 !important;
+      }
     `;
     document.head.appendChild(style);
 
@@ -498,473 +596,257 @@ export default function NSAIDContent({ content }: NSAIDContentProps) {
 
   useEffect(() => {
     // Add a small delay to ensure DOM elements are rendered
-    // 事件处理将由外部JavaScript文件处理
     console.log('🔧 NSAIDContent component initialized, external script will handle events');
 
     const timer = setTimeout(() => {
       // NSAID Calculator functionality
       const calculateButton = document.getElementById('calculate-dose-button');
-      const drugSelect = document.getElementById('drug-select') as HTMLSelectElement;
-      const weightInput = document.getElementById('weight-input') as HTMLInputElement;
-      const doseResult = document.getElementById('dose-result');
-      const resultDrugName = document.getElementById('result-drug-name');
-      const resultSingleDose = document.getElementById('result-single-dose');
-      const resultMaxDailyDose = document.getElementById('result-max-daily-dose');
-      const resultNotes = document.getElementById('result-notes');
 
-    if (calculateButton) {
-      // 强制设置按钮样式
-      const btn = calculateButton as HTMLButtonElement;
-      btn.style.setProperty('background', '#1e40af', 'important');
-      btn.style.setProperty('background-color', '#1e40af', 'important');
-      btn.style.setProperty('background-image', 'none', 'important');
-      btn.style.setProperty('color', '#ffffff', 'important');
-      btn.style.setProperty('border', '2px solid #1d4ed8', 'important');
-      btn.style.setProperty('border-radius', '0.5rem', 'important');
-      btn.style.setProperty('padding', '0.5rem 1rem', 'important');
-      btn.style.setProperty('font-weight', '700', 'important');
-      btn.style.setProperty('cursor', 'pointer', 'important');
-      btn.style.setProperty('opacity', '1', 'important');
-      btn.style.setProperty('pointer-events', 'auto', 'important');
-      btn.style.setProperty('z-index', '100', 'important');
-      btn.style.setProperty('position', 'relative', 'important');
-      btn.style.setProperty('display', 'inline-block', 'important');
-      btn.style.setProperty('width', '100%', 'important');
+      if (calculateButton) {
+        // 强制设置按钮样式
+        const btn = calculateButton as HTMLButtonElement;
+        btn.style.setProperty('background', '#1e40af', 'important');
+        btn.style.setProperty('background-color', '#1e40af', 'important');
+        btn.style.setProperty('background-image', 'none', 'important');
+        btn.style.setProperty('color', '#ffffff', 'important');
+        btn.style.setProperty('border', '2px solid #1d4ed8', 'important');
+        btn.style.setProperty('border-radius', '0.5rem', 'important');
+        btn.style.setProperty('padding', '0.5rem 1rem', 'important');
+        btn.style.setProperty('font-weight', '700', 'important');
+        btn.style.setProperty('cursor', 'pointer', 'important');
+        btn.style.setProperty('opacity', '1', 'important');
+        btn.style.setProperty('pointer-events', 'auto', 'important');
+        btn.style.setProperty('z-index', '100', 'important');
+        btn.style.setProperty('position', 'relative', 'important');
+        btn.style.setProperty('display', 'inline-block', 'important');
+        btn.style.setProperty('width', '100%', 'important');
 
-      // 事件处理由外部JavaScript文件处理
-      console.log('✅ Calculate button found and styled, event handling delegated to external script');
-    }
-
-    // Animation controls - Clear any existing event listeners first
-    const prevButton = document.getElementById('nsaidPrevButton');
-    const nextButton = document.getElementById('nsaidNextButton');
-    const sceneIndicator = document.getElementById('nsaidSceneIndicator');
-    const sceneTitle = document.getElementById('nsaidSceneTitle');
-    const narrationText = document.getElementById('nsaidNarrationText');
-
-    console.log('🎬 Animation controls found:', {
-      prevButton: !!prevButton,
-      nextButton: !!nextButton,
-      sceneIndicator: !!sceneIndicator,
-      sceneTitle: !!sceneTitle,
-      narrationText: !!narrationText
-    });
-
-    let currentScene = 1;
-    const totalScenes = 11;
-
-    const scenes = [
-      {
-        id: 1,
-        title: '场景1：开场 - 表现痛经的不适感',
-        text: '很多女性每个月都会经历痛经，那种痉挛、疼痛的感觉让人非常不适。',
-        videoUrl: 'https://v3.fal.media/files/monkey/OMrBMAEeA1my97zJzH64q_output.mp4'
-      },
-      {
-        id: 2,
-        title: '场景2：解释痛经原因 - 前列腺素',
-        text: '月经期间，子宫内膜会释放一种叫做"前列腺素"的物质。前列腺素会引起子宫肌肉剧烈收缩，导致疼痛。',
-        videoUrl: 'https://v3.fal.media/files/panda/DJlINSBKErKOTTRW4scwG_output.mp4'
-      },
-      {
-        id: 3,
-        title: '场景3：引出NSAIDs',
-        text: '而非甾体抗炎药，简称NSAID，是缓解痛经的常用药物。它们能从源头减少前列腺素的产生。',
-        videoUrl: 'https://v3.fal.media/files/monkey/sRVoOWjzmaoyzF7cure1m_output.mp4'
-      },
-      {
-        id: 4,
-        title: '场景4：药物服用',
-        text: '当您服下NSAID药片后，它会进入消化系统。',
-        videoUrl: 'https://v3.fal.media/files/lion/O4Ys7oYqfMg3M0jR80mhw_output.mp4'
-      },
-      {
-        id: 5,
-        title: '场景5：吸收进入血液',
-        text: '然后通过消化道被吸收到血液里，随着血液流向全身。',
-        videoUrl: 'https://v3.fal.media/files/elephant/ejMBtuanCnJ9v_RH-3gXc_output.mp4'
-      },
-      {
-        id: 6,
-        title: '场景6：分布到作用部位',
-        text: '药物分子随着血液循环，最终抵达引起疼痛的部位——比如您的子宫周围。',
-        videoUrl: 'https://v3.fal.media/files/lion/_wrFzYC89XCXhT08_ldCQ_output.mp4'
-      },
-      {
-        id: 7,
-        title: '场景7：作用机制 - 抑制COX酶',
-        text: '在这里，NSAID药物找到了产生前列腺素的关键"工厂"——环氧合酶，并抑制了它的活性。',
-        videoUrl: 'https://v3.fal.media/files/zebra/-3fM_hp6Ze7ceOdKospQ-_output.mp4'
-      },
-      {
-        id: 8,
-        title: '场景8：减少前列腺素',
-        text: '环氧合酶的工作被打断，前列腺素的合成量就大大降低了。',
-        videoUrl: 'https://v3.fal.media/files/koala/-0hQKGQ9lIMGoyG_jRw2H_output.mp4'
-      },
-      {
-        id: 9,
-        title: '场景9：疼痛缓解',
-        text: '随着前列腺素减少，子宫收缩变得温和，疼痛感明显减轻。',
-        videoUrl: 'https://v3.fal.media/files/monkey/OMrBMAEeA1my97zJzH64q_output.mp4'
-      },
-      {
-        id: 10,
-        title: '场景10：药物代谢',
-        text: '完成任务后，NSAID药物会被肝脏代谢，最终通过肾脏排出体外。',
-        videoUrl: 'https://v3.fal.media/files/panda/DJlINSBKErKOTTRW4scwG_output.mp4'
-      },
-      {
-        id: 11,
-        title: '场景11：总结',
-        text: '这就是NSAID缓解痛经的完整过程：从服用到吸收，从作用到代谢，科学而有效。',
-        videoUrl: 'https://v3.fal.media/files/monkey/sRVoOWjzmaoyzF7cure1m_output.mp4'
+        console.log('✅ Calculate button found and styled, event handling delegated to external script');
       }
-    ];
 
-    function updateScene() {
-      // Update scene data
-      const currentSceneData = scenes[currentScene - 1];
-
-      if (sceneIndicator) sceneIndicator.textContent = `场景 ${currentScene} / ${totalScenes}`;
-      if (sceneTitle) sceneTitle.textContent = currentSceneData.title;
-      if (narrationText) narrationText.textContent = currentSceneData.text;
-
-      // Load the video for current scene
+      // Simple video player initialization based on original code
       const videoPlayer = document.getElementById('nsaidAnimationPlayer') as HTMLVideoElement;
-      if (videoPlayer && currentSceneData.videoUrl) {
-        // Load video for current scene
-        videoPlayer.src = currentSceneData.videoUrl;
-        videoPlayer.load(); // Force reload the video
+      const prevButton = document.getElementById('nsaidPrevButton');
+      const nextButton = document.getElementById('nsaidNextButton');
+      const sceneIndicator = document.getElementById('nsaidSceneIndicator');
+      const sceneTitle = document.getElementById('nsaidSceneTitle');
+      const narrationText = document.getElementById('nsaidNarrationText');
 
-        // Reset video styles to ensure proper display - use brightness instead of none
-        videoPlayer.style.setProperty('filter', 'brightness(1.15) contrast(1.08) saturate(1.08)', 'important');
-        videoPlayer.style.setProperty('-webkit-filter', 'brightness(1.15) contrast(1.08) saturate(1.08)', 'important');
-        videoPlayer.style.setProperty('-moz-filter', 'brightness(1.15) contrast(1.08) saturate(1.08)', 'important');
-        videoPlayer.style.setProperty('-ms-filter', 'brightness(1.15) contrast(1.08) saturate(1.08)', 'important');
-        videoPlayer.style.setProperty('-o-filter', 'brightness(1.15) contrast(1.08) saturate(1.08)', 'important');
-        videoPlayer.style.setProperty('opacity', '1', 'important');
-        videoPlayer.style.setProperty('background', '#000000', 'important');
-        videoPlayer.style.setProperty('position', 'relative', 'important');
-        videoPlayer.style.setProperty('z-index', '100', 'important');
+      console.log('🎬 Animation controls found:', {
+        videoPlayer: !!videoPlayer,
+        prevButton: !!prevButton,
+        nextButton: !!nextButton,
+        sceneIndicator: !!sceneIndicator,
+        sceneTitle: !!sceneTitle,
+        narrationText: !!narrationText
+      });
 
-        // Remove any overlay or pseudo-elements
-        const container = videoPlayer.parentElement;
-        if (container) {
-          container.style.setProperty('background', 'transparent', 'important');
-          container.style.setProperty('filter', 'none', 'important');
-          container.style.setProperty('opacity', '1', 'important');
-          container.style.setProperty('position', 'relative', 'important');
+      let currentSceneIndex = 0;
 
-          // Remove any child elements that might be overlays
-          const overlays = container.querySelectorAll('div:not(.animation-video):not(video)');
-          overlays.forEach(overlay => {
-            if (overlay !== videoPlayer) {
-              (overlay as HTMLElement).style.display = 'none';
-            }
+      // Simple scene data structure matching original working code
+      const scenes = [
+        {
+          id: 1,
+          title: "场景1：开场 - 表现痛经的不适感",
+          videoUrl: "https://v3.fal.media/files/monkey/OMrBMAEeA1my97zJzH64q_output.mp4",
+          narration: "很多女性每个月都会经历痛经，那种痉挛、疼痛的感觉让人非常不适。"
+        },
+        {
+          id: 2,
+          title: '场景2：解释痛经原因 - 前列腺素',
+          text: '月经期间，子宫内膜会释放一种叫做"前列腺素"的物质。前列腺素会引起子宫肌肉剧烈收缩，导致疼痛。',
+          videoUrl: 'https://v3.fal.media/files/panda/DJlINSBKErKOTTRW4scwG_output.mp4'
+        },
+        {
+          id: 3,
+          title: '场景3：引出NSAIDs',
+          text: '而非甾体抗炎药，简称NSAID，是缓解痛经的常用药物。它们能从源头减少前列腺素的产生。',
+          videoUrl: 'https://v3.fal.media/files/monkey/sRVoOWjzmaoyzF7cure1m_output.mp4'
+        },
+        {
+          id: 4,
+          title: '场景4：药物服用',
+          text: '当您服下NSAID药片后，它会进入消化系统。',
+          videoUrl: 'https://v3.fal.media/files/lion/O4Ys7oYqfMg3M0jR80mhw_output.mp4'
+        },
+        {
+          id: 5,
+          title: '场景5：吸收进入血液',
+          text: '然后通过消化道被吸收到血液里，随着血液流向全身。',
+          videoUrl: 'https://v3.fal.media/files/elephant/ejMBtuanCnJ9v_RH-3gXc_output.mp4'
+        },
+        {
+          id: 6,
+          title: '场景6：分布到作用部位',
+          text: '药物分子随着血液循环，最终抵达引起疼痛的部位——比如您的子宫周围。',
+          videoUrl: 'https://v3.fal.media/files/lion/_wrFzYC89XCXhT08_ldCQ_output.mp4'
+        },
+        {
+          id: 7,
+          title: '场景7：作用机制 - 抑制COX酶',
+          text: '在这里，NSAID药物找到了产生前列腺素的关键"工厂"——环氧合酶，并抑制了它的活性。',
+          videoUrl: 'https://v3.fal.media/files/zebra/-3fM_hp6Ze7ceOdKospQ-_output.mp4'
+        },
+        {
+          id: 8,
+          title: '场景8：减少前列腺素',
+          text: '环氧合酶的工作被打断，前列腺素的合成量就大大降低了。',
+          videoUrl: 'https://v3.fal.media/files/koala/-0hQKGQ9lIMGoyG_jRw2H_output.mp4'
+        },
+        {
+          id: 9,
+          title: '场景9：疼痛缓解',
+          text: '随着前列腺素减少，子宫收缩变得温和，疼痛感明显减轻。',
+          videoUrl: 'https://v3.fal.media/files/monkey/OMrBMAEeA1my97zJzH64q_output.mp4'
+        },
+        {
+          id: 10,
+          title: '场景10：药物代谢',
+          text: '完成任务后，NSAID药物会被肝脏代谢，最终通过肾脏排出体外。',
+          videoUrl: 'https://v3.fal.media/files/panda/DJlINSBKErKOTTRW4scwG_output.mp4'
+        },
+        {
+          id: 11,
+          title: '场景11：总结',
+          text: '这就是NSAID缓解痛经的完整过程：从服用到吸收，从作用到代谢，科学而有效。',
+          videoUrl: 'https://v3.fal.media/files/monkey/sRVoOWjzmaoyzF7cure1m_output.mp4'
+        }
+      ];
+
+      // Simple scene loading function based on original working code
+      function loadScene(index: number) {
+        if (index < 0 || index >= scenes.length) {
+          console.error('Scene index out of bounds:', index);
+          return;
+        }
+
+        currentSceneIndex = index;
+        const scene = scenes[currentSceneIndex];
+
+        // Update UI elements
+        if (sceneTitle) sceneTitle.textContent = scene.title;
+        if (narrationText) narrationText.textContent = scene.text || scene.narration || '';
+        if (sceneIndicator) sceneIndicator.textContent = `场景 ${scene.id} / ${scenes.length}`;
+
+        // Load video
+        if (videoPlayer && scene.videoUrl) {
+          videoPlayer.src = scene.videoUrl;
+          videoPlayer.load();
+
+          // Try to play automatically
+          videoPlayer.play().catch(error => {
+            console.warn("Autoplay prevented:", error);
           });
         }
 
-        // Try to play the video automatically
-        const playPromise = videoPlayer.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(error => {
-            console.warn('Autoplay prevented for scene:', currentScene, error);
-          });
-        }
+        // Update navigation buttons
+        if (prevButton) (prevButton as HTMLButtonElement).disabled = currentSceneIndex === 0;
+        if (nextButton) (nextButton as HTMLButtonElement).disabled = currentSceneIndex === scenes.length - 1;
       }
 
-      // Update button states with strong styling
-      const shouldDisablePrev = currentScene === 1;
-      const shouldDisableNext = currentScene === totalScenes;
+      // Simple navigation functions
+      function playNextScene() {
+        currentSceneIndex++;
+        if (currentSceneIndex >= scenes.length) {
+          currentSceneIndex = 0; // Loop back to first scene
+        }
+        loadScene(currentSceneIndex);
+      }
 
+      function playPrevScene() {
+        currentSceneIndex--;
+        if (currentSceneIndex < 0) {
+          currentSceneIndex = scenes.length - 1; // Loop back to last scene
+        }
+        loadScene(currentSceneIndex);
+      }
+
+      // Set up event listeners based on original working code
+      if (videoPlayer) {
+        // Video ended - auto advance to next scene
+        videoPlayer.addEventListener('ended', () => {
+          playNextScene();
+        });
+
+        // Video error handling
+        videoPlayer.addEventListener('error', (e) => {
+          console.error('Video error:', e);
+          if (narrationText) narrationText.textContent = '抱歉，视频加载失败。请检查您的网络连接或稍后再试。';
+          if (sceneTitle) sceneTitle.textContent = '视频加载错误';
+        });
+      }
+
+      // Button event listeners
       if (prevButton) {
-        const btn = prevButton as HTMLButtonElement;
-        btn.disabled = shouldDisablePrev;
-
-        // Remove conflicting classes
-        btn.classList.remove('next-button', 'prev-button');
-
-        if (shouldDisablePrev) {
-          btn.setAttribute('disabled', 'true');
-          btn.classList.add('disabled', 'nsaid-disabled-button');
-          btn.classList.remove('nsaid-active-button');
-          btn.setAttribute('style', `
-            background: #9ca3af !important;
-            color: white !important;
-            cursor: not-allowed !important;
-            opacity: 0.6 !important;
-            pointer-events: none !important;
-            border: none !important;
-            padding: 0.5rem 1rem !important;
-            border-radius: 0.375rem !important;
-            font-weight: 500 !important;
-            transform: none !important;
-            box-shadow: none !important;
-            outline: none !important;
-          `);
-        } else {
-          btn.removeAttribute('disabled');
-          btn.classList.remove('disabled', 'nsaid-disabled-button');
-          btn.classList.add('nsaid-active-button');
-          btn.setAttribute('style', `
-            background: #1e40af !important;
-            color: #ffffff !important;
-            cursor: pointer !important;
-            opacity: 1 !important;
-            pointer-events: auto !important;
-            border: 2px solid #1d4ed8 !important;
-            padding: 0.625rem 1.25rem !important;
-            border-radius: 0.5rem !important;
-            font-weight: 700 !important;
-            transform: none !important;
-            transition: all 0.2s !important;
-            box-shadow: 0 2px 8px rgba(30, 64, 175, 0.3) !important;
-            outline: none !important;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
-            letter-spacing: 0.025em !important;
-          `);
-
-          // Re-add hover effects for enabled button
-          btn.addEventListener('mouseenter', () => {
-            if (!btn.disabled) {
-              btn.style.background = '#2563eb !important';
-              btn.style.transform = 'translateY(-1px) !important';
-            }
-          });
-
-          btn.addEventListener('mouseleave', () => {
-            if (!btn.disabled) {
-              btn.style.background = '#3b82f6 !important';
-              btn.style.transform = 'none !important';
-            }
-          });
-        }
-        // Previous button state updated
+        prevButton.addEventListener('click', () => {
+          playPrevScene();
+        });
       }
 
       if (nextButton) {
-        const btn = nextButton as HTMLButtonElement;
-        btn.disabled = shouldDisableNext;
-
-        // Remove conflicting classes
-        btn.classList.remove('next-button', 'prev-button');
-
-        if (shouldDisableNext) {
-          btn.setAttribute('disabled', 'true');
-          btn.classList.add('disabled', 'nsaid-disabled-button');
-          btn.classList.remove('nsaid-active-button');
-          btn.setAttribute('style', `
-            background: #374151 !important;
-            color: #ffffff !important;
-            cursor: not-allowed !important;
-            opacity: 0.7 !important;
-            pointer-events: none !important;
-            border: 2px solid #4b5563 !important;
-            padding: 0.625rem 1.25rem !important;
-            border-radius: 0.5rem !important;
-            font-weight: 700 !important;
-            transform: none !important;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
-            outline: none !important;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
-            letter-spacing: 0.025em !important;
-          `);
-        } else {
-          btn.removeAttribute('disabled');
-          btn.classList.remove('disabled', 'nsaid-disabled-button');
-          btn.classList.add('nsaid-active-button');
-          btn.setAttribute('style', `
-            background: #1e40af !important;
-            color: #ffffff !important;
-            cursor: pointer !important;
-            opacity: 1 !important;
-            pointer-events: auto !important;
-            border: 2px solid #1d4ed8 !important;
-            padding: 0.625rem 1.25rem !important;
-            border-radius: 0.5rem !important;
-            font-weight: 700 !important;
-            transform: none !important;
-            transition: all 0.2s !important;
-            box-shadow: 0 2px 8px rgba(30, 64, 175, 0.3) !important;
-            outline: none !important;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
-            letter-spacing: 0.025em !important;
-          `);
-
-          // Re-add hover effects for enabled button
-          btn.addEventListener('mouseenter', () => {
-            if (!btn.disabled) {
-              btn.style.background = '#1e3a8a !important';
-              btn.style.transform = 'translateY(-1px) !important';
-              btn.style.boxShadow = '0 4px 12px rgba(30, 64, 175, 0.4) !important';
-            }
-          });
-
-          btn.addEventListener('mouseleave', () => {
-            if (!btn.disabled) {
-              btn.style.background = '#1e40af !important';
-              btn.style.transform = 'none !important';
-              btn.style.boxShadow = '0 2px 8px rgba(30, 64, 175, 0.3) !important';
-            }
-          });
-        }
-        // Next button state updated
-      }
-    }
-
-    // Add event listeners with proper cleanup
-    const handlePrevClick = function() {
-      // Navigate to previous scene
-      if (currentScene > 1) {
-        currentScene--;
-        updateScene();
-      }
-    };
-
-    const handleNextClick = function() {
-      // Navigate to next scene
-      if (currentScene < totalScenes) {
-        currentScene++;
-        updateScene();
-      }
-    };
-
-    if (prevButton) {
-      prevButton.addEventListener('click', handlePrevClick);
-    }
-
-    if (nextButton) {
-      nextButton.addEventListener('click', handleNextClick);
-    }
-
-      // Initialize animation controls
-
-      // Force enable next button initially with stronger CSS
-      if (nextButton) {
-        const btn = nextButton as HTMLButtonElement;
-        btn.disabled = false;
-        btn.removeAttribute('disabled');
-        btn.classList.remove('disabled');
-
-        // Remove any conflicting classes
-        btn.classList.remove('next-button', 'prev-button');
-        btn.classList.add('nsaid-active-button');
-
-        // Apply styles with maximum specificity
-        btn.setAttribute('style', `
-          background: #1e40af !important;
-          color: #ffffff !important;
-          cursor: pointer !important;
-          opacity: 1 !important;
-          pointer-events: auto !important;
-          border: 2px solid #1d4ed8 !important;
-          padding: 0.625rem 1.25rem !important;
-          border-radius: 0.5rem !important;
-          font-weight: 700 !important;
-          transform: none !important;
-          transition: all 0.2s !important;
-          box-shadow: 0 2px 8px rgba(30, 64, 175, 0.3) !important;
-          outline: none !important;
-          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
-          letter-spacing: 0.025em !important;
-        `);
-
-        // Also add hover effect
-        btn.addEventListener('mouseenter', () => {
-          if (!btn.disabled) {
-            btn.style.background = '#1e3a8a !important';
-            btn.style.transform = 'translateY(-1px) !important';
-            btn.style.boxShadow = '0 4px 12px rgba(30, 64, 175, 0.4) !important';
-          }
+        nextButton.addEventListener('click', () => {
+          playNextScene();
         });
-
-        btn.addEventListener('mouseleave', () => {
-          if (!btn.disabled) {
-            btn.style.background = '#1e40af !important';
-            btn.style.transform = 'none !important';
-            btn.style.boxShadow = '0 2px 8px rgba(30, 64, 175, 0.3) !important';
-          }
-        });
-
-        // Next button enabled with enhanced styling
       }
 
-      // Initialize the first scene
-      updateScene();
+      // Initialize with first scene
+      if (scenes.length > 0) {
+        loadScene(0);
+      } else {
+        if (sceneTitle) sceneTitle.textContent = "没有可播放的场景";
+        if (narrationText) narrationText.textContent = "请检查数据配置。";
+        if (prevButton) (prevButton as HTMLButtonElement).disabled = true;
+        if (nextButton) (nextButton as HTMLButtonElement).disabled = true;
+        if (sceneIndicator) sceneIndicator.textContent = "场景 0 / 0";
+      }
 
-      // Also initialize the video player with the first scene and ensure controls are visible
-      const videoPlayer = document.getElementById('nsaidAnimationPlayer') as HTMLVideoElement;
-      if (videoPlayer && scenes[0].videoUrl) {
-        // Initialize video player with first scene
-        videoPlayer.src = scenes[0].videoUrl;
-        videoPlayer.load();
-
-        // Ensure video controls are always visible and functional
+      // Enhanced video player setup with debugging
+      if (videoPlayer) {
         videoPlayer.controls = true;
-        videoPlayer.style.setProperty('display', 'block', 'important');
+        videoPlayer.style.width = '100%';
+        videoPlayer.style.height = 'auto';
+        videoPlayer.style.minHeight = '250px';
+        videoPlayer.style.background = '#000';
+        videoPlayer.style.display = 'block';
 
-        // Basic video styling
+        console.log('✅ Video player initialized successfully');
+        console.log('🎬 Video player details:', {
+          element: videoPlayer,
+          src: videoPlayer.src,
+          currentSrc: videoPlayer.currentSrc,
+          controls: videoPlayer.controls,
+          style: {
+            display: videoPlayer.style.display,
+            width: videoPlayer.style.width,
+            height: videoPlayer.style.height,
+            visibility: videoPlayer.style.visibility
+          },
+          parentElement: videoPlayer.parentElement,
+          offsetWidth: videoPlayer.offsetWidth,
+          offsetHeight: videoPlayer.offsetHeight
+        });
+
+        // Force video to be visible
+        videoPlayer.style.setProperty('display', 'block', 'important');
+        videoPlayer.style.setProperty('visibility', 'visible', 'important');
         videoPlayer.style.setProperty('opacity', '1', 'important');
 
-        // Add click handler to video for play/pause
-        videoPlayer.addEventListener('click', function() {
-          if (videoPlayer.paused) {
-            videoPlayer.play().catch(error => {
-              console.warn('Video play failed:', error);
-            });
-          } else {
-            videoPlayer.pause();
-          }
-        });
-
-        // Video player ready with controls
-        console.log('✅ Video player initialized successfully');
       } else {
-        console.warn('❌ Video player not found');
+        console.error('❌ Video player element not found!');
+        // Try to find any video elements on the page
+        const allVideos = document.querySelectorAll('video');
+        console.log('🔍 All video elements found:', allVideos.length);
+        allVideos.forEach((video, index) => {
+          console.log(`Video ${index}:`, {
+            id: video.id,
+            className: video.className,
+            src: video.src,
+            parentElement: video.parentElement
+          });
+        });
       }
 
-      // 强化的按钮样式修复
-      const fixButtonStyles = () => {
-        // 修复计算按钮
-        const calculateBtn = document.getElementById('calculate-dose-button');
-        console.log('🔍 Calculate button found:', !!calculateBtn);
-        if (calculateBtn) {
-          calculateBtn.style.setProperty('background', '#1e40af', 'important');
-          calculateBtn.style.setProperty('background-color', '#1e40af', 'important');
-          calculateBtn.style.setProperty('background-image', 'none', 'important');
-          calculateBtn.style.setProperty('color', '#ffffff', 'important');
-          calculateBtn.style.setProperty('border', '2px solid #1d4ed8', 'important');
-          calculateBtn.style.setProperty('border-radius', '0.5rem', 'important');
-          calculateBtn.style.setProperty('padding', '0.5rem 1rem', 'important');
-          calculateBtn.style.setProperty('font-weight', '700', 'important');
-          calculateBtn.style.setProperty('cursor', 'pointer', 'important');
-          calculateBtn.style.setProperty('opacity', '1', 'important');
-          calculateBtn.style.setProperty('pointer-events', 'auto', 'important');
-          calculateBtn.style.setProperty('z-index', '100', 'important');
-          calculateBtn.style.setProperty('position', 'relative', 'important');
-          calculateBtn.style.setProperty('display', 'inline-block', 'important');
-          calculateBtn.style.setProperty('width', '100%', 'important');
-        }
 
-        // 修复其他按钮
-        const buttons = document.querySelectorAll('.nsaid-controls button, #nsaidNextButton, #nsaidPrevButton');
-        buttons.forEach((btn: any) => {
-          if (btn && !btn.disabled) {
-            btn.style.setProperty('background', '#3b82f6', 'important');
-            btn.style.setProperty('color', 'white', 'important');
-            btn.style.setProperty('cursor', 'pointer', 'important');
-            btn.style.setProperty('pointer-events', 'auto', 'important');
-          }
-        });
-
-        // 让外部JavaScript文件处理事件绑定
-        console.log('🔧 Button styling applied, events will be handled by external script');
-      };
-
-      fixButtonStyles();
-      // 定期检查和修复按钮样式
-      const styleInterval = setInterval(fixButtonStyles, 1000);
 
     }, 100); // Small delay to ensure DOM is ready
 

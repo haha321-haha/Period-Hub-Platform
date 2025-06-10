@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
 
 export default function Header() {
-  const t = useTranslations('navigation');
+  const t = useTranslations('header');
   const locale = useLocale();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,12 +16,12 @@ export default function Header() {
   // Navigation items
   const navigation = [
     { name: t('home'), href: `/${locale}` },
-    { name: locale === 'zh' ? '互动解决方案' : 'Interactive Solutions', href: `/${locale}/interactive-tools` },
-    { name: locale === 'zh' ? '文章PDF下载中心' : 'Articles & Downloads', href: `/${locale}/articles` },
+    { name: t('interactiveSolutions', locale === 'en' ? 'Interactive Solutions' : '互动解决方案'), href: `/${locale}/interactive-tools` },
+    { name: t('articlesDownloads', locale === 'en' ? 'Articles & Downloads' : '文章PDF下载中心'), href: `/${locale}/articles` },
     { name: t('scenarioSolutions'), href: `/${locale}/scenario-solutions` },
-    // { name: locale === 'zh' ? '🚀 框架演示' : '🚀 Framework Demo', href: `/${locale}/framework-demo` }, // 暂时隐藏 - 可快速恢复
-    { name: locale === 'zh' ? '平时调理' : 'Natural Care', href: `/${locale}/natural-therapies` },
-    { name: locale === 'zh' ? '痛经健康指南' : 'Health Guide', href: `/${locale}/health-guide` },
+    // { name: t('frameworkDemo', locale === 'en' ? '🚀 Framework Demo' : '🚀 框架演示'), href: `/${locale}/framework-demo` }, // 暂时隐藏 - 可快速恢复
+    { name: t('naturalCare', locale === 'en' ? 'Natural Care' : '平时调理'), href: `/${locale}/natural-therapies` },
+    { name: t('healthGuide', locale === 'en' ? 'Health Guide' : '痛经健康指南'), href: `/${locale}/health-guide` },
   ];
 
   // Handle scroll effect for header

@@ -25,7 +25,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div className="flex flex-col items-center md:items-start">
-            <h3 className="font-semibold text-neutral-800 mb-4">Links</h3>
+            <h3 className="font-semibold text-neutral-800 mb-4">{t('linksTitle', locale === 'en' ? 'Links' : '链接')}</h3>
             <nav className="flex flex-col space-y-2">
               <Link href={`/${locale}/privacy-policy`} className="text-sm text-neutral-600 hover:text-primary-600 transition-colors">
                 {t('privacy')}
@@ -34,20 +34,20 @@ export default function Footer() {
                 {t('terms')}
               </Link>
               <Link href={`/${locale}/medical-disclaimer`} className="text-sm text-neutral-600 hover:text-primary-600 transition-colors">
-                {locale === 'zh' ? '医疗免责声明' : 'Medical Disclaimer'}
+                {t('medicalDisclaimer', locale === 'en' ? 'Medical Disclaimer' : '医疗免责声明')}
               </Link>
               <Link href={`/${locale}/articles`} className="text-sm text-neutral-600 hover:text-primary-600 transition-colors">
-                {locale === 'zh' ? '文章PDF下载中心' : 'Articles'}
+                {t('articles', locale === 'en' ? 'Articles' : '文章PDF下载中心')}
               </Link>
               <Link href={`/${locale}/natural-therapies`} className="text-sm text-neutral-600 hover:text-primary-600 transition-colors">
-                {locale === 'zh' ? '平时调理' : 'Natural Therapies'}
+                {t('naturalTherapies', locale === 'en' ? 'Natural Therapies' : '平时调理')}
               </Link>
             </nav>
           </div>
 
           {/* Contact Information */}
           <div className="flex flex-col items-center md:items-start">
-            <h3 className="font-semibold text-neutral-800 mb-4">Contact</h3>
+            <h3 className="font-semibold text-neutral-800 mb-4">{t('contactTitle', locale === 'en' ? 'Contact' : '联系我们')}</h3>
             <a 
               href={`mailto:${t('contact_email')}`} 
               className="text-sm text-neutral-600 hover:text-primary-600 transition-colors"
@@ -80,7 +80,10 @@ export default function Footer() {
             {t('copyright', { currentYear })}
           </p>
           <p className="mt-4 text-xs text-neutral-500 max-w-2xl mx-auto">
-            <strong>Medical Disclaimer:</strong> The content on this website is for informational and educational purposes only and is not intended to be a substitute for professional medical advice, diagnosis, or treatment. We are not healthcare professionals. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition. In case of emergency, seek immediate medical attention. Use of this website does not establish a doctor-patient relationship.
+            {t('medicalDisclaimerFull', locale === 'en'
+              ? 'Medical Disclaimer: The content on this website is for informational and educational purposes only and is not intended to be a substitute for professional medical advice, diagnosis, or treatment. We are not healthcare professionals. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition. In case of emergency, seek immediate medical attention. Use of this website does not establish a doctor-patient relationship.'
+              : '医疗免责声明：本网站内容仅供信息和教育目的，不能替代专业医疗建议、诊断或治疗。我们不是医疗专业人员。如有任何医疗问题，请咨询您的医生或其他合格的医疗服务提供者。紧急情况下，请立即寻求医疗救助。使用本网站不构成医患关系。'
+            )}
           </p>
         </div>
       </div>

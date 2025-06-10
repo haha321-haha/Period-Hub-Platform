@@ -1,10 +1,13 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+
 interface NavigationTabsProps {
   locale: string;
 }
 
 export default function NavigationTabs({ locale }: NavigationTabsProps) {
+  const t = useTranslations('navigationTabs');
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     section?.scrollIntoView({ behavior: 'smooth' });
@@ -17,13 +20,13 @@ export default function NavigationTabs({ locale }: NavigationTabsProps) {
           onClick={() => scrollToSection('articles-section')}
           className="px-6 py-2 rounded-md text-neutral-700 hover:bg-white hover:shadow-sm transition-all"
         >
-          {locale === 'zh' ? '📚 专业文章' : '📚 Articles'}
+          {t('articles', locale === 'en' ? '📚 Articles' : '📚 专业文章')}
         </button>
         <button
           onClick={() => scrollToSection('downloads-section')}
           className="px-6 py-2 rounded-md text-neutral-700 hover:bg-white hover:shadow-sm transition-all"
         >
-          {locale === 'zh' ? '📥 PDF下载' : '📥 PDF Downloads'}
+          {t('pdfDownloads', locale === 'en' ? '📥 PDF Downloads' : '📥 PDF下载')}
         </button>
       </div>
     </section>
