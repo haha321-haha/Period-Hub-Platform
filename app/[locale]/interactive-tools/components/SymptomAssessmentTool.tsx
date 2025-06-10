@@ -248,7 +248,7 @@ export default function SymptomAssessmentTool({ locale }: SymptomAssessmentToolP
 
             <div className="bg-gradient-to-r from-yellow-100 to-orange-100 p-6 rounded-lg text-center">
               <h3 className="text-sm font-medium text-gray-600 mb-2">
-                {t('result.severity')}
+                {t('result.type')}
               </h3>
               <p className="text-xl font-bold text-gray-900">
                 {t(`severity.${result.type}`)}
